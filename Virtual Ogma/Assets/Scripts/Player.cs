@@ -28,16 +28,16 @@ public class Player : MonoBehaviour
 	
     void Update()
     {
-		if(Vector3.Distance(target, transform.position) > min_dist)
-		{
-			agent.SetDestination(target);
-			target_reached = false;
-		}
-		else
-		{
-			if(!target_reached)
-				target_reached = true;
-		}
+		//if(Vector3.Distance(target, transform.position) > min_dist)
+		//{
+		//	agent.SetDestination(target);
+		//	target_reached = false;
+		//}
+		//else
+		//{
+		//	if(!target_reached)
+		//		target_reached = true;
+		//}
 
 		//if (Input.GetMouseButtonDown(0))
 		//{
@@ -73,8 +73,8 @@ public class Player : MonoBehaviour
 
 	public void move_player(Vector3 pos)
 	{
-		target = new Vector3();
-		//agent.SetDestination(pos);
+		//target = new Vector3();
+		agent.SetDestination(pos);
 	}
 
 	public void wait_for_seconds(float seconds)
@@ -89,7 +89,7 @@ public class Player : MonoBehaviour
 
 	public void highlight_player()
 	{
-		highlighter = Instantiate(player_highlighter, transform.position + new Vector3(0, -1, 0), Quaternion.identity);
+		highlighter = Instantiate(player_highlighter, transform.position + new Vector3(0, 0, 0), Quaternion.identity);
 		highlighter.transform.SetParent(transform);
 	}
 	public void remove_highlighter()

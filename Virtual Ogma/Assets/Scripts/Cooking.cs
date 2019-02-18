@@ -18,7 +18,7 @@ public class Cooking : MonoBehaviour
 		is_listening = true;
 	}
 
-	public GameObject keywords_data;
+	//public GameObject keywords_data;
 	List<string> keywords = new List<string>();
 	Dictionary<Transform, Vector3> place_position = new Dictionary<Transform, Vector3>();
 	Dictionary<string, Vector3> item_positions = new Dictionary<string, Vector3>();
@@ -80,7 +80,7 @@ public class Cooking : MonoBehaviour
 	void Update()
 	{
 		
-		if (Input.GetKeyDown(KeyCode.Q))
+		if (Input.GetKey(KeyCode.Q))
 		{
 			if (!keyword_recognizer.IsRunning && is_listening)		// !keyword_recognizer.IsRunning not required, is_listening will alone do the trick
 			{

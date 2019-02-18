@@ -18,7 +18,7 @@ public class InitRecognition : MonoBehaviour
 	void Start()
     {
 		foreach (GameObject chef in chefs)
-			keywords.Add(chef.name, () => init_chef(chef));
+			keywords.Add(chef.name, () => init_chef_1(chef));
 		foreach (GameObject waiter in waiters)
 			keywords.Add(waiter.name, () => init_waiter(waiter));
 		keywords.Add("Pause game", () => open_pause_menu());
@@ -35,8 +35,8 @@ public class InitRecognition : MonoBehaviour
 			keyword_action.Invoke();
 		}
 	}
-	public GameObject ob;
-	GameObject ob_;
+	//public GameObject ob;
+	//GameObject ob_;
 	bool is_listening = true;		// prevents keyword_recognizer to start and stop repeatedly every frame
 	void Update()
     {
@@ -67,11 +67,11 @@ public class InitRecognition : MonoBehaviour
 		}
 
 		//control test script.. DELETE it
-		if (Input.GetKeyDown(KeyCode.K))
-		{
-			ob_ = Instantiate<GameObject>(ob, Vector3.zero, Quaternion.identity);
-			ob_.AddComponent<Test_script>();
-		}
+		//if (Input.GetKeyDown(KeyCode.K))
+		//{
+		//	ob_ = Instantiate<GameObject>(ob, Vector3.zero, Quaternion.identity);
+		//	ob_.AddComponent<Test_script>();
+		//}
 	}
 
 	GameObject ch_action;
@@ -99,5 +99,13 @@ public class InitRecognition : MonoBehaviour
 	void open_pause_menu()
 	{
 
+	}
+
+	void init_chef_1(GameObject chef)
+	{
+		Debug.Log(chef.name + " called");
+		Test_script2 ts2 = GameObject.Find("test_script_2").GetComponent<Test_script2>();
+		ts2.initiate(chef);
+		keyword_recognizer.Stop();
 	}
 }

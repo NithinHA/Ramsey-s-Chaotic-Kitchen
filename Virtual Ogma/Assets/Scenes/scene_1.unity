@@ -9989,7 +9989,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 499971047}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7e42201704404b64397e0bd7f89dce82, type: 3}
   m_Name: 
@@ -12575,6 +12575,59 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 675246374}
   m_Mesh: {fileID: 571983937}
+--- !u!1 &678466050
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 678466052}
+  - component: {fileID: 678466051}
+  m_Layer: 0
+  m_Name: test_script_2
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &678466051
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 678466050}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7914a13898dc474b8efaf7aff63a3fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  keywords:
+  - vegetables
+  - fruits
+  - rice
+  - buns
+  item_pos:
+  - {fileID: 1747227063}
+  - {fileID: 1276541612}
+  - {fileID: 672320318}
+  - {fileID: 26208248}
+--- !u!4 &678466052
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 678466050}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 11
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &682628320 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1601271802652301095, guid: 540a134fabc337a4891851347cde9df1,
@@ -18301,7 +18354,6 @@ MonoBehaviour:
   waiters:
   - {fileID: 2939221931306743055}
   empty_gameobject: {fileID: 1163601205}
-  ob: {fileID: 1163601205}
 --- !u!4 &1009420816
 Transform:
   m_ObjectHideFlags: 0
@@ -22079,7 +22131,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh12972
+  m_Name: pb_Mesh13096
   serializedVersion: 9
   m_SubMeshes:
   - serializedVersion: 2
