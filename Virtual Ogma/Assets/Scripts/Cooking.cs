@@ -19,7 +19,7 @@ public class Cooking : MonoBehaviour
 	}
 
 	//public GameObject keywords_data;
-	List<string> keywords = new List<string>();
+	List<string> keywords_list = new List<string>();
 	Dictionary<Transform, Vector3> place_position = new Dictionary<Transform, Vector3>();
 	Dictionary<string, Vector3> item_positions = new Dictionary<string, Vector3>();
 
@@ -29,15 +29,14 @@ public class Cooking : MonoBehaviour
 	void Start()
 	{
 		GameObject keywords_data = GameObject.FindGameObjectWithTag("character data");					// !!!!!! Find GameObject with tag !!!!!!
-		keywords = keywords_data.GetComponent<KeywordsData>().chef_keywords_2;
+		keywords_list = keywords_data.GetComponent<KeywordsData>().chef_keywords_2;
 		place_position = keywords_data.GetComponent<KeywordsData>().chef_place_positions;
 		item_positions = keywords_data.GetComponent<KeywordsData>().chef_item_positions;
 
-		for (int i = 0; i < keywords.Count; i++)
+		foreach (string keyword in keywords_list)
 		{
 			Action method_call;
-			//StringBuilder sb = new StringBuilder(keywords[i]);
-			string[] word_list = keywords[i].Split();
+			string[] word_list = keyword.Split();
 			switch (word_list[0])
 			{
 				case "chop":
@@ -62,7 +61,7 @@ public class Cooking : MonoBehaviour
 					method_call = () => default_method();
 					break;
 			}
-			keywords_dict.Add(keywords[i], method_call);
+			keywords_dict.Add(keyword, method_call);
 		}
 		keyword_recognizer = new KeywordRecognizer(keywords_dict.Keys.ToArray(), ConfidenceLevel.Low);
 		keyword_recognizer.OnPhraseRecognized += OnKeywordsRecognized;
@@ -114,7 +113,7 @@ public class Cooking : MonoBehaviour
 			Vector3[] positions = { item_positions[item], place_position[place.transform] };        //array of positions where character needs to go
 
 			character.GetComponent<Player>().is_busy = true;		//set character is_busy true
-			cutting_board_GO.GetComponent<CuttingBoard>().chop_item(character, item, positions);
+			//cutting_board_GO.GetComponent<CuttingBoard>().chop_item(character, item, positions);
 
 			//move player to fetch item
 			//wait player for 1s

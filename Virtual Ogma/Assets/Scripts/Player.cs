@@ -11,12 +11,12 @@ public class Player : MonoBehaviour
 	[HideInInspector] public Vector3 starting_position;
 	[HideInInspector] public bool is_busy = false;
 
-	public bool target_reached = true;
+	[SerializeField] public bool target_reached = true;
 	public Vector3 target;
-	public float min_dist = 0.1f;
+	public float min_dist = 1f;
 
 	public GameObject player_highlighter;
-	GameObject highlighter;
+	[SerializeField] GameObject highlighter;
 
 	void Start()
     {
@@ -28,16 +28,16 @@ public class Player : MonoBehaviour
 	
     void Update()
     {
-		//if(Vector3.Distance(target, transform.position) > min_dist)
-		//{
-		//	agent.SetDestination(target);
-		//	target_reached = false;
-		//}
-		//else
-		//{
-		//	if(!target_reached)
-		//		target_reached = true;
-		//}
+		if (Vector3.Distance(target, transform.position) > min_dist)
+		{
+			agent.SetDestination(target);
+			target_reached = false;
+		}
+		else
+		{
+			if (!target_reached)
+				target_reached = true;
+		}
 
 		//if (Input.GetMouseButtonDown(0))
 		//{
@@ -58,7 +58,7 @@ public class Player : MonoBehaviour
 		//	Debug.Log("Busy");
 		//else
 		//	Debug.Log("Free");
-		
+
 	}
 
 	public void path(Vector3 init_pos, Vector3 final_pos, float time_dealy)

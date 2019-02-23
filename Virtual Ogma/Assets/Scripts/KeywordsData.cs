@@ -22,24 +22,23 @@ public class KeywordsData : MonoBehaviour
 
 	[Header("Chef data")]
 	public List<string> chef_keywords_2 = new List<string>();
-
-	public List<Transform> chef_places = new List<Transform>();
-	public List<Transform> chef_positions = new List<Transform>();
+	[SerializeField] private List<Transform> chef_places = new List<Transform>();
+	[SerializeField] private List<Transform> chef_positions = new List<Transform>();
 	public Dictionary<Transform, Vector3> chef_place_positions = new Dictionary<Transform, Vector3>();
 
 	[Header("Waiter data")]
 	public List<string> waiter_keywords_2 = new List<string>();
-	public List<Transform> waiter_places = new List<Transform>();
-	public List<Transform> waiter_positions = new List<Transform>();
+	[SerializeField] private List<Transform> waiter_places = new List<Transform>();
+	[SerializeField] private List<Transform> waiter_positions = new List<Transform>();
 	public Dictionary<Transform, Vector3> waiter_place_positions = new Dictionary<Transform, Vector3>();
 
 	[Header("Items data")]
-	public List<string> item_names = new List<string>();
-	public List<Transform> item_positions = new List<Transform>();
+	[SerializeField] private List<string> item_names = new List<string>();
+	[SerializeField] private List<Transform> item_positions = new List<Transform>();
 	public Dictionary<string, Vector3> chef_item_positions = new Dictionary<string, Vector3>();
 
 
-	void Start()
+	void Awake()
     {
 		for (int i = 0; i < chef_places.Count; i++)
 		{

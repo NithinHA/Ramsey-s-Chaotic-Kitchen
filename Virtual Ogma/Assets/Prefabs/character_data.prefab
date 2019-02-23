@@ -46,9 +46,9 @@ MonoBehaviour:
   chef_keywords_2:
   - chop vegetables at a
   - chop vegetables at b
+  - chop fruits at a
   - chop fruits at b
-  - chop fruits at b
-  - chop meat at b
+  - chop meat at a
   - chop meat at b
   - boil rice at a
   - boil rice at b

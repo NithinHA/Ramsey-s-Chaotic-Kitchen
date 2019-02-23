@@ -104,8 +104,14 @@ public class InitRecognition : MonoBehaviour
 	void init_chef_1(GameObject chef)
 	{
 		Debug.Log(chef.name + " called");
-		Test_script2 ts2 = GameObject.Find("test_script_2").GetComponent<Test_script2>();
-		ts2.initiate(chef);
+		Test_script3 ts3 = GetComponent<Test_script3>();		//GameObject.Find("test_scripts").GetComponent<Test_script2>();
+		ts3.init_cooking(chef);
+
+		//ch_action = Instantiate(empty_gameobject, Vector3.zero, Quaternion.identity);
+		//ch_action.AddComponent<Test_script3>();
+		//ch_action.GetComponent<Test_script3>().init_cooking(chef);
+
 		keyword_recognizer.Stop();
 	}
+	
 }

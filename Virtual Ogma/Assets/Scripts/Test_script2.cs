@@ -8,38 +8,30 @@ using System.Linq;
 
 public class Test_script2 : MonoBehaviour
 {
-	GameObject character;
+	[SerializeField] GameObject character;
 	bool is_listening = false;
 
-	public void initiate(GameObject ch)
+	public void init_cooking(GameObject ch)
 	{
 		character = ch;
 		ch.GetComponent<Player>().highlight_player();
 		is_listening = true;
 	}
 	
-	//[SerializeField] private List<string> keywords = new List<string>();
-	//[SerializeField]  private List<Transform> item_pos = new List<Transform>();
 	Dictionary<string, Vector3> item_positions = new Dictionary<string, Vector3>();
 
 	KeywordRecognizer keyword_recognizer;
 	Dictionary<string, Action> keywords_dict = new Dictionary<string, Action>();
 
-	private void Awake()
-	{
-		GameObject keywords_data = GameObject.FindGameObjectWithTag("character data");                  // !!!!!! Find GameObject with tag !!!!!!
-		//keywords = keywords_data.GetComponent<KeywordsData>().item_names;
-		//item_pos = keywords_data.GetComponent<KeywordsData>().item_positions;
-		item_positions = keywords_data.GetComponent<KeywordsData>().chef_item_positions;
-	}
+	[SerializeField] string[] item_list;		//never actually used, but is used to check for the items in dictionary. Since dictionary cannot be serialized
 
 	void Start()
 	{
-		//for (int i = 0; i < keywords.Length; i++)
-		//{
-		//	keywords_dict.Add(keywords[i], () => MoveToPosition(item_pos[i].position));
-		//}
-		foreach(KeyValuePair<string, Vector3> item_pos in item_positions)
+		GameObject keywords_data = GameObject.FindGameObjectWithTag("character data");                  // !!!!!! Find GameObject with tag !!!!!!
+		item_positions = keywords_data.GetComponent<KeywordsData>().chef_item_positions;
+		item_list = item_positions.Keys.ToArray();		//just to check in inspector weather items are added
+
+		foreach (KeyValuePair<string, Vector3> item_pos in item_positions)
 		{
 			keywords_dict.Add(item_pos.Key, () => MoveToPosition(item_pos.Value));
 		}
@@ -50,11 +42,9 @@ public class Test_script2 : MonoBehaviour
 
 	public void OnKeywordsRecognized(PhraseRecognizedEventArgs args)
 	{
-		//Debug.Log("Recognized");
 		Action keyword_action;
 		if (keywords_dict.TryGetValue(args.text, out keyword_action))
 		{
-			//Debug.Log("recognized");
 			keyword_action.Invoke();
 		}
 	}
@@ -85,17 +75,50 @@ public class Test_script2 : MonoBehaviour
 			//Debug.Log("NOT listening");
 	}
 
-
-	public void MoveToPosition(Vector3 position)
+	void MoveToPosition(Vector3 position)
 	{
 		Player player = character.GetComponent<Player>();
-		Debug.Log("moving ");
 		if (!player.is_busy)
 		{
 			player.is_busy = true;
-			player.move_player(position);
-			player.is_busy = false;
+			StartCoroutine(move_player(position));
+			//player.move_player(position);
 		}
 	}
-	
+
+	IEnumerator move_player(Vector3 position)
+	{
+		Player player = character.GetComponent<Player>();
+		player.target = position;
+		player.target_reached = false;
+		while (!player.target_reached)
+		{
+			yield return null;
+		}
+
+		player.target = player.starting_position;
+		player.target_reached = false;
+		while (!player.target_reached)
+		{
+			yield return null;
+		}
+
+		//player.target = position;
+		//player.target_reached = false;
+		//while (!player.target_reached)
+		//{
+		//	yield return null;
+		//}
+
+		//player.target = player.starting_position;
+		//player.target_reached = false;
+		//while (!player.target_reached)
+		//{
+		//	yield return null;
+		//}
+
+		Debug.Log("journey ends here");
+		player.is_busy = false;
+		
+	}
 }
