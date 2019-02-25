@@ -87,6 +87,9 @@ public class Test_script3 : MonoBehaviour
 			case "boil":
 				StartCoroutine(boiling(word_list));
 				break;
+			case "turn":
+				StartCoroutine(turn_off(word_list));
+				break;
 			case "get":
 				StartCoroutine(getting_supplies(word_list));
 				break;
@@ -94,13 +97,10 @@ public class Test_script3 : MonoBehaviour
 				StartCoroutine(washing(word_list));
 				break;
 			case "prepare":
-				StartCoroutine(chopping(word_list));
-				break;
-			case "turn":
-				StartCoroutine(chopping(word_list));
+				StartCoroutine(preparing(word_list));
 				break;
 			default:
-				StartCoroutine(chopping(word_list));
+				//StartCoroutine(chopping(word_list));
 				break;
 		}
 	}
@@ -162,7 +162,7 @@ public class Test_script3 : MonoBehaviour
 		GameObject player_GO = character;          // A copy of character is made for use within the coroutine since, the global variable character might change before this coroutine ends.
 		string cooker_name = word_list[word_list.Length - 1];
 		GameObject cooker_GO = GameObject.Find("/Props/cookers/" + cooker_name.ToLower());                  // !!!!!! Find GameObject with name !!!!!!
-		if (!player_GO.GetComponent<Player>().is_busy && !cooker_GO.GetComponent<Cooker>().is_cooking)
+		if (!player_GO.GetComponent<Player>().is_busy && !cooker_GO.GetComponent<Cooker>().is_cooking)		// if character is free and cooker is not cooking anything
 		{
 			string item = word_list[1];                     //received item to be cooked rice/noodles
 			Vector3[] positions = { item_positions[item], place_position[cooker_GO.transform], player_GO.GetComponent<Player>().starting_position };        //array of positions where character needs to go
@@ -170,7 +170,7 @@ public class Test_script3 : MonoBehaviour
 			Player ch = player_GO.GetComponent<Player>();
 			Cooker co = cooker_GO.GetComponent<Cooker>();
 			ch.is_busy = true;          // set character.is_busy true
-			co.is_cooking = true;      // set cooker.is_cooking true
+			co.is_cooking = true;		// set cooker.is_cooking true
 
 			//move player to fetch item
 			Debug.Log("fetch item for boiling");
@@ -207,7 +207,45 @@ public class Test_script3 : MonoBehaviour
 			ch.is_busy = false;
 		}
 	}
-	
+
+	IEnumerator turn_off(string[] word_list)
+	{
+		GameObject player_GO = character;          // A copy of character is made for use within the coroutine since, the global variable character might change before this coroutine ends.
+		string cooker_name = word_list[word_list.Length - 1];
+		GameObject cooker_GO = GameObject.Find("/Props/cookers/" + cooker_name.ToLower());                  // !!!!!! Find GameObject with name !!!!!!
+		if (!player_GO.GetComponent<Player>().is_busy && cooker_GO.GetComponent<Cooker>().is_cooking)		// if character is free and cooker is cooking something
+		{
+			Vector3[] positions = { place_position[cooker_GO.transform], player_GO.GetComponent<Player>().starting_position };        //array of positions where character needs to go
+
+			Player ch = player_GO.GetComponent<Player>();
+			Cooker co = cooker_GO.GetComponent<Cooker>();
+			ch.is_busy = true;          // set character.is_busy true, and cooker.is_cooking is already true
+
+			//move player to cooker
+			Debug.Log("move to cooker");
+			ch.target = positions[0];
+			ch.target_reached = false;
+			while (!ch.target_reached)
+				yield return null;
+
+			//call co.turn_off_cooker()
+			Debug.Log("reached cooker");
+			co.turn_off_cooker();
+
+			yield return new WaitForSeconds(.5f);		// player takes 0.5s to turn off cooker
+
+			//move player to starting position
+			ch.target = positions[1];
+			ch.target_reached = false;
+			while (!ch.target_reached)
+				yield return null;
+			Debug.Log("player returns");
+
+			//set chef not busy
+			ch.is_busy = false;
+		}
+	}
+
 	IEnumerator getting_supplies(string[] word_list)
 	{
 		GameObject player_GO = character;          // A copy of character is made for use within the coroutine since, the global variable character might change before this coroutine ends.
@@ -246,61 +284,69 @@ public class Test_script3 : MonoBehaviour
 	IEnumerator washing(string[] word_list)
 	{
 		GameObject player_GO = character;          // A copy of character is made for use within the coroutine since, the global variable character might change before this coroutine ends.
-		if (!player_GO.GetComponent<Player>().is_busy)
+		GameObject sink_GO = GameObject.Find("/Props/sink");                  // !!!!!! Find GameObject with name !!!!!!
+		if (!player_GO.GetComponent<Player>().is_busy && !sink_GO.GetComponent<Sink>().is_washing)
 		{
 			string item = word_list[1];                     // received item to be washed (dishes)
-			Vector3[] positions = { item_positions[item], player_GO.GetComponent<Player>().starting_position };        // array of positions where character needs to go
-			yield return null;	////////////////here
+			Vector3[] positions = { item_positions[item], place_position[sink_GO.transform], player_GO.GetComponent<Player>().starting_position };        // array of positions where character needs to go
+
+			Player ch = player_GO.GetComponent<Player>();
+			Sink sink = sink_GO.GetComponent<Sink>();
+			ch.is_busy = true;              // set character.is_busy true
+			sink.is_washing = true;         // set sink.is_washing true
+
+			//move player to fetch item
+			Debug.Log("fetch plates");
+			ch.target = positions[0];
+			ch.target_reached = false;
+			while (!ch.target_reached)
+				yield return null;
+
+			//wait player for 1s
+			yield return new WaitForSeconds(1);
+
+			//move player to sink
+			Debug.Log("move to sink");
+			ch.target = positions[1];
+			ch.target_reached = false;
+			while (!ch.target_reached)
+				yield return null;
+
+			//call sink.wash_plates()
+			Debug.Log("reached sink");
+			sink.wash_plates();
+
+			//wait player for washing_time seconds
+			while (sink.is_washing)
+				yield return null;
+
+			//move player to starting position
+			ch.target = positions[2];
+			ch.target_reached = false;
+			while (!ch.target_reached)
+				yield return null;
+			Debug.Log("player returns");
+
+			//set chef not busy
+			ch.is_busy = false;
 		}
 	}
-	void _washing(string[] word_list)
+	
+	IEnumerator preparing(string[] word_list)
 	{
+		GameObject player_GO = character;          // A copy of character is made for use within the coroutine since, the global variable character might change before this coroutine ends.
+
+		yield return null;				//////////////////////// !!!
+	}
+	void _preparing(string[] word_list)
+	{
+
 		if (!character.GetComponent<Player>().is_busy)
 		{
-			string item = word_list[1];
-			Vector3[] positions = { item_positions[item] };
-			GameObject sink_instance = GameObject.Find("sink");
-
-			Player ch = character.GetComponent<Player>();
-			ch.is_busy = true;
-
-			//move player to item_position sink
-			//call sink_instance.wash_plates()
-			//wait player for washing delay
-			//move player to starting position
-			//set chef not busy
-
-			//destroy gameobject if is_listening is false
-		}
-	}
-	void preparing(string[] word_list)
-	{
-		if (!character.GetComponent<Player>().is_busy)
-		{
 
 		}
 	}
-	void turn_off(string[] word_list)
-	{
-		string place_name = "cooker_" + word_list[3];
-		GameObject place = GameObject.Find(place_name);
-		if (!character.GetComponent<Player>().is_busy && place.GetComponent<Cooker>().is_cooking)
-		{
-			Vector3[] positions = { place_position[place.transform] };
-
-			Player ch = character.GetComponent<Player>();
-			Cooker co = place.GetComponent<Cooker>();
-			ch.is_busy = true;
-
-			//move player to cooker position
-			//call co.turn_off_cooker()
-			//wait player 1s
-			//move player to starting position
-			//set chef not busy
-
-			//destroy gameobject if is_listening is false
-		}
-	}
+	
 
 	void default_method()
 	{

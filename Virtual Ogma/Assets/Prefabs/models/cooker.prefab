@@ -45,6 +45,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75cf05959b8ffa84f8fe6cbafce4830d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  is_cooking: 0
+  is_cooked: 0
+  time_to_spoil: 10
+  cooking_mat: {fileID: 2100000, guid: b2146a44345c58c4bb87160b0f1efefc, type: 2}
+  cooked_mat: {fileID: 2100000, guid: cc0df98cbe7c2734596eb664114239ca, type: 2}
+  stove: {fileID: 0}
 --- !u!1 &2599901936147178276
 GameObject:
   m_ObjectHideFlags: 0

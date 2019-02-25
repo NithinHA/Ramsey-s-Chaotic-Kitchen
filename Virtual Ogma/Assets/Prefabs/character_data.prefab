@@ -78,7 +78,9 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  - {fileID: 0}
   chef_positions:
+  - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
@@ -120,7 +122,7 @@ MonoBehaviour:
   - rice
   - noodles
   - buns
-  - dishes
+  - plates
   item_positions:
   - {fileID: 0}
   - {fileID: 0}

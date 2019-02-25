@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Sink : MonoBehaviour
 {
+	public bool is_washing = false;
+
 	public float time_to_wash = 1.5f;
 	public int no_of_plates = 4;
 	public static int clean_plates;
@@ -22,6 +24,7 @@ public class Sink : MonoBehaviour
 	{
 		int dirty_plates = no_of_plates - clean_plates;
 		float washing_time = time_to_wash * dirty_plates;
+		Debug.Log("plates to wash:" + dirty_plates + "\ntime taken:" + washing_time);
 		StartCoroutine(washing_plates(washing_time));
 	}
 
@@ -29,5 +32,6 @@ public class Sink : MonoBehaviour
 	{
 		yield return new WaitForSeconds(washing_time);
 		clean_plates = no_of_plates;
+		is_washing = false;
 	}
 }

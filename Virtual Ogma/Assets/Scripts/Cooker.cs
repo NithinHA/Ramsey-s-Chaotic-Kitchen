@@ -17,16 +17,34 @@ public class Cooker : MonoBehaviour
 	private Coroutine cooking_delay_coroutine;
 	private Coroutine spoiling_delay_coroutine;
 
+	[SerializeField] Material cooking_mat;
+	[SerializeField] Material cooked_mat;
+	Material default_mat;
+	[SerializeField] Renderer stove;
+
 	void Start()
 	{
 		cooking_time.Add("rice", 12);
 		cooking_time.Add("noodles", 15);
 
 		cur_time = time_to_spoil;
+
+		default_mat = stove.material;
 	}
+
 
 	void Update()
 	{
+		//if (is_cooking)
+		//{
+		//	if (is_cooked)
+		//		stove.material = cooked_mat;
+		//	else
+		//		stove.material = cooking_mat;
+		//}
+		//else
+		//	stove.material = default_mat;
+
 		//if (is_cooked)
 		//{
 		//	if (cur_time > 0) {
@@ -42,8 +60,11 @@ public class Cooker : MonoBehaviour
 
 	public void cook(string food_item)		// called when player says, "COOK food_item AT __"
 	{
+		if (!is_cooking)            // this overcomes the scenario in which one cheff goes to get food_item to boil and at the same time, you instruct other cheff to turn off cooker.
+			is_cooking = true;		// eg.- "alice boil rice at a" followed by "bob turn off cooker a" immediately. Without this check, it will result in "Overcooked".
 		Debug.Log("cooking " + food_item);
 		this.food_item = food_item;
+		stove.material = cooking_mat;
 		cooking_delay_coroutine = StartCoroutine(cooking_delay(food_item));
 	}
 
@@ -52,6 +73,7 @@ public class Cooker : MonoBehaviour
 		yield return new WaitForSeconds(cooking_time[food_item]);
 		Debug.Log(food_item + " cooked");
 		is_cooked = true;       // at this time, both is_cooking and is_cooked  will be true and system waits for user to turn off cooker
+		stove.material = cooked_mat;
 		Debug.Log("indicate turn off cooker!");
 		spoiling_delay_coroutine = StartCoroutine(spoiling_delay());
 	}
@@ -63,6 +85,8 @@ public class Cooker : MonoBehaviour
 		is_cooking = false;
 		is_cooked = false;
 		Debug.Log("Overcooked!");
+
+		stove.material = default_mat;
 	}
 
 	public void turn_off_cooker()       // called when player says, "TURN OFF COOKER __"
@@ -78,11 +102,13 @@ public class Cooker : MonoBehaviour
 
 		if (is_cooked)
 		{
-			Debug.Log("adding cooked " + food_item + "to inventory");
-			// add cooked rice or cooked noodles to inventory
+			Debug.Log("adding cooked " + food_item + " to inventory");
+			// add cooked rice or cooked noodles (food_item) to inventory!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 		}
 		is_cooking = false;
 		is_cooked = false;
 		Debug.Log("cooking stops");
+
+		stove.material = default_mat;
 	}
 }
