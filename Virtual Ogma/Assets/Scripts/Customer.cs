@@ -37,7 +37,7 @@ public class Customer : MonoBehaviour
 			}
 			else
 			{
-				Debug.Log("I want to order something..");
+				// Debug.Log("I want to order something..");
 				is_ordering = true;
 				table_top.GetComponent<Renderer>().material = food_order_indication_mat;	// make the table pink color indicating waiter has to take order from that table
 				cur_time = order_time;
@@ -48,7 +48,7 @@ public class Customer : MonoBehaviour
 
 	public void order_food()		// called when player says, "TAKE ORDER FROM TABLE __"
 	{
-		string[] dishes = { "salad", "sushi", "biryani", "fruit juice", "burger" };
+		string[] dishes = { "salad", "biryani", "sushi", "noodles", "fruit juice", "burger" };
 		Debug.Log("I'll have " + dishes[Random.Range(0, dishes.Length)]);
 		is_ordering = false;
 		table_top.GetComponent<Renderer>().material = food_to_be_served_indication_mat;		// make table orange color indicating customer is waiting for the dish to be served
@@ -59,7 +59,7 @@ public class Customer : MonoBehaviour
 	{
 		Debug.Log("Now I start eating!");
 		is_served = true;
-		Sink.clean_plates--;
+		//Sink.clean_plates--;
 		table_top.GetComponent<Renderer>().material = default_mat;	// make table original color indicating customer has been served and is eating the dish
 		// pop that dish from orders list. Also remember to pop it from inventory list
 	}

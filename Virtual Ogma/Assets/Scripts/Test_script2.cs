@@ -28,8 +28,8 @@ public class Test_script2 : MonoBehaviour
 	void Start()
 	{
 		GameObject keywords_data = GameObject.FindGameObjectWithTag("character data");                  // !!!!!! Find GameObject with tag !!!!!!
-		item_positions = keywords_data.GetComponent<KeywordsData>().chef_item_positions;
-		item_list = item_positions.Keys.ToArray();		//just to check in inspector weather items are added
+		//item_positions = keywords_data.GetComponent<KeywordsData>().game_item_positions;
+		//item_list = item_positions.Keys.ToArray();		//just to check in inspector weather items are added
 
 		foreach (KeyValuePair<string, Vector3> item_pos in item_positions)
 		{

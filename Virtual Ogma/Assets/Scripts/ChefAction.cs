@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.Windows.Speech;
 using System.Linq;
 
-public class Test_script3 : MonoBehaviour
+public class ChefAction : MonoBehaviour
 {
 	[SerializeField] GameObject character;
 	bool is_listening = false;

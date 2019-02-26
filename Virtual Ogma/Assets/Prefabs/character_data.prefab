@@ -54,16 +54,19 @@ MonoBehaviour:
   - boil rice at b
   - boil noodles at a
   - boil noodles at b
-  - get buns
+  - turn off cooker a
+  - turn off cooker b
   - wash plates
+  - wash bowls
+  - wash cups
   - prepare salad
   - prepare biryani
   - prepare sushi
   - prepare burger
   - prepare fruit juice
   - prepare noodles
-  - turn off cooker a
-  - turn off cooker b
+  - get buns
+  - get sea weed
   chef_places:
   - {fileID: 0}
   - {fileID: 0}
@@ -115,14 +118,17 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  item_names:
-  - vegetables
-  - fruits
-  - meat
-  - rice
-  - noodles
-  - buns
-  - plates
+  item_list:
+  - {fileID: 11400000, guid: 40c4992d1a8539c49ba2b2c1201949f0, type: 2}
+  - {fileID: 11400000, guid: a6606a6e5ee4ca447b120daa707eb913, type: 2}
+  - {fileID: 11400000, guid: 7649b3ccddf3254478deeece4d735b60, type: 2}
+  - {fileID: 11400000, guid: 8359ca5e21e552746b704e55d38d9a8c, type: 2}
+  - {fileID: 11400000, guid: 8b6f475664e417d46ac48baee9bbe928, type: 2}
+  - {fileID: 11400000, guid: 1e8bbf652597776408b2368cb58e49a3, type: 2}
+  - {fileID: 11400000, guid: f2ede5dce22925f46b30e0ecb1b022ba, type: 2}
+  - {fileID: 11400000, guid: de29e1ce9522de649b16c5d3fc6b32e7, type: 2}
+  - {fileID: 11400000, guid: 45a3670296d99b8458c5e51948d41c05, type: 2}
+  - {fileID: 11400000, guid: 1637c6e31b3f54448867e269534d9d88, type: 2}
   item_positions:
   - {fileID: 0}
   - {fileID: 0}
@@ -131,3 +137,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  dish_list: []

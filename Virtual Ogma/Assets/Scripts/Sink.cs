@@ -6,13 +6,20 @@ public class Sink : MonoBehaviour
 {
 	public bool is_washing = false;
 
-	public float time_to_wash = 1.5f;
-	public int no_of_plates = 4;
-	public static int clean_plates;
+	[SerializeField] int[] utensil_count_arr;
+	static int[] clean_utensil_arr;
 
     void Start()
     {
-		clean_plates = no_of_plates;
+		clean_utensil_arr = new int[utensil_count_arr.Length];
+		for (int i = 0; i < utensil_count_arr.Length; i++)
+		{
+			clean_utensil_arr[i] = utensil_count_arr[i];
+		}
+
+		clean_utensil_arr[0] -= 3;
+		clean_utensil_arr[1] -= 1;
+		clean_utensil_arr[2] -= 2;
     }
 	
     void Update()
@@ -20,18 +27,35 @@ public class Sink : MonoBehaviour
         
     }
 
-	public void wash_plates()
+	public void washUtensils(Item utensil)
 	{
-		int dirty_plates = no_of_plates - clean_plates;
-		float washing_time = time_to_wash * dirty_plates;
-		Debug.Log("plates to wash:" + dirty_plates + "\ntime taken:" + washing_time);
-		StartCoroutine(washing_plates(washing_time));
+		int utensil_index = 0;
+		switch (utensil.name)
+		{
+			case "plates":
+				utensil_index = 0;
+				break;
+			case "bowls":
+				utensil_index = 1;
+				break;
+			case "cups":
+				utensil_index = 2;
+				break;
+			default:
+				Debug.LogWarning("invalid utensil index!");
+				break;
+		}
+
+		int dirty_utensils = utensil_count_arr[utensil_index] - clean_utensil_arr[utensil_index];
+		float washing_time = utensil.time_to_prepare * dirty_utensils;
+		Debug.Log(utensil.name + " to wash:" + dirty_utensils + "\ntime taken:" + washing_time);
+		StartCoroutine(washing_utensils(washing_time, utensil_index));
 	}
 
-	IEnumerator washing_plates(float washing_time)
+	IEnumerator washing_utensils(float washing_time, int utensil_index)
 	{
 		yield return new WaitForSeconds(washing_time);
-		clean_plates = no_of_plates;
+		clean_utensil_arr[utensil_index] = utensil_count_arr[utensil_index];
 		is_washing = false;
 	}
 }

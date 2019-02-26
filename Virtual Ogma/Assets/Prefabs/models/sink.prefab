@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6079810605052198958}
   - component: {fileID: 1197740395736571784}
   m_Layer: 0
-  m_Name: Sink
+  m_Name: sink
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -56,6 +56,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d28ce439c61745b4c808f0ab27085faa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  is_washing: 0
+  utensil_count_arr: 040000000200000002000000
 --- !u!1 &6079810605052435472
 GameObject:
   m_ObjectHideFlags: 0

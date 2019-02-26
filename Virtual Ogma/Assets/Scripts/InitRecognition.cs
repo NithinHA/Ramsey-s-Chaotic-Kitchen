@@ -12,16 +12,15 @@ public class InitRecognition : MonoBehaviour
 	
 	public GameObject[] chefs;
 	public GameObject[] waiters;
-	
-	public GameObject empty_gameobject;
 
 	void Start()
     {
 		foreach (GameObject chef in chefs)
-			keywords.Add(chef.name, () => init_chef_1(chef));
+			keywords.Add(chef.name, () => initChef(chef));
 		foreach (GameObject waiter in waiters)
-			keywords.Add(waiter.name, () => init_waiter(waiter));
-		keywords.Add("Pause game", () => open_pause_menu());
+			keywords.Add(waiter.name, () => initWaiter(waiter));
+		keywords.Add("Inventory", () => openInventory());
+		keywords.Add("Pause game", () => openPauseMenu());
 
 		keyword_recognizer = new KeywordRecognizer(keywords.Keys.ToArray(), ConfidenceLevel.Low);
 		keyword_recognizer.OnPhraseRecognized += OnKeywordsRecognized;
@@ -59,11 +58,6 @@ public class InitRecognition : MonoBehaviour
 			{
 				is_listening = true;
 			}
-			//if (selected_player != null)        // to remove player highlighter a player was selected
-			//{
-			//	selected_player.GetComponent<Player>().remove_highlighter();
-			//	selected_player = null;
-			//}
 		}
 
 		//control test script.. DELETE it
@@ -75,43 +69,36 @@ public class InitRecognition : MonoBehaviour
 	}
 
 	GameObject ch_action;
-	void init_chef(GameObject chef)
-	{
-		//CharacterScript ch = new CharacterScript(chef, "chef");
-		
-		ch_action = Instantiate(empty_gameobject, Vector3.zero, Quaternion.identity);
-		ch_action.AddComponent<Cooking>();
-		ch_action.GetComponent<Cooking>().init_cooking(chef);
-		
-		keyword_recognizer.Stop();
-		
-	}
-
-	void init_waiter(GameObject waiter)
-	{
-		if (!waiter.GetComponent<Player>().is_busy)
-		{
-			//CharacterScript ch = new CharacterScript(waiter, "waiter");
-
-		}
-	}
-
-	void open_pause_menu()
-	{
-
-	}
-
-	void init_chef_1(GameObject chef)
+	void initChef(GameObject chef)
 	{
 		Debug.Log(chef.name + " called");
-		Test_script3 ts3 = GetComponent<Test_script3>();		//GameObject.Find("test_scripts").GetComponent<Test_script2>();
-		ts3.init_cooking(chef);
-
-		//ch_action = Instantiate(empty_gameobject, Vector3.zero, Quaternion.identity);
-		//ch_action.AddComponent<Test_script3>();
-		//ch_action.GetComponent<Test_script3>().init_cooking(chef);
+		ChefAction chef_action = GetComponent<ChefAction>();
+		chef_action.init_cooking(chef);
 
 		keyword_recognizer.Stop();
+	}
+	//void initChef_1(GameObject chef)
+	//{
+	//	Debug.Log(chef.name + " called");
+	//	Test_script3 chef_action = GetComponent<Test_script3>();
+	//	chef_action.init_cooking(chef);
+
+	//	keyword_recognizer.Stop();
+	//}
+
+	void initWaiter(GameObject waiter)
+	{
+		
+	}
+
+	void openInventory()
+	{
+
+	}
+
+	void openPauseMenu()
+	{
+
 	}
 	
 }

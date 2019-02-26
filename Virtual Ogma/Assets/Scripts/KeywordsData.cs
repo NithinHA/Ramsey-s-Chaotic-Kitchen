@@ -4,42 +4,36 @@ using UnityEngine;
 
 public class KeywordsData : MonoBehaviour
 {
-	//-------------option:1-------------//
-	// create a structure and read all the calls from csv file
-	public struct keywords_data
-	{
-		string call;				// string that KeywordRecognizer will recognize
-		int action_number;			// method number
-		string item;				// food item such as vegetables, fruits, rice, etc
-		int action_position;		// position A/B
-	}
-
-	public static List<keywords_data> chef_keywords_1 = new List<keywords_data>();
-	public static List<keywords_data> waiter_keywords_1 = new List<keywords_data>();
-
-	//-------------option:2-------------//
-	// create a list of all the calls and decipher the call by using stringbuilder
+	public static KeywordsData instance;	// Singleton instance of class KeywordsData
 
 	[Header("Chef data")]
 	public List<string> chef_keywords_2 = new List<string>();
-	[SerializeField] private List<Transform> chef_places = new List<Transform>();
-	[SerializeField] private List<Transform> chef_positions = new List<Transform>();
-	public Dictionary<Transform, Vector3> chef_place_positions = new Dictionary<Transform, Vector3>();
+	[SerializeField] private List<Transform> chef_places = new List<Transform>();			// List of cheff places like cooker A & B, cutting_board A & B, etc
+	[SerializeField] private List<Transform> chef_positions = new List<Transform>();		// List of positions that cheff has to be to interact with above objects
+	public Dictionary<Transform, Vector3> chef_place_positions = new Dictionary<Transform, Vector3>();		// A Dictionary formed out of above info
 
 	[Header("Waiter data")]
 	public List<string> waiter_keywords_2 = new List<string>();
-	[SerializeField] private List<Transform> waiter_places = new List<Transform>();
-	[SerializeField] private List<Transform> waiter_positions = new List<Transform>();
-	public Dictionary<Transform, Vector3> waiter_place_positions = new Dictionary<Transform, Vector3>();
+	[SerializeField] private List<Transform> waiter_places = new List<Transform>();         // List of waiter places like Dining table A,B,C & D
+	[SerializeField] private List<Transform> waiter_positions = new List<Transform>();      // List of positions that waiter has to be to interact with above objects
+	public Dictionary<Transform, Vector3> waiter_place_positions = new Dictionary<Transform, Vector3>();	// A dictionary formed out of above info
 
 	[Header("Items data")]
-	[SerializeField] private List<string> item_names = new List<string>();
-	[SerializeField] private List<Transform> item_positions = new List<Transform>();
-	public Dictionary<string, Vector3> chef_item_positions = new Dictionary<string, Vector3>();
+	[SerializeField] private List<Item> item_list = new List<Item>();						// List of Items that go in the inventory
+	[SerializeField] private List<Transform> item_positions = new List<Transform>();		// List of positions that player has to be on to interact with items
+	public Dictionary<Item, Vector3> game_item_positions = new Dictionary<Item, Vector3>();             // A Dictionary formed out of above info
 
+	[SerializeField] private List<Item> dish_list = new List<Item>();
 
 	void Awake()
     {
+		if (instance != null)
+		{
+			Debug.LogWarning("More than one KeywordsData instance found in the scene");
+			return;
+		}
+		instance = this;
+
 		for (int i = 0; i < chef_places.Count; i++)
 		{
 			chef_place_positions.Add(chef_places[i], chef_positions[i].position);
@@ -48,10 +42,20 @@ public class KeywordsData : MonoBehaviour
 		{
 			waiter_place_positions.Add(waiter_places[i], waiter_positions[i].position);
 		}
-		for (int i = 0; i < item_names.Count; i++)
+		for (int i = 0; i < item_list.Count; i++)
 		{
-			chef_item_positions.Add(item_names[i], item_positions[i].position);
+			game_item_positions.Add(item_list[i], item_positions[i].position);
 		}
     }
-	
+
+	public Item findItemWithRawMaterial(string item_name)           // keywords_data.findItemWithRawMaterial("chopped " + item);	Use this format in calling function
+	{
+		foreach(Item item in item_list)
+		{
+			if (item.name == item_name)
+				return item;
+		}
+		Debug.LogWarning("No item with the name " + item_name + "exists");
+		return null;
+	}
 }

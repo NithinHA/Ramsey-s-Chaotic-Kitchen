@@ -9,6 +9,7 @@ public class Player : MonoBehaviour
 	private NavMeshAgent agent;
 
 	[HideInInspector] public Vector3 starting_position;
+	[SerializeField] private Transform preparing_position;			// used in ChefAction script
 	[HideInInspector] public bool is_busy = false;
 
 	[SerializeField] public bool target_reached = true;
