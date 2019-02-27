@@ -72,6 +72,7 @@ public class InitRecognition : MonoBehaviour
 	void initChef(GameObject chef)
 	{
 		Debug.Log(chef.name + " called");
+		Test_script2.ts2.applyText(chef.name + " called");
 		ChefAction chef_action = GetComponent<ChefAction>();
 		chef_action.init_cooking(chef);
 

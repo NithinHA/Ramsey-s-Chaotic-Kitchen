@@ -61,6 +61,7 @@ public class ChefAction : MonoBehaviour
 			if (!keyword_recognizer.IsRunning && is_listening)
 			{
 				Debug.Log("give a cooking command");
+				Test_script2.ts2.applyText("give a cooking command");
 				keyword_recognizer.Start();
 			}
 		}
@@ -122,7 +123,8 @@ public class ChefAction : MonoBehaviour
 			cb.is_chopping = true;      // set cutting_board.is_chopping true
 
 			//move player to fetch item
-			Debug.Log("fetch item for chopping");
+			Debug.Log("fetch " + item_name + " for chopping");
+			Test_script2.ts2.applyText("fetch " + item_name + " for chopping");
 			ch.target = positions[0];
 			ch.target_reached = false;
 			while (!ch.target_reached)
@@ -133,6 +135,7 @@ public class ChefAction : MonoBehaviour
 
 			//move player to chopping board
 			Debug.Log("move to chopping board");
+			Test_script2.ts2.applyText("move to chopping board");
 			ch.target = positions[1];
 			ch.target_reached = false;
 			while (!ch.target_reached)
@@ -140,6 +143,7 @@ public class ChefAction : MonoBehaviour
 
 			//call cb.chop()
 			Debug.Log("reached chopping board");
+			Test_script2.ts2.applyText("reached chopping board");
 			cb.chop(food_item);
 
 			//wait player for chopping_delay seconds
@@ -152,6 +156,7 @@ public class ChefAction : MonoBehaviour
 			while (!ch.target_reached)
 				yield return null;
 			Debug.Log("player returns");
+			Test_script2.ts2.applyText("player returns");
 
 			//set chef not busy
 			ch.is_busy = false;
@@ -175,7 +180,8 @@ public class ChefAction : MonoBehaviour
 			co.is_cooking = true;       // set cooker.is_cooking true
 
 			//move player to fetch item
-			Debug.Log("fetch item for boiling");
+			Debug.Log("fetch " + item_name + " for boiling");
+			Test_script2.ts2.applyText("fetch " + item_name + " for boiling");
 			ch.target = positions[0];
 			ch.target_reached = false;
 			while (!ch.target_reached)
@@ -186,6 +192,7 @@ public class ChefAction : MonoBehaviour
 
 			//move player to cooker
 			Debug.Log("move to cooker");
+			Test_script2.ts2.applyText("move to cooker");
 			ch.target = positions[1];
 			ch.target_reached = false;
 			while (!ch.target_reached)
@@ -193,6 +200,7 @@ public class ChefAction : MonoBehaviour
 
 			//call co.cook()
 			Debug.Log("reached cooker");
+			Test_script2.ts2.applyText("reached cooker");
 			co.cook(food_item);
 
 			//DO NOT wait player for cooking_delay seconds. Instead, wait player at cooker for 1s
@@ -204,6 +212,7 @@ public class ChefAction : MonoBehaviour
 			while (!ch.target_reached)
 				yield return null;
 			Debug.Log("player returns");
+			Test_script2.ts2.applyText("player returns");
 
 			//set chef not busy
 			ch.is_busy = false;
@@ -225,6 +234,7 @@ public class ChefAction : MonoBehaviour
 
 			//move player to cooker
 			Debug.Log("move to cooker");
+			Test_script2.ts2.applyText("move to cooker");
 			ch.target = positions[0];
 			ch.target_reached = false;
 			while (!ch.target_reached)
@@ -232,6 +242,7 @@ public class ChefAction : MonoBehaviour
 
 			//call co.turn_off_cooker()
 			Debug.Log("reached cooker");
+			Test_script2.ts2.applyText("reached cooker");
 			co.turn_off_cooker();
 
 			yield return new WaitForSeconds(.5f);       // player takes 0.5s to turn off cooker
@@ -242,6 +253,7 @@ public class ChefAction : MonoBehaviour
 			while (!ch.target_reached)
 				yield return null;
 			Debug.Log("player returns");
+			Test_script2.ts2.applyText("player returns");
 
 			//set chef not busy
 			ch.is_busy = false;
@@ -267,6 +279,7 @@ public class ChefAction : MonoBehaviour
 
 			//move player to fetch item
 			Debug.Log("get item from " + item_positions[food_item]);
+			Test_script2.ts2.applyText("get item from " + item_positions[food_item]);
 			ch.target = positions[0];
 			ch.target_reached = false;
 			while (!ch.target_reached)
@@ -277,17 +290,21 @@ public class ChefAction : MonoBehaviour
 
 			//add item to inventory... DONE
 			bool has_added = Inventory.instance.addItem(food_item);
-			if (has_added)
+			if (has_added) {
 				Debug.Log(food_item.name + " added to inventory");
-			else
+				Test_script2.ts2.applyText(food_item.name + " added to inventory");
+			}
+			else {
 				Debug.Log("can not add " + food_item.name + " to inventory");
-
+				Test_script2.ts2.applyText("can not add " + food_item.name + " to inventory");
+			}
 			//move player to starting position
 			ch.target = positions[1];
 			ch.target_reached = false;
 			while (!ch.target_reached)
 				yield return null;
 			Debug.Log("player returns");
+			Test_script2.ts2.applyText("player returns");
 
 			//set chef not busy
 			ch.is_busy = false;
@@ -311,6 +328,7 @@ public class ChefAction : MonoBehaviour
 
 			//move player to fetch item
 			Debug.Log("fetch " + utensil_item.name);
+			Test_script2.ts2.applyText("fetch " + utensil_item.name);
 			ch.target = positions[0];
 			ch.target_reached = false;
 			while (!ch.target_reached)
@@ -321,6 +339,7 @@ public class ChefAction : MonoBehaviour
 
 			//move player to sink
 			Debug.Log("move to sink");
+			Test_script2.ts2.applyText("move to sink");
 			ch.target = positions[1];
 			ch.target_reached = false;
 			while (!ch.target_reached)
@@ -328,6 +347,7 @@ public class ChefAction : MonoBehaviour
 
 			//call sink.wash_plates()
 			Debug.Log("reached sink");
+			Test_script2.ts2.applyText("reached sink");
 			sink.washUtensils(utensil_item);
 
 			//wait player for washing_time seconds
@@ -340,6 +360,7 @@ public class ChefAction : MonoBehaviour
 			while (!ch.target_reached)
 				yield return null;
 			Debug.Log("player returns");
+			Test_script2.ts2.applyText("player returns");
 
 			//set chef not busy
 			ch.is_busy = false;
