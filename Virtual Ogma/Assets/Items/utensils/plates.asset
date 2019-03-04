@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: plates
   m_EditorClassIdentifier: 
   name: plates
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 1e22844889711b846bd2ee19facd2100, type: 3}
   time_to_prepare: 1.5
+  served_in: {fileID: 0}
   ingredients: []

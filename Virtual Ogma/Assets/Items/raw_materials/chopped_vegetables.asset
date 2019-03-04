@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: chopped_vegetables
   m_EditorClassIdentifier: 
   name: chopped vegetables
-  icon: {fileID: 0}
-  ingredients: []
+  icon: {fileID: 21300000, guid: 4bfdf896467998e49951d2af79214f4d, type: 3}
   time_to_prepare: 5
+  served_in: {fileID: 0}
+  ingredients: []

@@ -14,5 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: salad
   icon: {fileID: 0}
-  ingredients: []
   time_to_prepare: 5
+  served_in: {fileID: 11400000, guid: 45a3670296d99b8458c5e51948d41c05, type: 2}
+  ingredients:
+  - {fileID: 11400000, guid: 40c4992d1a8539c49ba2b2c1201949f0, type: 2}

@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b5da541e9a87b949bd8e804af5e3496, type: 3}
+  m_Name: sushi
+  m_EditorClassIdentifier: 
+  name: sushi
+  icon: {fileID: 0}
+  time_to_prepare: 8
+  served_in: {fileID: 11400000, guid: de29e1ce9522de649b16c5d3fc6b32e7, type: 2}
+  ingredients:
+  - {fileID: 11400000, guid: 7649b3ccddf3254478deeece4d735b60, type: 2}
+  - {fileID: 11400000, guid: 8359ca5e21e552746b704e55d38d9a8c, type: 2}
+  - {fileID: 11400000, guid: f2ede5dce22925f46b30e0ecb1b022ba, type: 2}

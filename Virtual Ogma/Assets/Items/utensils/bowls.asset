@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: bowls
   m_EditorClassIdentifier: 
   name: bowls
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 2bf4a1fe3d969f142a1b88c5b7018f96, type: 3}
   time_to_prepare: 1
+  served_in: {fileID: 0}
   ingredients: []

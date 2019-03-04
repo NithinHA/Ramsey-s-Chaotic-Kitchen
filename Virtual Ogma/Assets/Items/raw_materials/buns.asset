@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: buns
   m_EditorClassIdentifier: 
   name: buns
-  icon: {fileID: 0}
-  ingredients: []
+  icon: {fileID: 21300000, guid: 90054227924f15f44b6c7982d6c78876, type: 3}
   time_to_prepare: 1
+  served_in: {fileID: 0}
+  ingredients: []
