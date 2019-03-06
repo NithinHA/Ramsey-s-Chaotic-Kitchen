@@ -78,18 +78,15 @@ public class InitRecognition : MonoBehaviour
 
 		keyword_recognizer.Stop();
 	}
-	//void initChef_1(GameObject chef)
-	//{
-	//	Debug.Log(chef.name + " called");
-	//	Test_script3 chef_action = GetComponent<Test_script3>();
-	//	chef_action.init_cooking(chef);
-
-	//	keyword_recognizer.Stop();
-	//}
 
 	void initWaiter(GameObject waiter)
 	{
-		
+		Debug.Log(waiter.name + " called");
+		Test_script2.ts2.applyText(waiter.name + " called");
+		WaiterAction waiter_action = GetComponent<WaiterAction>();
+		waiter_action.init_serving(waiter);
+
+		keyword_recognizer.Stop();
 	}
 
 	void openInventory()

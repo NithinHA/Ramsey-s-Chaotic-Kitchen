@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: chopped_meat
   m_EditorClassIdentifier: 
   name: chopped meat
-  icon: {fileID: 21300000, guid: 7d366837e2448fe4cb70e70369cd19ca, type: 3}
+  icon: {fileID: 21300000, guid: aa7f62e7f928bdd4a8cc7c41141710f5, type: 3}
   time_to_prepare: 8
   served_in: {fileID: 0}
   ingredients: []

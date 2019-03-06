@@ -31,7 +31,7 @@ public class Test_script3 : MonoBehaviour
 	{
 		keywords_data = KeywordsData.instance;      // get the Singleton instance of KeywordsData Class
 		keywords_list = keywords_data.chef_keywords_2;
-		place_position = keywords_data.chef_place_positions;
+		//place_position = keywords_data.chef_interactable_positions;
 		item_positions = keywords_data.game_item_positions;
 
 		foreach (string keyword in keywords_list)

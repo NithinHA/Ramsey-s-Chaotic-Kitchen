@@ -11,27 +11,32 @@ public class ChefAction : MonoBehaviour
 	[SerializeField] GameObject character;
 	bool is_listening = false;
 
-	public void init_cooking(GameObject ch)
-	{
-		character = ch;
-		ch.GetComponent<Player>().highlight_player();
-		// pan the camera towards the selected character and follow the player until 'Q' is released
-		is_listening = true;
-	}
-
 	KeywordsData keywords_data;
-	[SerializeField] List<string> keywords_list = new List<string>();
+	Inventory inventory;
+
+	List<string> keywords_list = new List<string>();
 	Dictionary<Transform, Vector3> place_position = new Dictionary<Transform, Vector3>();
 	Dictionary<Item, Vector3> item_positions = new Dictionary<Item, Vector3>();
 
 	KeywordRecognizer keyword_recognizer;
 	Dictionary<string, Action> keywords_dict = new Dictionary<string, Action>();
 
+
+	public void init_cooking(GameObject ch)
+	{
+		character = ch;
+		ch.GetComponent<Player>().highlight_player();
+		place_position = ch.GetComponent<ChefData>().chef_interactable_positions;
+		// pan the camera towards the selected character and follow the player until 'Q' is released
+		is_listening = true;
+	}
+
 	void Start()
 	{
+		inventory = Inventory.instance;             // get the Singleton instance of Inventory Class
 		keywords_data = KeywordsData.instance;      // get the Singleton instance of KeywordsData Class
+		
 		keywords_list = keywords_data.chef_keywords_2;
-		place_position = keywords_data.chef_place_positions;
 		item_positions = keywords_data.game_item_positions;
 
 		foreach (string keyword in keywords_list)
@@ -101,7 +106,7 @@ public class ChefAction : MonoBehaviour
 				StartCoroutine(preparing(word_list));
 				break;
 			default:
-				//StartCoroutine(chopping(word_list));
+				default_method();
 				break;
 		}
 	}
@@ -289,7 +294,7 @@ public class ChefAction : MonoBehaviour
 			yield return new WaitForSeconds(food_item.time_to_prepare);
 
 			//add item to inventory... DONE
-			bool has_added = Inventory.instance.addItem(food_item);
+			bool has_added = inventory.addItem(food_item);
 			if (has_added) {
 				Debug.Log(food_item.name + " added to inventory");
 				Test_script2.ts2.applyText(food_item.name + " added to inventory");
@@ -315,11 +320,12 @@ public class ChefAction : MonoBehaviour
 	{
 		GameObject player_GO = character;          // A copy of character is made for use within the coroutine since, the global variable character might change before this coroutine ends.
 		GameObject sink_GO = GameObject.Find("/Props/sink");                  // !!!!!! Find GameObject with name !!!!!!
+		GameObject serving_table_GO = GameObject.Find("/Props/serving_table");
 		if (!player_GO.GetComponent<Player>().is_busy && !sink_GO.GetComponent<Sink>().is_washing)
 		{
 			string item_name = word_list[1];                     // received item to be washed (dishes)
 			Item utensil_item = keywords_data.findItemWithRawMaterial(item_name);
-			Vector3[] positions = { item_positions[utensil_item], place_position[sink_GO.transform], player_GO.GetComponent<Player>().starting_position };        // array of positions where character needs to go
+			Vector3[] positions = { place_position[serving_table_GO.transform], place_position[sink_GO.transform], player_GO.GetComponent<Player>().starting_position };        // array of positions where character needs to go
 
 			Player ch = player_GO.GetComponent<Player>();
 			Sink sink = sink_GO.GetComponent<Sink>();
@@ -370,18 +376,61 @@ public class ChefAction : MonoBehaviour
 	IEnumerator preparing(string[] word_list)
 	{
 		GameObject player_GO = character;          // A copy of character is made for use within the coroutine since, the global variable character might change before this coroutine ends.
-
-		yield return null;              //////////////////////// !!!
-	}
-	void _preparing(string[] word_list)
-	{
-
-		if (!character.GetComponent<Player>().is_busy)
+		if (!player_GO.GetComponent<Player>().is_busy)
 		{
+			StringBuilder sb = new StringBuilder();
+			for (int i = 1; i < word_list.Length; i++)
+			{
+				sb.Append(" " + word_list[i]);          // for dishes such as "french fries", dish name consist of 2 words. Therefore, we have to use StringBuilder to set dish name of any size
+			}
+			string dish_name = sb.ToString().Trim();         // dish to prepare eg.- salad,biryani,sushi,etc..
+			Item dish_item = keywords_data.findItemWithRawMaterial(dish_name);
+			
+			bool are_ingredients_available = inventory.areIngredientsAvailable(dish_item);  // check if raw materials for dish are available in inventory
+			if (are_ingredients_available)
+			{
+				Vector3[] positions = { player_GO.GetComponent<Player>().preparing_position.position, player_GO.GetComponent<Player>().starting_position };
+				Player ch = player_GO.GetComponent<Player>();
+				ch.is_busy = true;          // set character.is_busy true
 
+				//move player to fetch item
+				ch.target = positions[0];
+				ch.target_reached = false;
+				while (!ch.target_reached)
+					yield return null;
+
+				//remove ingredients used to prepare the dish from inventory
+				inventory.removeIngredientsUsed(dish_item);
+
+				//wait player for preparing delay
+				yield return new WaitForSeconds(dish_item.time_to_prepare);
+
+				//add item to inventory... DONE
+				bool has_added = inventory.addItem(dish_item);
+				if (has_added)
+				{
+					Debug.Log(dish_item.name + " added to inventory");
+					Test_script2.ts2.applyText(dish_item.name + " added to inventory");
+				}
+				else
+				{
+					Debug.Log("can not add " + dish_item.name + " to inventory");
+					Test_script2.ts2.applyText("can not add " + dish_item.name + " to inventory");
+				}
+
+				//move player to starting position
+				ch.target = positions[1];
+				ch.target_reached = false;
+				while (!ch.target_reached)
+					yield return null;
+				Debug.Log("player returns");
+				Test_script2.ts2.applyText("player returns");
+
+				//set chef not busy
+				ch.is_busy = false;
+			}
 		}
 	}
-
 
 	void default_method()
 	{

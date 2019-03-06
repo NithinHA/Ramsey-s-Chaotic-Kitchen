@@ -9,7 +9,7 @@ public class Player : MonoBehaviour
 	private NavMeshAgent agent;
 
 	[HideInInspector] public Vector3 starting_position;
-	[SerializeField] private Transform preparing_position;			// used in ChefAction script
+	public Transform preparing_position;			// used in ChefAction script
 	[HideInInspector] public bool is_busy = false;
 
 	[SerializeField] public bool target_reached = true;
@@ -39,38 +39,7 @@ public class Player : MonoBehaviour
 			if (!target_reached)
 				target_reached = true;
 		}
-
-		//if (Input.GetMouseButtonDown(0))
-		//{
-		//	Ray ray = cam.ScreenPointToRay(Input.mousePosition);
-		//	RaycastHit hit;
-		//	if (Physics.Raycast(ray, out hit))
-		//	{
-		//		move_player(hit.point);
-		//	}
-		//}
-
-		//if (Input.GetKeyDown(KeyCode.Space))
-		//{
-		//	wait_for_seconds(4);
-		//}
-
-		//if (is_busy)
-		//	Debug.Log("Busy");
-		//else
-		//	Debug.Log("Free");
-
 	}
-
-	public void path(Vector3 init_pos, Vector3 final_pos, float time_dealy)
-	{
-
-	}
-	public void path(Vector3 init_pos, Vector3 mid_pos, Vector3 final_pos, float time_1, float time_2)
-	{
-
-	}
-
 
 	public void move_player(Vector3 pos)
 	{
@@ -98,13 +67,4 @@ public class Player : MonoBehaviour
 		if (highlighter != null)
 			Destroy(highlighter);
 	}
-
-	//public bool is_player_idle()
-	//{
-	//	if (agent.velocity.x <= 0 || agent.velocity.z <= 0)
-	//		return true;
-	//	else
-	//		return false;
-	//}
-
 }

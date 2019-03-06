@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: burger
   m_EditorClassIdentifier: 
   name: burger
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 1c94e1ea662f99b4a8c51efb4d1d4bb5, type: 3}
   time_to_prepare: 6
   served_in: {fileID: 11400000, guid: de29e1ce9522de649b16c5d3fc6b32e7, type: 2}
   ingredients:

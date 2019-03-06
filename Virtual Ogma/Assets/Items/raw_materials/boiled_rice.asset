@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: boiled_rice
   m_EditorClassIdentifier: 
   name: boiled rice
-  icon: {fileID: 21300000, guid: 79c0af2e8b6d70c40b72c1338045d592, type: 3}
+  icon: {fileID: 21300000, guid: 87a3d0c764da98c4ab59516a4719f74a, type: 3}
   time_to_prepare: 12
   served_in: {fileID: 0}
   ingredients: []

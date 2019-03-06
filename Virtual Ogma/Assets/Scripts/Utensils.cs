@@ -32,6 +32,10 @@ public class Utensils : MonoBehaviour
 		{
 			clean_utensil_arr[i] = utensil_count_arr[i];            // at start of game, all the utensils are clean
 		}
+
+		clean_utensil_arr[0] = 1;
+		clean_utensil_arr[1] = 1;
+		clean_utensil_arr[2] = 1;
 	}
 
 	public bool checkUtensilAvailability(Item utensil)              // if there are any clean utensil of that instance, returns true; else false
@@ -52,5 +56,13 @@ public class Utensils : MonoBehaviour
 
 		if (on_utensil_changed_callback != null)
 			on_utensil_changed_callback.Invoke();			// invoke delegate on removing a utensil
+	}
+
+	public void utensilUnavailableIndicator(Item utensil)			// cause blinking of utensil_slot when utensil is unavailable
+	{
+		int utensil_index;
+		utensil_index_dict.TryGetValue(utensil.name, out utensil_index);
+		UtensilSlot[] utensil_slot_arr = gameObject.GetComponentsInChildren<UtensilSlot>();
+		utensil_slot_arr[utensil_index].blinkSlot();
 	}
 }

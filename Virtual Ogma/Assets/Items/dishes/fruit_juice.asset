@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: fruit_juice
   m_EditorClassIdentifier: 
   name: fruit juice
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 00a7cc1c3c40ecf47a537f55274e5448, type: 3}
   time_to_prepare: 6
   served_in: {fileID: 11400000, guid: 1637c6e31b3f54448867e269534d9d88, type: 2}
   ingredients:

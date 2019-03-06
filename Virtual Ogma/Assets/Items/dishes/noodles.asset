@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: noodles
   m_EditorClassIdentifier: 
   name: noodles
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 365e349f171bdd34e814ad3c08a9ad2c, type: 3}
   time_to_prepare: 10
   served_in: {fileID: 11400000, guid: 45a3670296d99b8458c5e51948d41c05, type: 2}
   ingredients:

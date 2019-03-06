@@ -148,12 +148,13 @@ public class WaiterAction : MonoBehaviour
 		if (!player_GO.GetComponent<Player>().is_busy && !customer_GO.GetComponent<Customer>().is_ordering && !customer_GO.GetComponent<Customer>().is_served)
 		{
 			Item food_item = customer_GO.GetComponent<Customer>().dish;
-			if (!inventory.isItemPresent(food_item))
+			if (!inventory.isItemPresent(food_item))			// check if the ordered dish is present in inventory
 			{
 				yield break;
 			}
-			if (!Utensils.instance.checkUtensilAvailability(food_item.served_in))		// check if utensil to serve food in is available.
+			if (!Utensils.instance.checkUtensilAvailability(food_item.served_in))       // check if utensil to serve food in is available.
 			{
+				Utensils.instance.utensilUnavailableIndicator(food_item.served_in);     //indicate utensil are unavailable by blinking utensil_slot
 				yield break;
 			}
 			Vector3[] positions = { player_GO.GetComponent<WaiterData>().waiter_interactable_positions[customer_GO.transform], player_GO.GetComponent<Player>().starting_position };        // array of positions where character needs to go

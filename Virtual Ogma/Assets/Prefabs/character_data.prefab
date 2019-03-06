@@ -67,57 +67,15 @@ MonoBehaviour:
   - prepare noodles
   - get buns
   - get sea weed
-  chef_places:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  chef_positions:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
   waiter_keywords_2:
-  - take order from table a
-  - take order from table b
-  - take order from table c
-  - take order from table d
-  - serve table a
-  - serve table b
-  - serve table c
-  - serve table d
-  waiter_places:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  waiter_positions:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - take order from table alpha
+  - take order from table beta
+  - take order from table gamma
+  - take order from table delta
+  - serve table alpha
+  - serve table beta
+  - serve table gamma
+  - serve table delta
   item_list:
   - {fileID: 11400000, guid: 40c4992d1a8539c49ba2b2c1201949f0, type: 2}
   - {fileID: 11400000, guid: a6606a6e5ee4ca447b120daa707eb913, type: 2}
@@ -126,9 +84,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 8b6f475664e417d46ac48baee9bbe928, type: 2}
   - {fileID: 11400000, guid: 1e8bbf652597776408b2368cb58e49a3, type: 2}
   - {fileID: 11400000, guid: f2ede5dce22925f46b30e0ecb1b022ba, type: 2}
-  - {fileID: 11400000, guid: de29e1ce9522de649b16c5d3fc6b32e7, type: 2}
-  - {fileID: 11400000, guid: 45a3670296d99b8458c5e51948d41c05, type: 2}
-  - {fileID: 11400000, guid: 1637c6e31b3f54448867e269534d9d88, type: 2}
   item_positions:
   - {fileID: 0}
   - {fileID: 0}
@@ -137,7 +92,17 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  dish_list: []
+  dish_list:
+  - {fileID: 11400000, guid: f4179b3ade73c1a4f9df835a64c8a9a7, type: 2}
+  - {fileID: 11400000, guid: db67d6ca6bed8ce4e99be53eed1dca78, type: 2}
+  - {fileID: 11400000, guid: d59b40bd07df84b42b30b0e1daa13ad7, type: 2}
+  - {fileID: 11400000, guid: a7248ed0c73fe204a8f1b7d58f5c5cd1, type: 2}
+  - {fileID: 11400000, guid: b65c5fb7f4d75d740a532fddd5216fd1, type: 2}
+  - {fileID: 11400000, guid: 17ace74f947e8224f93c9219744eae25, type: 2}
+  cost_list: 1e00000050000000500000003c0000004600000028000000
+  utensil_list:
+  - {fileID: 11400000, guid: de29e1ce9522de649b16c5d3fc6b32e7, type: 2}
+  - {fileID: 11400000, guid: 45a3670296d99b8458c5e51948d41c05, type: 2}
+  - {fileID: 11400000, guid: 1637c6e31b3f54448867e269534d9d88, type: 2}
+  utensil_count_arr: 040000000200000002000000
+  all_items: []
