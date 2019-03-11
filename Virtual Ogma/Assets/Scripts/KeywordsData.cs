@@ -13,17 +13,24 @@ public class KeywordsData : MonoBehaviour
 	public List<string> waiter_keywords_2 = new List<string>();
 
 	[Header("Items data")]
-	[SerializeField] private List<Item> item_list = new List<Item>();                       // List of Items that go in the inventory
-	[SerializeField] private List<Transform> item_positions = new List<Transform>();        // List of positions that player has to be on to interact with items
-	public Dictionary<Item, Vector3> game_item_positions = new Dictionary<Item, Vector3>();                         // A Dictionary formed out of above info
-
-	public List<Item> dish_list = new List<Item>();
-	[SerializeField] private List<int> cost_list = new List<int>();
+	[SerializeField] private Item[] item_arr;					// List of Items that go in the inventory
+	[SerializeField] private Transform[] item_positions;		// List of positions that player has to be on to interact with items
+	public Dictionary<Item, Vector3> game_item_positions = new Dictionary<Item, Vector3>();             // A Dictionary formed out of above info
+	
+	[Header("Dish data")]
+	public Item[] dish_arr;						// this array is cloned in Customer script for choosing a random dish from array of available dishes
+	[SerializeField] private int[] cost_arr;
 	public Dictionary<Item, int> dish_cost = new Dictionary<Item, int>();
 
-	public List<Item> utensil_list = new List<Item>();
-	public int[] utensil_count_arr;               // total numer of utensil instances present for serving... eg.- 4 plates, 2 bowls and 2 cups
-	
+	[Header("Utensil data")]
+	public Item[] utensil_arr;
+	//public int[] utensil_count_arr;               // total numer of utensil instances present for serving... eg.- 4 plates, 2 bowls and 2 cups
+
+	[Header("Particle Effects data")]
+	[SerializeField] private Item[] item_for_particles;
+	[SerializeField] private GameObject[] particle_effects;
+	public Dictionary<Item, GameObject> item_particles_dict = new Dictionary<Item, GameObject>();
+
 	[SerializeField] List<Item> all_items = new List<Item>();
 
 	void Awake()
@@ -35,20 +42,24 @@ public class KeywordsData : MonoBehaviour
 		}
 		instance = this;
 		
-		for (int i = 0; i < item_list.Count; i++)                                           // initialize item_positoins dictionary
+		for (int i = 0; i < item_arr.Length; i++)                                           // initialize item_positoins dictionary
 		{
-			game_item_positions.Add(item_list[i], item_positions[i].position);
+			game_item_positions.Add(item_arr[i], item_positions[i].position);
 		}
-		for (int i = 0; i < dish_list.Count; i++)
+		for (int i = 0; i < dish_arr.Length; i++)
 		{
-			dish_cost.Add(dish_list[i], cost_list[i]);
+			dish_cost.Add(dish_arr[i], cost_arr[i]);
+		}
+		for (int i = 0; i < item_for_particles.Length; i++)
+		{
+			item_particles_dict.Add(item_for_particles[i], particle_effects[i]);
 		}
 
-		foreach (Item item in item_list)
+		foreach (Item item in item_arr)
 			all_items.Add(item);
-		foreach (Item item in dish_list)
+		foreach (Item item in dish_arr)
 			all_items.Add(item);
-		foreach (Item item in utensil_list)
+		foreach (Item item in utensil_arr)
 			all_items.Add(item);
 	}
 

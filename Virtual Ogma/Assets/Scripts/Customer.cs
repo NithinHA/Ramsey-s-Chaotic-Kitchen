@@ -31,7 +31,7 @@ public class Customer : MonoBehaviour
     {
 		cur_time = start_time;
 
-		dishes = KeywordsData.instance.dish_list.ToArray();
+		dishes = KeywordsData.instance.dish_arr;
 		orders = Orders.instance;
 		default_mat = table_top.GetComponent<Renderer>().material;
     }

@@ -57,7 +57,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   is_washing: 0
-  utensil_count_arr: 040000000200000002000000
+  countdown_display_prefab: {fileID: 204844342657620476, guid: 7ec709e83c9d1f04eb769ba3019b6744,
+    type: 3}
 --- !u!1 &6079810605052435472
 GameObject:
   m_ObjectHideFlags: 0

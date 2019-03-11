@@ -51,6 +51,7 @@ public class WaiterAction : MonoBehaviour
 
 	public void OnKeywordsRecognized(PhraseRecognizedEventArgs args)
 	{
+		Test_script2.ts2.applyText(args.text);
 		Action keyword_action;
 		if (keywords_dict.TryGetValue(args.text, out keyword_action))
 		{

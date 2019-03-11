@@ -13,6 +13,9 @@ public class InitRecognition : MonoBehaviour
 	public GameObject[] chefs;
 	public GameObject[] waiters;
 
+	[SerializeField] private InventoryUI inventory_UI;
+	
+
 	void Start()
     {
 		foreach (GameObject chef in chefs)
@@ -91,7 +94,7 @@ public class InitRecognition : MonoBehaviour
 
 	void openInventory()
 	{
-
+		inventory_UI.toggleInventory();
 	}
 
 	void openPauseMenu()

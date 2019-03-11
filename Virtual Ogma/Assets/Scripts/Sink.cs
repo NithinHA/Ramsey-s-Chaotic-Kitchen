@@ -7,7 +7,9 @@ public class Sink : MonoBehaviour
 	public bool is_washing = false;
 	Utensils utensils;
 
-    void Start()
+	[SerializeField] private GameObject countdown_display_prefab;
+
+	void Start()
     {
 		utensils = Utensils.instance;
 		
@@ -32,6 +34,12 @@ public class Sink : MonoBehaviour
 
 	IEnumerator washing_utensils(float washing_time, int utensil_index)
 	{
+		// displpay the countdown_timer and then delete it after the countdown is over
+		GameObject countdown_display = Instantiate(countdown_display_prefab, transform.position + new Vector3(0, 1, .5f), Quaternion.Euler(new Vector3(45, 0, 0)));
+		countdown_display.transform.SetParent(transform);
+		countdown_display.GetComponentInChildren<CountdownDisplay>().setTimer(washing_time);
+		Destroy(countdown_display, washing_time);
+
 		yield return new WaitForSeconds(washing_time);
 		utensils.clean_utensil_arr[utensil_index] = utensils.utensil_count_arr[utensil_index];            // cleans all utensil of that instance. ie.- cleans all plates or bowls or cups
 		is_washing = false;

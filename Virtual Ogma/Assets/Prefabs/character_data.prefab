@@ -76,7 +76,7 @@ MonoBehaviour:
   - serve table beta
   - serve table gamma
   - serve table delta
-  item_list:
+  item_arr:
   - {fileID: 11400000, guid: 40c4992d1a8539c49ba2b2c1201949f0, type: 2}
   - {fileID: 11400000, guid: a6606a6e5ee4ca447b120daa707eb913, type: 2}
   - {fileID: 11400000, guid: 7649b3ccddf3254478deeece4d735b60, type: 2}
@@ -92,17 +92,24 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  dish_list:
+  dish_arr:
   - {fileID: 11400000, guid: f4179b3ade73c1a4f9df835a64c8a9a7, type: 2}
   - {fileID: 11400000, guid: db67d6ca6bed8ce4e99be53eed1dca78, type: 2}
   - {fileID: 11400000, guid: d59b40bd07df84b42b30b0e1daa13ad7, type: 2}
   - {fileID: 11400000, guid: a7248ed0c73fe204a8f1b7d58f5c5cd1, type: 2}
   - {fileID: 11400000, guid: b65c5fb7f4d75d740a532fddd5216fd1, type: 2}
   - {fileID: 11400000, guid: 17ace74f947e8224f93c9219744eae25, type: 2}
-  cost_list: 1e00000050000000500000003c0000004600000028000000
-  utensil_list:
+  cost_arr: 1e00000050000000500000003c0000004600000028000000
+  utensil_arr:
   - {fileID: 11400000, guid: de29e1ce9522de649b16c5d3fc6b32e7, type: 2}
   - {fileID: 11400000, guid: 45a3670296d99b8458c5e51948d41c05, type: 2}
   - {fileID: 11400000, guid: 1637c6e31b3f54448867e269534d9d88, type: 2}
-  utensil_count_arr: 040000000200000002000000
+  item_for_particles:
+  - {fileID: 11400000, guid: 40c4992d1a8539c49ba2b2c1201949f0, type: 2}
+  - {fileID: 11400000, guid: a6606a6e5ee4ca447b120daa707eb913, type: 2}
+  - {fileID: 11400000, guid: 7649b3ccddf3254478deeece4d735b60, type: 2}
+  particle_effects:
+  - {fileID: 9006584157614221114, guid: de2a65509bf51de488e86448266ececa, type: 3}
+  - {fileID: 2699112774267438021, guid: 2822b7e7ddcc43f4fa4c6365a77ba18a, type: 3}
+  - {fileID: 3845390964486929192, guid: 90b9c85030832bd44a165349ba959710, type: 3}
   all_items: []

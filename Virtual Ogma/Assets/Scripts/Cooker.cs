@@ -15,6 +15,9 @@ public class Cooker : MonoBehaviour
 	private Coroutine cooking_delay_coroutine;
 	private Coroutine spoiling_delay_coroutine;
 
+	[SerializeField] private GameObject countdown_display_prefab;
+	private GameObject countdown_display;
+
 	[SerializeField] Material cooking_mat;
 	[SerializeField] Material cooked_mat;
 	Material default_mat;
@@ -30,17 +33,7 @@ public class Cooker : MonoBehaviour
 
 	void Update()
 	{
-		//if (is_cooked)
-		//{
-		//	if (cur_time > 0) {
-		//		cur_time -= Time.deltaTime;
-		//	} else {
-		//		is_cooking = false;
-		//		is_cooked = false;
-		//		Debug.Log("overcooked");
-		//		cur_time = time_to_spoil;
-		//	}
-		//}
+
 	}
 
 	public void cook(Item food_item)		// called when player says, "COOK food_item AT __"
@@ -57,6 +50,12 @@ public class Cooker : MonoBehaviour
 
 	IEnumerator cooking_delay(string food_item_name)
 	{
+		// displpay the countdown_timer and then delete it after the countdown is over
+		countdown_display = Instantiate(countdown_display_prefab, transform.position + new Vector3(0, 1, .5f), Quaternion.Euler(new Vector3(45, 0, 0)));
+		countdown_display.transform.SetParent(transform);
+		countdown_display.GetComponentInChildren<CountdownDisplay>().setTimer(food_item.time_to_prepare);
+		Destroy(countdown_display, food_item.time_to_prepare);
+
 		yield return new WaitForSeconds(food_item.time_to_prepare);
 		Debug.Log(food_item_name + " cooked");
 		Test_script2.ts2.applyText(food_item_name + " cooked");
@@ -69,6 +68,12 @@ public class Cooker : MonoBehaviour
 
 	IEnumerator spoiling_delay()
 	{
+		// displpay the countdown_timer and then delete it after the countdown is over
+		countdown_display = Instantiate(countdown_display_prefab, transform.position + new Vector3(0, 1, .5f), Quaternion.Euler(new Vector3(45, 0, 0)));
+		countdown_display.transform.SetParent(transform);
+		countdown_display.GetComponentInChildren<CountdownDisplay>().setTimer(time_to_spoil);
+		Destroy(countdown_display, time_to_spoil);
+
 		yield return new WaitForSeconds(time_to_spoil);
 		//instantiate smoke particle effects at cooker position that self destroy after 1s indicating food has spoiled
 		is_cooking = false;
@@ -104,6 +109,12 @@ public class Cooker : MonoBehaviour
 		}
 		is_cooking = false;
 		is_cooked = false;
+
+		if(countdown_display != null)
+		{
+			Destroy(countdown_display);
+		}
+
 		Debug.Log("cooking stops");
 		Test_script2.ts2.applyText("cooking stops");
 
