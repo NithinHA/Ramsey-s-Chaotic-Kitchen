@@ -26,11 +26,14 @@ public class ChefAction : MonoBehaviour
 
 	public void init_cooking(GameObject ch)
 	{
-		character = ch;
-		ch.GetComponent<Player>().highlight_player();
-		place_position = ch.GetComponent<ChefData>().chef_interactable_positions;
-		// pan the camera towards the selected character and follow the player until 'Q' is released
-		is_listening = true;
+		if (Input.GetKey(KeyCode.Q))
+		{
+			character = ch;
+			ch.GetComponent<Player>().highlight_player();
+			place_position = ch.GetComponent<ChefData>().chef_interactable_positions;
+			// pan the camera towards the selected character and follow the player until 'Q' is released
+			is_listening = true;
+		}
 	}
 
 	void Start()
@@ -137,6 +140,9 @@ public class ChefAction : MonoBehaviour
 			while (!ch.target_reached)
 				yield return null;
 
+			//play get_supplies sound
+			AudioManager.instance.playSound("get_supplies");
+			
 			//wait player for 1s
 			yield return new WaitForSeconds(1);
 
@@ -147,13 +153,20 @@ public class ChefAction : MonoBehaviour
 			while (!ch.target_reached)
 				yield return null;
 
+			//resolve rotations
+			Vector3 direction = cb.transform.position - ch.transform.position;
+			ch.resolveRotationAfterNavigation(direction);
+
 			//call cb.chop()
-			Debug.Log("reached chopping board");
 			cb.chop(food_item);
 
 			//wait player for chopping_delay seconds
 			while (cb.is_chopping)
 				yield return null;
+			
+			//stop resolve_rotations_coroutine
+			if (ch.resolve_rotations_coroutine != null)
+				StopCoroutine(ch.resolve_rotations_coroutine);
 
 			//move player to starting position
 			ch.target = positions[2];
@@ -161,6 +174,14 @@ public class ChefAction : MonoBehaviour
 			while (!ch.target_reached)
 				yield return null;
 			Debug.Log("player returns");
+
+			//resolve rotations
+			direction = ch.starting_rotation;
+			Coroutine resolve_rotations_on_return = StartCoroutine(ch.resolveRotations(direction));
+			yield return new WaitForSeconds(1);
+			//stop resolve_rotations_on_return
+			if (resolve_rotations_on_return != null)
+				StopCoroutine(resolve_rotations_on_return);
 
 			//set chef not busy
 			ch.is_busy = false;
@@ -190,6 +211,9 @@ public class ChefAction : MonoBehaviour
 			while (!ch.target_reached)
 				yield return null;
 
+			//play get_supplies sound
+			AudioManager.instance.playSound("get_supplies");
+
 			//wait player for 1s
 			yield return new WaitForSeconds(1);
 
@@ -200,12 +224,20 @@ public class ChefAction : MonoBehaviour
 			while (!ch.target_reached)
 				yield return null;
 
+			//resolve rotations
+			Vector3 direction = co.transform.position - ch.transform.position;
+			ch.resolveRotationAfterNavigation(direction);
+
 			//call co.cook()
 			Debug.Log("reached cooker");
 			co.cook(food_item);
 
 			//DO NOT wait player for cooking_delay seconds. Instead, wait player at cooker for 1s
 			yield return new WaitForSeconds(1);
+			
+			//stop resolve_rotations_coroutine
+			if (ch.resolve_rotations_coroutine != null)
+				StopCoroutine(ch.resolve_rotations_coroutine);
 
 			//move player to starting position
 			ch.target = positions[2];
@@ -213,6 +245,14 @@ public class ChefAction : MonoBehaviour
 			while (!ch.target_reached)
 				yield return null;
 			Debug.Log("player returns");
+
+			//resolve rotations
+			direction = ch.starting_rotation;
+			Coroutine resolve_rotations_on_return = StartCoroutine(ch.resolveRotations(direction));
+			yield return new WaitForSeconds(1);
+			//stop resolve_rotations_on_return
+			if (resolve_rotations_on_return != null)
+				StopCoroutine(resolve_rotations_on_return);
 
 			//set chef not busy
 			ch.is_busy = false;
@@ -239,11 +279,19 @@ public class ChefAction : MonoBehaviour
 			while (!ch.target_reached)
 				yield return null;
 
+			//resolve rotations
+			Vector3 direction = co.transform.position - ch.transform.position;
+			ch.resolveRotationAfterNavigation(direction);
+
 			//call co.turn_off_cooker()
 			Debug.Log("reached cooker");
 			co.turn_off_cooker();
 
 			yield return new WaitForSeconds(.5f);       // player takes 0.5s to turn off cooker
+
+			//stop resolve_rotations_coroutine
+			if (ch.resolve_rotations_coroutine != null)
+				StopCoroutine(ch.resolve_rotations_coroutine);
 
 			//move player to starting position
 			ch.target = positions[1];
@@ -251,6 +299,14 @@ public class ChefAction : MonoBehaviour
 			while (!ch.target_reached)
 				yield return null;
 			Debug.Log("player returns");
+
+			//resolve rotations
+			direction = ch.starting_rotation;
+			Coroutine resolve_rotations_on_return = StartCoroutine(ch.resolveRotations(direction));
+			yield return new WaitForSeconds(1);
+			//stop resolve_rotations_on_return
+			if (resolve_rotations_on_return != null)
+				StopCoroutine(resolve_rotations_on_return);
 
 			//set chef not busy
 			ch.is_busy = false;
@@ -281,6 +337,9 @@ public class ChefAction : MonoBehaviour
 			while (!ch.target_reached)
 				yield return null;
 
+			//play get_supplies sound
+			AudioManager.instance.playSound("get_supplies");
+
 			//wait player for 1s
 			yield return new WaitForSeconds(food_item.time_to_prepare);
 
@@ -299,6 +358,14 @@ public class ChefAction : MonoBehaviour
 			while (!ch.target_reached)
 				yield return null;
 			Debug.Log("player returns");
+
+			//resolve rotations
+			Vector3 direction = ch.starting_rotation;
+			Coroutine resolve_rotations_on_return = StartCoroutine(ch.resolveRotations(direction));
+			yield return new WaitForSeconds(1);
+			//stop resolve_rotations_on_return
+			if (resolve_rotations_on_return != null)
+				StopCoroutine(resolve_rotations_on_return);
 
 			//set chef not busy
 			ch.is_busy = false;
@@ -338,6 +405,10 @@ public class ChefAction : MonoBehaviour
 			while (!ch.target_reached)
 				yield return null;
 
+			//resolve rotations
+			Vector3 direction = sink.transform.position - ch.transform.position;
+			ch.resolveRotationAfterNavigation(direction);
+
 			//call sink.wash_plates()
 			Debug.Log("reached sink");
 			sink.washUtensils(utensil_item);
@@ -346,12 +417,24 @@ public class ChefAction : MonoBehaviour
 			while (sink.is_washing)
 				yield return null;
 
+			//stop resolve_rotations_coroutine
+			if (ch.resolve_rotations_coroutine != null)
+				StopCoroutine(ch.resolve_rotations_coroutine);
+
 			//move player to starting position
 			ch.target = positions[2];
 			ch.target_reached = false;
 			while (!ch.target_reached)
 				yield return null;
 			Debug.Log("player returns");
+
+			//resolve rotations
+			direction = ch.starting_rotation;
+			Coroutine resolve_rotations_on_return = StartCoroutine(ch.resolveRotations(direction));
+			yield return new WaitForSeconds(1);
+			//stop resolve_rotations_on_return
+			if (resolve_rotations_on_return != null)
+				StopCoroutine(resolve_rotations_on_return);
 
 			//set chef not busy
 			ch.is_busy = false;
@@ -378,11 +461,15 @@ public class ChefAction : MonoBehaviour
 				Player ch = player_GO.GetComponent<Player>();
 				ch.is_busy = true;          // set character.is_busy true
 
-				//move player to fetch item
+				//move player to player's preparing_position
 				ch.target = positions[0];
 				ch.target_reached = false;
 				while (!ch.target_reached)
 					yield return null;
+
+				//resolve rotations
+				Vector3 direction = new Vector3(0, ch.preparing_position.eulerAngles.y, 0);
+				Coroutine resolve_rotations_coroutine = StartCoroutine(ch.resolveRotations(direction));
 
 				//remove ingredients used to prepare the dish from inventory
 				inventory.removeIngredientsUsed(dish_item);
@@ -394,7 +481,11 @@ public class ChefAction : MonoBehaviour
 				Destroy(countdown_display, dish_item.time_to_prepare);
 				yield return new WaitForSeconds(dish_item.time_to_prepare);
 
-				//add item to inventory... DONE
+				//stop resolve_rotations_on_return
+				if (resolve_rotations_coroutine != null)
+					StopCoroutine(resolve_rotations_coroutine);
+
+				//add item to inventory
 				bool has_added = inventory.addItem(dish_item);
 				if (has_added)
 				{
@@ -412,6 +503,14 @@ public class ChefAction : MonoBehaviour
 				while (!ch.target_reached)
 					yield return null;
 				Debug.Log("player returns");
+
+				//resolve rotations
+				direction = new Vector3(0, ch.starting_rotation.y, 0);
+				Coroutine resolve_rotations_on_return = StartCoroutine(ch.resolveRotations(direction));
+				yield return new WaitForSeconds(1);
+				//stop resolve_rotations_on_return
+				if (resolve_rotations_on_return != null)
+					StopCoroutine(resolve_rotations_on_return);
 
 				//set chef not busy
 				ch.is_busy = false;

@@ -9,6 +9,8 @@ public class Sink : MonoBehaviour
 
 	[SerializeField] private GameObject countdown_display_prefab;
 
+	[SerializeField] private GameObject tapwater_particles_prefab;
+
 	void Start()
     {
 		utensils = Utensils.instance;
@@ -40,9 +42,21 @@ public class Sink : MonoBehaviour
 		countdown_display.GetComponentInChildren<CountdownDisplay>().setTimer(washing_time);
 		Destroy(countdown_display, washing_time);
 
+		// display tap water particles
+		GameObject tapwater_particles = Instantiate(tapwater_particles_prefab, transform.position + new Vector3(0, .8f, 0), Quaternion.identity);
+		tapwater_particles.transform.SetParent(transform);
+
+		// play wash_basin sound
+		GetComponent<AudioSource>().Play();
+
 		yield return new WaitForSeconds(washing_time);
 		utensils.clean_utensil_arr[utensil_index] = utensils.utensil_count_arr[utensil_index];            // cleans all utensil of that instance. ie.- cleans all plates or bowls or cups
 		is_washing = false;
+
+		Destroy(tapwater_particles);
+
+		// stop wash_basin sound
+		GetComponent<AudioSource>().Stop();
 
 		utensils.on_utensil_changed_callback.Invoke();              // invoke delegate on cleaning utensils
 	}

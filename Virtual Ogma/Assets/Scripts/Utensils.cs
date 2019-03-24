@@ -33,7 +33,7 @@ public class Utensils : MonoBehaviour
 			clean_utensil_arr[i] = utensil_count_arr[i];            // at start of game, all the utensils are clean
 		}
 
-		clean_utensil_arr[0] = 1;
+		clean_utensil_arr[0] = 1;			// for testing
 		clean_utensil_arr[1] = 1;
 		clean_utensil_arr[2] = 1;
 	}
@@ -64,5 +64,7 @@ public class Utensils : MonoBehaviour
 		utensil_index_dict.TryGetValue(utensil.name, out utensil_index);
 		UtensilSlot[] utensil_slot_arr = gameObject.GetComponentsInChildren<UtensilSlot>();
 		utensil_slot_arr[utensil_index].blinkSlot();
+
+		// play an indication sound
 	}
 }

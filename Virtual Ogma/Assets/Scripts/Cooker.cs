@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class Cooker : MonoBehaviour
 {
@@ -18,16 +20,30 @@ public class Cooker : MonoBehaviour
 	[SerializeField] private GameObject countdown_display_prefab;
 	private GameObject countdown_display;
 
-	[SerializeField] Material cooking_mat;
-	[SerializeField] Material cooked_mat;
-	Material default_mat;
-	[SerializeField] Renderer stove;
+	[Header("Particles:")]
+	[SerializeField] private GameObject flame_particles_prefab;
+	private GameObject flame_particles;
+	[SerializeField] private GameObject smoke_particles_prefab;
+	private GameObject smoke_particles;
+	[SerializeField] private GameObject overcooked_particles_prefab;
+	private GameObject overcooked_particles;
+
+	[Header("Audio Clips:")]
+	[SerializeField] private AudioSource stove_ignition_audio;
+	[SerializeField] private AudioSource cooker_flame_audio;
+	[SerializeField] private AudioSource overcooked_audio;
+
+	//[Header("Materials:")]
+	//[SerializeField] Material cooking_mat;
+	//[SerializeField] Material cooked_mat;
+	//Material default_mat;
+	//[SerializeField] Renderer stove;
 
 	void Start()
 	{
 		cur_time = time_to_spoil;
-
-		default_mat = stove.material;
+		
+		//default_mat = stove.material;
 	}
 
 
@@ -44,7 +60,7 @@ public class Cooker : MonoBehaviour
 		Debug.Log("cooking " + food_item_name);
 		Test_script2.ts2.applyText("cooking " + food_item_name);
 		this.food_item = food_item;
-		stove.material = cooking_mat;			// indicates that stove is lit and food_item is being cooked
+		//stove.material = cooking_mat;			// indicates that stove is lit and food_item is being cooked
 		cooking_delay_coroutine = StartCoroutine(cooking_delay(food_item_name));
 	}
 
@@ -56,11 +72,20 @@ public class Cooker : MonoBehaviour
 		countdown_display.GetComponentInChildren<CountdownDisplay>().setTimer(food_item.time_to_prepare);
 		Destroy(countdown_display, food_item.time_to_prepare);
 
+		// display particle effects for cooking action
+		flame_particles = Instantiate(flame_particles_prefab, transform.position + new Vector3(0, -1f, 0), Quaternion.identity);
+		flame_particles.transform.SetParent(transform);
+
+		// play stove_ignition and cooker_flame sound
+		stove_ignition_audio.Play();
+		cooker_flame_audio.Play();
+
 		yield return new WaitForSeconds(food_item.time_to_prepare);
 		Debug.Log(food_item_name + " cooked");
 		Test_script2.ts2.applyText(food_item_name + " cooked");
 		is_cooked = true;						// at this time, both is_cooking and is_cooked  will be true and system waits for user to turn off cooker
-		stove.material = cooked_mat;			// indicates that food_item is cooked and you may turn off the stove
+		//stove.material = cooked_mat;			// indicates that food_item is cooked and you may turn off the stove
+
 		Debug.Log("indicate turn off cooker!");
 		Test_script2.ts2.applyText("indicate turn off cooker");
 		spoiling_delay_coroutine = StartCoroutine(spoiling_delay());
@@ -74,6 +99,9 @@ public class Cooker : MonoBehaviour
 		countdown_display.GetComponentInChildren<CountdownDisplay>().setTimer(time_to_spoil);
 		Destroy(countdown_display, time_to_spoil);
 
+		// display smoke particle indicating that food is being spoiled
+		smoke_particles = Instantiate(smoke_particles_prefab, transform.position + new Vector3(0, .5f, 0), Quaternion.identity);
+
 		yield return new WaitForSeconds(time_to_spoil);
 		//instantiate smoke particle effects at cooker position that self destroy after 1s indicating food has spoiled
 		is_cooking = false;
@@ -81,7 +109,27 @@ public class Cooker : MonoBehaviour
 		Debug.Log("Overcooked!");
 		Test_script2.ts2.applyText("Overcooked");
 
-		stove.material = default_mat;
+		// turn off flame automatically
+		if(flame_particles != null)
+		{
+			Destroy(flame_particles);
+		}
+		// destroy smoke particles as well
+		if(smoke_particles != null)
+		{
+			Destroy(smoke_particles);
+		}
+
+		// stop cooker_flame sound
+		cooker_flame_audio.Stop();
+
+		// release lot of smoke indicating food has been overcooked
+		overcooked_particles = Instantiate(overcooked_particles_prefab, transform.position + new Vector3(0, .5f, 0), Quaternion.identity);
+		Destroy(overcooked_particles, 5);
+
+		// play overcooked sound
+		overcooked_audio.Play();
+		//stove.material = default_mat;
 	}
 
 	public void turn_off_cooker()       // called when player says, "TURN OFF COOKER __"
@@ -112,12 +160,23 @@ public class Cooker : MonoBehaviour
 
 		if(countdown_display != null)
 		{
-			Destroy(countdown_display);
+			Destroy(countdown_display);			// destroy countdown timer
 		}
+		if(flame_particles != null)
+		{
+			Destroy(flame_particles);			// turn off flame
+		}
+		if(smoke_particles != null)
+		{
+			Destroy(smoke_particles);			// destroy smoke effect
+		}
+
+		// stop cooker_flame sound
+		cooker_flame_audio.Stop();
 
 		Debug.Log("cooking stops");
 		Test_script2.ts2.applyText("cooking stops");
 
-		stove.material = default_mat;		// indicates cooking is over and stove is turned off
+		//stove.material = default_mat;		// indicates cooking is over and stove is turned off
 	}
 }

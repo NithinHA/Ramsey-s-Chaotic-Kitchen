@@ -48,9 +48,14 @@ MonoBehaviour:
   is_cooking: 0
   is_cooked: 0
   time_to_spoil: 15
-  cooking_mat: {fileID: 2100000, guid: b2146a44345c58c4bb87160b0f1efefc, type: 2}
-  cooked_mat: {fileID: 2100000, guid: cc0df98cbe7c2734596eb664114239ca, type: 2}
-  stove: {fileID: 0}
+  countdown_display_prefab: {fileID: 204844342657620476, guid: 7ec709e83c9d1f04eb769ba3019b6744,
+    type: 3}
+  flame_particles_prefab: {fileID: 7579382595384921960, guid: f538ec89f750cc245b91a5bfdfaa2ab2,
+    type: 3}
+  smoke_particles_prefab: {fileID: 5041097169879437884, guid: 1dcb25b5c63c0204f9de77f244ee11e4,
+    type: 3}
+  overcooked_particles_prefab: {fileID: 1195820528960595135, guid: 26eae3133f71c604ea9b38ea9fb3a7bc,
+    type: 3}
 --- !u!1 &2599901936147178276
 GameObject:
   m_ObjectHideFlags: 0

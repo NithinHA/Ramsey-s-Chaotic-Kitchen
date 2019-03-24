@@ -23,7 +23,7 @@ public class ItemSlot : MonoBehaviour
 		icon.enabled = true;
 
 		if (name_text != null)
-			name_text.text = item.name + " -> " + KeywordsData.instance.dish_cost[item];		// display name and cost of of the order
+			name_text.text = item.name + " -> ₹" + KeywordsData.instance.dish_cost[item];		// display name and cost of of the order
 
 		if(ingredients_panel != null)
 		{

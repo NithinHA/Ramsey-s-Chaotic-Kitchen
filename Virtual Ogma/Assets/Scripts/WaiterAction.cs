@@ -24,11 +24,14 @@ public class WaiterAction : MonoBehaviour
 
 	public void init_serving(GameObject ch)
 	{
-		character = ch;
-		ch.GetComponent<Player>().highlight_player();
-		place_position = ch.GetComponent<WaiterData>().waiter_interactable_positions;
-		// pan the camera towards the selected character and follow the player until 'Q' is released
-		is_listening = true;
+		if (Input.GetKey(KeyCode.Q))
+		{
+			character = ch;
+			ch.GetComponent<Player>().highlight_player();
+			place_position = ch.GetComponent<WaiterData>().waiter_interactable_positions;
+			// pan the camera towards the selected character and follow the player until 'Q' is released
+			is_listening = true;
+		}
 	}
 
 	void Start()
@@ -122,11 +125,19 @@ public class WaiterAction : MonoBehaviour
 			while (!ch.target_reached)
 				yield return null;
 
+			//resolve rotations
+			Vector3 direction = cu.transform.position - ch.transform.position;
+			ch.resolveRotationAfterNavigation(direction);
+
 			//wait waiter for 2 seconds
 			yield return new WaitForSeconds(2);
 
 			//call cu.order_food()
 			cu.order_food();
+
+			//stop resolve_rotations_coroutine
+			if (ch.resolve_rotations_coroutine != null)
+				StopCoroutine(ch.resolve_rotations_coroutine);
 
 			//move player to starting position
 			ch.target = positions[1];
@@ -136,6 +147,14 @@ public class WaiterAction : MonoBehaviour
 			Debug.Log("waiter returns");
 			Test_script2.ts2.applyText("waiter returns");
 
+			//resolve rotations
+			direction = new Vector3(0, ch.starting_rotation.y, 0);
+			Coroutine resolve_rotations_on_return = StartCoroutine(ch.resolveRotations(direction));
+			yield return new WaitForSeconds(1);
+			//stop resolve_rotations_on_return
+			if (resolve_rotations_on_return != null)
+				StopCoroutine(resolve_rotations_on_return);
+			
 			//set chef not busy
 			ch.is_busy = false;
 		}
@@ -172,6 +191,10 @@ public class WaiterAction : MonoBehaviour
 			while (!ch.target_reached)
 				yield return null;
 
+			//resolve rotations
+			Vector3 direction = cu.transform.position - ch.transform.position;
+			ch.resolveRotationAfterNavigation(direction);
+
 			//wait player for 2s
 			yield return new WaitForSeconds(2);
 
@@ -183,7 +206,11 @@ public class WaiterAction : MonoBehaviour
 				//remove dish from inventory and one utensil instance
 				inventory.removeItem(food_item);
 				Utensils.instance.removeOneUtensil(food_item.served_in);
-			}				
+			}
+
+			//stop resolve_rotations_coroutine
+			if (ch.resolve_rotations_coroutine != null)
+				StopCoroutine(ch.resolve_rotations_coroutine);
 			
 			//move player to starting position
 			ch.target = positions[1];
@@ -193,6 +220,14 @@ public class WaiterAction : MonoBehaviour
 			Debug.Log("waiter returns");
 			Test_script2.ts2.applyText("waiter returns");
 
+			//resolve rotations
+			direction = new Vector3(0, ch.starting_rotation.y, 0);
+			Coroutine resolve_rotations_on_return = StartCoroutine(ch.resolveRotations(direction));
+			yield return new WaitForSeconds(1);
+			//stop resolve_rotations_on_return
+			if (resolve_rotations_on_return != null)
+				StopCoroutine(resolve_rotations_on_return);
+			 
 			//set chef not busy
 			ch.is_busy = false;
 		}

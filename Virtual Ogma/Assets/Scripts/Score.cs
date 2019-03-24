@@ -41,5 +41,8 @@ public class Score : MonoBehaviour
 		int bill_amount = keywords_data.dish_cost[dish];
 		score += bill_amount + tips;
 		score_text.text = "Score: ₹" + score.ToString();
+
+		// play coins sound
+		GetComponent<AudioSource>().Play();
 	}
 }

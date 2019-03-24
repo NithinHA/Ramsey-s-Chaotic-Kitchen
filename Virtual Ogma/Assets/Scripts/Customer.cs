@@ -93,12 +93,13 @@ public class Customer : MonoBehaviour
 		Debug.Log("Delay = " + serv_delay);
 		Test_script2.ts2.applyText("Delay = " + serv_delay);
 
+		// coustomer gives tips depending upon the time customer was waiting
 		if (serv_delay < 30) {
-			tips = 50;
+			tips = 20;
 		} else if(serv_delay < 60) {
-			tips = 30;
-		} else if(serv_delay < 90) {
 			tips = 10;
+		} else if(serv_delay < 90) {
+			tips = 5;
 		} else {
 			tips = 0;
 		}
