@@ -10,6 +10,8 @@ public class OrdersUI : MonoBehaviour
 
 	ItemSlot[] slots;
 
+	[SerializeField] private Button info_toggle_button;
+
 	void Start()
 	{
 		orders = Orders.instance;
@@ -38,7 +40,7 @@ public class OrdersUI : MonoBehaviour
 		}
 	}
 
-	public void toggleOrdersInfo(Transform button)
+	public void toggleOrdersInfo()
 	{
 		bool is_shrink = !slots[0].transform.Find("info_panel").gameObject.activeSelf;					// !!!!!! Find GameObject with name !!!!!!
 		foreach (ItemSlot slot in slots)
@@ -49,12 +51,12 @@ public class OrdersUI : MonoBehaviour
 		if (is_shrink)
 		{
 			transform.GetComponent<RectTransform>().sizeDelta = new Vector2(250, 260);
-			button.transform.GetComponentInChildren<Text>().text = "H\nI\nD\nE";
+			info_toggle_button.GetComponentInChildren<Text>().text = "H\nI\nD\nE";
 		}
 		else
 		{
 			transform.GetComponent<RectTransform>().sizeDelta = new Vector2(75, 260);
-			button.transform.GetComponentInChildren<Text>().text = "S\nH\nO\nW";
+			info_toggle_button.GetComponentInChildren<Text>().text = "S\nH\nO\nW";
 		}
 	}
 }

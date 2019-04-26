@@ -157,6 +157,15 @@ MonoBehaviour:
               inWeight: 0
               outWeight: 0
             - serializedVersion: 3
+              time: 0.26377952
+              value: 0.35042733
+              inSlope: 1.8091166
+              outSlope: 1.8091166
+              tangentMode: 0
+              weightedMode: 0
+              inWeight: 0
+              outWeight: 0
+            - serializedVersion: 3
               time: 1
               value: 0.9878049
               inSlope: 0.47154468
@@ -313,17 +322,17 @@ MonoBehaviour:
   grain:
     m_Enabled: 0
     m_Settings:
-      colored: 1
-      intensity: 0.5
-      size: 1
-      luminanceContribution: 0.8
+      colored: 0
+      intensity: 0.26
+      size: 0.85
+      luminanceContribution: 0
   vignette:
     m_Enabled: 0
     m_Settings:
       mode: 0
       color: {r: 0, g: 0, b: 0, a: 1}
       center: {x: 0.5, y: 0.5}
-      intensity: 0.45
+      intensity: 0.42
       smoothness: 0.2
       roundness: 1
       mask: {fileID: 0}

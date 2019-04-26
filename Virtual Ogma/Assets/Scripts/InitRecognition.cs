@@ -14,6 +14,7 @@ public class InitRecognition : MonoBehaviour
 	public GameObject[] waiters;
 
 	[SerializeField] private InventoryUI inventory_UI;
+	[SerializeField] private OrdersUI orders_UI;
 	
 
 	void Start()
@@ -23,6 +24,7 @@ public class InitRecognition : MonoBehaviour
 		foreach (GameObject waiter in waiters)
 			keywords.Add(waiter.name, () => initWaiter(waiter));
 		keywords.Add("Inventory", () => openInventory());
+		keywords.Add("Orders", () => showOrders());
 		keywords.Add("Pause game", () => openPauseMenu());
 
 		keyword_recognizer = new KeywordRecognizer(keywords.Keys.ToArray(), ConfidenceLevel.Low);
@@ -74,27 +76,36 @@ public class InitRecognition : MonoBehaviour
 	GameObject ch_action;
 	void initChef(GameObject chef)
 	{
+		keyword_recognizer.Stop();
+
 		Debug.Log(chef.name + " called");
 		Test_script2.ts2.applyText(chef.name + " called");
 		ChefAction chef_action = GetComponent<ChefAction>();
 		chef_action.init_cooking(chef);
 
-		keyword_recognizer.Stop();
+		//keyword_recognizer.Stop();
 	}
 
 	void initWaiter(GameObject waiter)
 	{
+		keyword_recognizer.Stop();
+
 		Debug.Log(waiter.name + " called");
 		Test_script2.ts2.applyText(waiter.name + " called");
 		WaiterAction waiter_action = GetComponent<WaiterAction>();
 		waiter_action.init_serving(waiter);
 
-		keyword_recognizer.Stop();
+		//keyword_recognizer.Stop();
 	}
 
 	void openInventory()
 	{
 		inventory_UI.toggleInventory();
+	}
+
+	void showOrders()
+	{
+		orders_UI.toggleOrdersInfo();
 	}
 
 	void openPauseMenu()

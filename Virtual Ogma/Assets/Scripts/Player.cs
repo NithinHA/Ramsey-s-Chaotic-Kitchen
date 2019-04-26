@@ -8,7 +8,7 @@ public class Player : MonoBehaviour
 	//private Camera cam;
 	private NavMeshAgent agent;
 
-	[HideInInspector] public Vector3 starting_position;
+	[HideInInspector] public Vector3 starting_position;		// use transform instead
 	[HideInInspector] public Vector3 starting_rotation;
 
 	public Transform preparing_position;			// used in ChefAction script
