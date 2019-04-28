@@ -15,7 +15,7 @@ public class KeywordsData : MonoBehaviour
 	[Header("Items data")]
 	[SerializeField] private Item[] item_arr;					// List of Items that go in the inventory
 	[SerializeField] private Transform[] item_positions;		// List of positions that player has to be on to interact with items
-	public Dictionary<Item, Vector3> game_item_positions = new Dictionary<Item, Vector3>();             // A Dictionary formed out of above info
+	public Dictionary<Item, Transform> game_item_positions = new Dictionary<Item, Transform>();             // A Dictionary formed out of above info
 	
 	[Header("Dish data")]
 	public Item[] dish_arr;						// this array is cloned in Customer script for choosing a random dish from array of available dishes
@@ -44,7 +44,7 @@ public class KeywordsData : MonoBehaviour
 		
 		for (int i = 0; i < item_arr.Length; i++)                                           // initialize item_positoins dictionary
 		{
-			game_item_positions.Add(item_arr[i], item_positions[i].position);
+			game_item_positions.Add(item_arr[i], item_positions[i]);
 		}
 		for (int i = 0; i < dish_arr.Length; i++)
 		{

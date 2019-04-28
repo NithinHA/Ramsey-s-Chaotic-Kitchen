@@ -8,8 +8,8 @@ public class Player : MonoBehaviour
 	//private Camera cam;
 	private NavMeshAgent agent;
 
-	[HideInInspector] public Vector3 starting_position;		// use transform instead
-	[HideInInspector] public Vector3 starting_rotation;
+	public Transform starting_transform;		// use transform instead
+	//[HideInInspector] public Vector3 starting_rotation;
 
 	public Transform preparing_position;			// used in ChefAction script
 	[HideInInspector] public bool is_busy = false;
@@ -27,10 +27,9 @@ public class Player : MonoBehaviour
 	void Start()
     {
 		agent = GetComponent<NavMeshAgent>();
-		starting_position = transform.position;
-		target = starting_position;
+        target = starting_transform.position;
 		
-		starting_rotation = transform.eulerAngles;
+		//starting_rotation = transform.eulerAngles;
 		//cam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
 	}
 	
@@ -87,6 +86,13 @@ public class Player : MonoBehaviour
 		Debug.Log("Dir:" + dir);
 		resolve_rotations_coroutine = StartCoroutine(resolveRotations(new Vector3(0, dir.y, 0)));
 	}
+    public IEnumerator invokeResolveRotation(Transform destination, float time_to_stop)
+    {
+        Coroutine resolve_rotations_cor = StartCoroutine(resolveRotations(destination.eulerAngles));
+        yield return new WaitForSeconds(time_to_stop);
+        if (resolve_rotations_cor != null)
+            StopCoroutine(resolve_rotations_cor);
+    }
 	public IEnumerator resolveRotations(Vector3 direction)
 	{
 		if (direction.y > transform.eulerAngles.y)

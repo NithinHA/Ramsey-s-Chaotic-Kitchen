@@ -196,8 +196,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78f7822574a593d48a181bb13b1c8a45, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  starting_position: {x: 0, y: 0, z: 0}
-  starting_rotation: {x: 0, y: 0, z: 0}
+  starting_transform: {fileID: 0}
   preparing_position: {fileID: 0}
   is_busy: 0
   target_reached: 1
@@ -206,7 +205,7 @@ MonoBehaviour:
   player_highlighter: {fileID: 557994964362876731, guid: 31ff061fcb8fb4d41811cfdb65447fd1,
     type: 3}
   highlighter: {fileID: 0}
-  resolve_rotation_speed: 3
+  resolve_rotation_speed: 5
 --- !u!82 &4381091544659784152
 AudioSource:
   m_ObjectHideFlags: 0
@@ -217,9 +216,9 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 9b5e541c0567a5d44969db77efe82b43, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 3e691446d5361504b89557118b4636f4, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 1
   Mute: 0

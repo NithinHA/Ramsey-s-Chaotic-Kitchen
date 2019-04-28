@@ -7,7 +7,7 @@ public class ChefData : MonoBehaviour
 	[Header("Chef data")]
 	[SerializeField] private List<Transform> chef_interactable = new List<Transform>();         // List of cheff places like cooker A & B, cutting_board A & B, etc
 	[SerializeField] private List<Transform> chef_positions = new List<Transform>();        // List of positions that cheff has to be to interact with above objects
-	public Dictionary<Transform, Vector3> chef_interactable_positions = new Dictionary<Transform, Vector3>();       // A Dictionary formed out of above info
+	public Dictionary<Transform, Transform> chef_interactable_positions = new Dictionary<Transform, Transform>();       // A Dictionary formed out of above info
 
 	//[Header("Items data")]
 	//[SerializeField] private List<Item> item_list = new List<Item>();                       // List of Items that go in the inventory
@@ -23,7 +23,7 @@ public class ChefData : MonoBehaviour
     {
 		for (int i = 0; i < chef_interactable.Count; i++)                                   // initialize chef_interactable_positoins dictionary
 		{
-			chef_interactable_positions.Add(chef_interactable[i], chef_positions[i].position);
+			chef_interactable_positions.Add(chef_interactable[i], chef_positions[i]);
 		}
 
 		//for (int i = 0; i < item_list.Count; i++)                                           // initialize item_positoins dictionary

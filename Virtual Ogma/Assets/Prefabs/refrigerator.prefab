@@ -634,7 +634,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7055364166067015985}
   m_LocalRotation: {x: 1, y: 0, z: 0, w: 0}
-  m_LocalPosition: {x: 0.129234, y: 4.025856, z: -4.9269}
+  m_LocalPosition: {x: 0.129234, y: 2.83776, z: -2.7502413}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 7055364166067309867}
@@ -1371,7 +1371,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7055364166067309867}
   m_Layer: 0
-  m_Name: ref
+  m_Name: refrigerator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1386,7 +1386,7 @@ Transform:
   m_GameObject: {fileID: 7055364166067016011}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -4.584464, y: 3.1582541, z: -38.486862}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children:
   - {fileID: 7055364166067309827}
   - {fileID: 7055364166067309847}
@@ -1422,7 +1422,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7055364166067016013}
   m_LocalRotation: {x: 1, y: 0, z: 0, w: 0}
-  m_LocalPosition: {x: 0.27784154, y: 1.3980963, z: -4.89666}
+  m_LocalPosition: {x: 0.27784154, y: 0.21, z: -2.72}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 7055364166067309867}
