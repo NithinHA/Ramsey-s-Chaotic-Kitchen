@@ -19,6 +19,10 @@ public class Customer : MonoBehaviour
 	public bool is_ordering = false;	// if is_ordering is true, then only the waiter will take order. So this condition will be used in take_order()
 	public bool is_served = true;
 
+    [Header("Customer lego model")]
+    public GameObject lego_customer;
+    Animator anim;
+
 	[Header("Materials for table top indication")]
 	public Material food_order_indication_mat;
 	public Material food_to_be_served_indication_mat;
@@ -33,6 +37,8 @@ public class Customer : MonoBehaviour
 
 		dishes = KeywordsData.instance.dish_arr;
 		orders = Orders.instance;
+
+        anim = lego_customer.GetComponent<Animator>();
 		default_mat = table_top.GetComponent<Renderer>().material;
     }
 	
@@ -48,6 +54,10 @@ public class Customer : MonoBehaviour
 			{
 				Debug.Log("I want to order something..");
 				Test_script2.ts2.applyText("I want to order something");
+
+                anim.SetBool("is_eating", false);    // stop eating animation
+                anim.SetBool("is_ordering", true);   // play ordering animation
+
 				is_ordering = true;
 				table_top.GetComponent<Renderer>().material = food_order_indication_mat;	// make the table pink color indicating waiter has to take order from that table
 				cur_time = order_time;
@@ -78,9 +88,9 @@ public class Customer : MonoBehaviour
 			is_ordering = true;				// so that the waiter can come back and take order some other time
 			return;
 		}
-		Debug.Log("I'll have " + this.dish.name);
-		Test_script2.ts2.applyText("I'll have " + this.dish.name);
-		table_top.GetComponent<Renderer>().material = food_to_be_served_indication_mat;		// make table orange color indicating customer is waiting for the dish to be served
+        anim.SetBool("is_ordering", false);      // stop ordering animation and go to idle animation
+
+        table_top.GetComponent<Renderer>().material = food_to_be_served_indication_mat;		// make table orange color indicating customer is waiting for the dish to be served
 		
 	}
 
@@ -89,9 +99,9 @@ public class Customer : MonoBehaviour
 		is_served = true;
 		orders.removeItem(this.dish);           // remove dish from orders list
 
-		int serv_delay = (int)(Time.time - time_of_order);
-		Debug.Log("Delay = " + serv_delay);
-		Test_script2.ts2.applyText("Delay = " + serv_delay);
+        anim.SetBool("is_eating", true);        // play eating animation
+
+        int serv_delay = (int)(Time.time - time_of_order);
 
 		// coustomer gives tips depending upon the time customer was waiting
 		if (serv_delay < 30) {

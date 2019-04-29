@@ -25,9 +25,11 @@ public class InitRecognition : MonoBehaviour
 			keywords.Add(waiter.name, () => initWaiter(waiter));
 		keywords.Add("Inventory", () => openInventory());
 		keywords.Add("Orders", () => showOrders());
-		keywords.Add("Pause game", () => openPauseMenu());
+        keywords.Add("Help", () => showManual());
+        keywords.Add("Restart", () => restartGame());
+        keywords.Add("Main menu", () => loadMainMenu());
 
-		keyword_recognizer = new KeywordRecognizer(keywords.Keys.ToArray(), ConfidenceLevel.Low);
+        keyword_recognizer = new KeywordRecognizer(keywords.Keys.ToArray(), ConfidenceLevel.Low);
 		keyword_recognizer.OnPhraseRecognized += OnKeywordsRecognized;
 	}
 
@@ -108,9 +110,18 @@ public class InitRecognition : MonoBehaviour
 		orders_UI.toggleOrdersInfo();
 	}
 
-	void openPauseMenu()
-	{
+    void showManual()
+    {
+        ManualUI.instance.showManual();
+    }
 
+    void restartGame()
+	{
+        // scene transition load scene(build_index)
 	}
 	
+    void loadMainMenu()
+    {
+        // scene transition load scene(main_menu)
+    }
 }
