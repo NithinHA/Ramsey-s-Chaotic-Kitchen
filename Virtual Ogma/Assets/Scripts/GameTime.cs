@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class GameTime : MonoBehaviour
 {
-	[SerializeField] private Text time_text;
+	//[SerializeField] private Text time_text;
+    [SerializeField] private TextMeshProUGUI time_text;
 	public float game_time;
 
 	[SerializeField] private GameObject end_game_canvas;
@@ -58,6 +60,6 @@ public class GameTime : MonoBehaviour
 	{
 		Time.timeScale = 0;					// this pauses the game.. no time related functions can operate. Therefore, we can not even use yield return waitForSeconds()
 		end_game_canvas.SetActive(true);
-		end_game_canvas.GetComponentInChildren<Text>().text = "Score: " + Score.score;      // displays score at end of the game
+		end_game_canvas.GetComponentInChildren<TextMeshProUGUI>().text = "Score: " + Score.score;      // displays score at end of the game
 	}
 }

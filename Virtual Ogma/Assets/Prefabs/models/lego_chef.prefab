@@ -1185,7 +1185,7 @@ MonoBehaviour:
   target_reached: 1
   target: {x: 0, y: 0, z: 0}
   min_dist: 1
-  player_highlighter: {fileID: 557994964362876731, guid: 31ff061fcb8fb4d41811cfdb65447fd1,
+  player_highlighter: {fileID: 1174197452610182, guid: daf72d3edabed174db60617e81b9495b,
     type: 3}
   highlighter: {fileID: 0}
   resolve_rotation_speed: 5

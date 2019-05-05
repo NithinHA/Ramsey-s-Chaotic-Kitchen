@@ -28,6 +28,7 @@ public class Score : MonoBehaviour
 		keywords_data = KeywordsData.instance;
 		score_text = GetComponentInChildren<Text>();
 
+        score = 0;      // doing so avoids the score being carried when you restart the level
 		score_text.text = "Score: ₹" + score.ToString();
     }
 	

@@ -117,11 +117,11 @@ public class InitRecognition : MonoBehaviour
 
     void restartGame()
 	{
-        // scene transition load scene(build_index)
-	}
+        SceneTransition.instance.restartLevel();
+    }
 	
     void loadMainMenu()
     {
-        // scene transition load scene(main_menu)
+        SceneTransition.instance.mainMenu();
     }
 }
