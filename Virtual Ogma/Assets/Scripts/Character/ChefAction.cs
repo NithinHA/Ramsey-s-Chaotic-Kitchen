@@ -22,8 +22,8 @@ public class ChefAction : CharacterAction
 
 	void Start()
 	{
-		inventory = Inventory.instance;             // get the Singleton instance of Inventory Class
-		keywords_data = KeywordsData.instance;      // get the Singleton instance of KeywordsData Class
+		inventory = Inventory.Instance;             // get the Singleton instance of Inventory Class
+		keywords_data = KeywordsData.Instance;      // get the Singleton instance of KeywordsData Class
 		characterType = CharacterType.chef;
 		
 		keywords_list = keywords_data.chef_keywords_2;
@@ -112,7 +112,7 @@ public class ChefAction : CharacterAction
             //resolve rotations
             StartCoroutine(ch.invokeResolveRotation(all_transforms[0], 1));
 			//play get_supplies sound
-			AudioManager.instance.playSound("get_supplies");
+			AudioManager.Instance.playSound("get_supplies");
             anim.SetTrigger("is_serving");      // get supplies anim
             //wait player for 1s
             yield return new WaitForSeconds(1);
@@ -184,7 +184,7 @@ public class ChefAction : CharacterAction
             //resolve rotations
             StartCoroutine(ch.invokeResolveRotation(all_transforms[0], 1));
             //play get_supplies sound
-            AudioManager.instance.playSound("get_supplies");
+            AudioManager.Instance.playSound("get_supplies");
             anim.SetTrigger("is_serving");      // get supplies anim
             //wait player for 1s
             yield return new WaitForSeconds(1);
@@ -300,7 +300,7 @@ public class ChefAction : CharacterAction
             //resolve rotations
             StartCoroutine(ch.invokeResolveRotation(all_transforms[0], food_item.time_to_prepare));
             //play get_supplies sound
-            AudioManager.instance.playSound("get_supplies");
+            AudioManager.Instance.playSound("get_supplies");
             anim.SetTrigger("is_serving");      // get supplies anim
 			//wait player for time required to fetch the item
 			yield return new WaitForSeconds(food_item.time_to_prepare);
@@ -312,7 +312,7 @@ public class ChefAction : CharacterAction
 			}
 			else {
 				Debug.Log("can not add " + food_item.name + " to inventory");
-				Test_script2.ts2.applyText("can not add " + food_item.name + " to inventory");
+				InstructionPanel.Instance.DisplayInstruction("can not add " + food_item.name + " to inventory");
 			}
 
             //move player to starting position
@@ -459,7 +459,7 @@ public class ChefAction : CharacterAction
 				else
 				{
 					Debug.Log("can not add " + dish_item.name + " to inventory");
-					Test_script2.ts2.applyText("can not add " + dish_item.name + " to inventory");
+					InstructionPanel.Instance.DisplayInstruction("can not add " + dish_item.name + " to inventory");
 				}
 
                 //move player to starting position

@@ -1,36 +1,27 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
+using SingletonBase;
 
-public class Score : MonoBehaviour
+public class Score : Singleton<Score>
 {
-	#region Singleton
-	public static Score instance;       // singleton
-	private void Awake()
-	{
-		if (instance != null)
-		{
-			Debug.LogWarning("More than one score instance found in the scene");
-			return;
-		}
-		instance = this;
-	}
-	#endregion
-
 	public static int score = 0;
-	Text score_text;
+	//Text score_text;
+	[SerializeField] TextMeshProUGUI scoreText;
 
 	KeywordsData keywords_data;
 
-    void Start()
+    protected override void Start()
     {
-		keywords_data = KeywordsData.instance;
-		score_text = GetComponentInChildren<Text>();
+		base.Start();
+
+		keywords_data = KeywordsData.Instance;
+		//score_text = GetComponentInChildren<Text>();
 
         score = 0;      // doing so avoids the score being carried when you restart the level
-		score_text.text = "Score: ₹" + score.ToString();
-    }
+		//score_text.text = "Score: ₹" + score.ToString();
+		scoreText.text = "Score: $" + score.ToString();
+	}
 	
     void Update()
     {
@@ -41,7 +32,7 @@ public class Score : MonoBehaviour
 	{
 		int bill_amount = keywords_data.dish_cost[dish];
 		score += bill_amount + tips;
-		score_text.text = "Score: ₹" + score.ToString();
+		scoreText.text = "Score: $" + score.ToString();
 
 		// play coins sound
 		GetComponent<AudioSource>().Play();

@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using SingletonBase;
 
-public class Utensils : MonoBehaviour
+public class Utensils : Singleton<Utensils>
 {
 	public delegate void onUtensilChanged();                   // invoke this delegate whenever any change occurs in the number of plates
 	public onUtensilChanged on_utensil_changed_callback;
@@ -12,16 +13,9 @@ public class Utensils : MonoBehaviour
 	public int[] utensil_count_arr;             // total numer of utensil instances present for serving... eg.- 4 plates, 2 bowls and 2 cups
 	public int[] clean_utensil_arr;             // tells how many of the utensils are clean at a given time
 
-	public static Utensils instance;			// singleton
-
-	void Awake()
+	protected override void Awake()
 	{
-		if (instance != null)
-		{
-			Debug.LogWarning("More than one Utensils instance found in the scene");
-			return;
-		}
-		instance = this;
+		base.Awake();
 
 		utensil_index_dict.Add("plates", 0);
 		utensil_index_dict.Add("bowls", 1);

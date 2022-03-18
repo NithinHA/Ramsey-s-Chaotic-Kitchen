@@ -3,23 +3,15 @@ using System.Collections.Generic;
 using System;
 using UnityEngine;
 using UnityEngine.Audio;
+using SingletonBase;
 
-public class AudioManager : MonoBehaviour
+public class AudioManager : Singleton<AudioManager>
 {
-	public static AudioManager instance;		// singleton class
-
 	public Sound[] sounds;
 
-	private void Awake()
+	protected override void Awake()
 	{
-		if (instance == null)
-			instance = this;
-		else
-		{
-			Destroy(gameObject);				// if an instance of AudioManager exists in the scene, destroy this gameobject
-			return;
-		}
-		DontDestroyOnLoad(gameObject);			// does not destroy existing gameobject when new scene is loaded
+		base.Awake();
 
 		foreach(Sound sound in sounds)			// for each sounds that can be played in game, add it to sounds array and set desired properties in the inspector
 		{
@@ -31,11 +23,6 @@ public class AudioManager : MonoBehaviour
 			sound.source.pitch = sound.pitch;
 		}
 	}
-
-	void Start()
-    {
-        
-    }
 	
     public void playSound(string name)
 	{

@@ -1,16 +1,15 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Text;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class ItemSlot : MonoBehaviour
 {
 	Item item;
 
-	public Image icon;						// applies to both inventory and orders
+	public Image icon;                      // applies to both inventory and orders
 
-	public Text name_text;					// applies to only orders
+	[SerializeField] private TextMeshProUGUI nameText;
 	public GameObject ingredients_panel;		// applies to only orders
 
 	public Button close_button;				// applies to only inventory
@@ -22,8 +21,8 @@ public class ItemSlot : MonoBehaviour
 		icon.sprite = item.icon;			// changes the sprite of icon in both inventory and orders to icon of this.item
 		icon.enabled = true;
 
-		if (name_text != null)
-			name_text.text = item.name + " -> ₹" + KeywordsData.instance.dish_cost[item];		// display name and cost of of the order
+		if (nameText != null)
+			nameText.text = item.name + " -> $" + KeywordsData.Instance.dish_cost[item];		// display name and cost of of the order
 
 		if(ingredients_panel != null)
 		{
@@ -54,8 +53,8 @@ public class ItemSlot : MonoBehaviour
 		icon.sprite = null;			// remove the sprite
 		icon.enabled = false;		// make the sprite not visible since null value will disply an ugly white square
 
-		if (name_text != null)
-			name_text.text = "";     // remove the display name
+		if (nameText != null)
+			nameText.text = "";     // remove the display name
 
 		if (ingredients_panel != null)
 		{
@@ -78,13 +77,13 @@ public class ItemSlot : MonoBehaviour
 		if (this.item != null)
 		{
 			Debug.Log("Item selected: " + item.name);
-			Test_script2.ts2.applyText("Item selected: " + item.name);
+			InstructionPanel.Instance.DisplayInstruction("Item selected: " + item.name);
 		}
 	}
 	
 	public void onCloseButton()
 	{
-		Inventory.instance.removeItem(item);
+		Inventory.Instance.removeItem(item);
 	}
 
 	public void onOrderButton()
@@ -99,7 +98,7 @@ public class ItemSlot : MonoBehaviour
 				sb.Append(" " + item.ingredients[i].name);
 			}
 			Debug.Log("Order selected: " + item.name + "\nIngredients:" + sb.ToString());
-			Test_script2.ts2.applyText("Order selected: " + item.name + "\nIngredients:" + sb.ToString());
+			InstructionPanel.Instance.DisplayInstruction("Order selected: " + item.name + "\nIngredients:" + sb.ToString());
 		}
 	}
 }

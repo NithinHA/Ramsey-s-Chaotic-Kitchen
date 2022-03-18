@@ -78,7 +78,7 @@ public class InitRecognition : MonoBehaviour
     {
 		keyword_recognizer.Stop();
 		Debug.Log(character.name + " called");
-		Test_script2.ts2.applyText(character.name + " called");
+		InstructionPanel.Instance.DisplayInstruction(character.name + " called");
 		CharacterAction characterAction = type == CharacterType.chef ? GetComponent<ChefAction>() as CharacterAction : 
 			GetComponent<WaiterAction>() as CharacterAction;
 		characterAction.Init(character);
@@ -96,16 +96,16 @@ public class InitRecognition : MonoBehaviour
 
     void showManual()
     {
-        ManualUI.instance.showManual();
+        ManualUI.Instance.showManual();
     }
 
     void restartGame()
 	{
-        SceneTransition.instance.restartLevel();
+        SceneTransition.Instance.restartLevel();
     }
 	
     void loadMainMenu()
     {
-        SceneTransition.instance.mainMenu();
+        SceneTransition.Instance.mainMenu();
     }
 }

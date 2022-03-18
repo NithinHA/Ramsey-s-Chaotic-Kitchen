@@ -13,7 +13,7 @@ public class Sink : MonoBehaviour
 
 	void Start()
     {
-		utensils = Utensils.instance;
+		utensils = Utensils.Instance;
 		
     }
 	
@@ -30,7 +30,7 @@ public class Sink : MonoBehaviour
 		int dirty_utensils = utensils.utensil_count_arr[utensil_index] - utensils.clean_utensil_arr[utensil_index];		// compute number of dirty utensils
 		float washing_time = utensil.time_to_prepare * dirty_utensils;									// compute time taken to wash dirty utensils
 		Debug.Log(utensil.name + " to wash:" + dirty_utensils + "\ntime taken:" + washing_time);
-		Test_script2.ts2.applyText(utensil.name + " to wash:" + dirty_utensils + "\ntime taken:" + washing_time);
+		InstructionPanel.Instance.DisplayInstruction(utensil.name + " to wash:" + dirty_utensils + "\ntime taken:" + washing_time);
 		StartCoroutine(washing_utensils(washing_time, utensil_index));
 	}
 

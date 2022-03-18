@@ -1,22 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using SingletonBase;
 
-public class Inventory : MonoBehaviour
+public class Inventory : Singleton<Inventory>
 {
-	#region Singleton
-	public static Inventory instance;		// singleton
-	private void Awake()
-	{
-		if (instance != null)
-		{
-			Debug.LogWarning("More than one Inventory instance found in the scene");
-			return;
-		}
-		instance = this;
-	}
-	#endregion
-
 	public delegate void onItemChanged();					// invoke this delegate whenever a new item is added to inventory, or an existing item is removed from inventory
 	public onItemChanged on_item_changed_callback;
 

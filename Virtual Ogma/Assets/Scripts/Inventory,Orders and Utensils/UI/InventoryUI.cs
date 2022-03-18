@@ -11,7 +11,7 @@ public class InventoryUI : MonoBehaviour
 
     void Start()
     {
-		inventory = Inventory.instance;
+		inventory = Inventory.Instance;
 		inventory.on_item_changed_callback += updateUI;
 
 		slots = inventory_panel.GetComponentsInChildren<ItemSlot>();

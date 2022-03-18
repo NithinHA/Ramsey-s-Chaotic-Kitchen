@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class Customer : MonoBehaviour
 {
@@ -12,7 +13,6 @@ public class Customer : MonoBehaviour
 	float time_of_order;                    // time at which was made. Used to compute total waiting time of a customer
 	int tips;								// additional score that player gets for serving food early to this customer
 
-	Orders orders;						// singleton instance of Orders class
 	Item[] dishes;						// list of all dish Items taken from KeywordsData class
 	public Item dish;					//current dish
 
@@ -30,16 +30,25 @@ public class Customer : MonoBehaviour
 
 	[Header("table_top GameObject")]
 	public GameObject table_top;
+	[SerializeField] private CustomerOrderBubble orderBubblePrefab;
+	[SerializeField] private Transform bubbleParent;
+
+	public Action<Item> onFoodOrdered;
+	public Action onFoodServed;
+
+	private CustomerOrderBubble orderBubble;
 
     void Start()
     {
 		cur_time = start_time;
 
-		dishes = KeywordsData.instance.dish_arr;
-		orders = Orders.instance;
+		dishes = KeywordsData.Instance.dish_arr;
 
         anim = lego_customer.GetComponent<Animator>();
 		default_mat = table_top.GetComponent<Renderer>().material;
+
+		orderBubble = Instantiate(orderBubblePrefab, bubbleParent);
+		orderBubble.Init(this, transform);
     }
 	
     void Update()
@@ -53,7 +62,7 @@ public class Customer : MonoBehaviour
 			else
 			{
 				Debug.Log("I want to order something..");
-				Test_script2.ts2.applyText("I want to order something");
+				InstructionPanel.Instance.DisplayInstruction("I want to order something");
 
                 anim.SetBool("is_eating", false);    // stop eating animation
                 anim.SetBool("is_ordering", true);   // play ordering animation
@@ -74,30 +83,31 @@ public class Customer : MonoBehaviour
 
 	public void order_food()		// called when player says, "TAKE ORDER FROM TABLE __"
 	{
-		this.dish = dishes[Random.Range(0, dishes.Length)];
-		bool has_added = orders.addItem(this.dish);      // add this.dish to orders list
+		this.dish = dishes[UnityEngine.Random.Range(0, dishes.Length)];
+		bool has_added = Orders.Instance.addItem(this.dish);      // add this.dish to orders list
 		if (has_added)
 		{
 			Debug.Log(this.dish.name + " added to orders list");
-			Test_script2.ts2.applyText(this.dish.name + " added to orders list");
+			InstructionPanel.Instance.DisplayInstruction(this.dish.name + " added to orders list");
 		}
 		else
 		{
 			Debug.Log("can not add " + this.dish.name + " to orders list");
-			Test_script2.ts2.applyText("can not add " + this.dish.name + " to orders list");
+			InstructionPanel.Instance.DisplayInstruction("can not add " + this.dish.name + " to orders list");
 			is_ordering = true;				// so that the waiter can come back and take order some other time
 			return;
 		}
         anim.SetBool("is_ordering", false);      // stop ordering animation and go to idle animation
 
-        table_top.GetComponent<Renderer>().material = food_to_be_served_indication_mat;		// make table orange color indicating customer is waiting for the dish to be served
-		
+        table_top.GetComponent<Renderer>().material = food_to_be_served_indication_mat;     // make table orange color indicating customer is waiting for the dish to be served
+
+		onFoodOrdered?.Invoke(dish);
 	}
 
 	public void food_served()       // called when player says, "SERVE TABLE __"
 	{
 		is_served = true;
-		orders.removeItem(this.dish);           // remove dish from orders list
+		Orders.Instance.removeItem(this.dish);           // remove dish from orders list
 
         anim.SetBool("is_eating", true);        // play eating animation
 
@@ -114,14 +124,15 @@ public class Customer : MonoBehaviour
 			tips = 0;
 		}
 		Debug.Log("Tips received = " + tips);
-		Test_script2.ts2.applyText("Tips received = " + tips);
+		InstructionPanel.Instance.DisplayInstruction("Tips received = " + tips);
 		
-		Score.instance.payBill(this.dish, tips);		// update score text
+		Score.Instance.payBill(this.dish, tips);		// update score text
 
 		this.dish = null;				// reset dish to null
 		tips = 0;						// reset tips value to 0
 		time_of_order = -1;				// reset time_of_order to -1
 		// removing dish from inventory and decrementing clean utensil count is done in WaiterAction class
-		table_top.GetComponent<Renderer>().material = default_mat;	// make table original color indicating customer has been served and is eating the dish
+		table_top.GetComponent<Renderer>().material = default_mat;  // make table original color indicating customer has been served and is eating the dish
+		onFoodServed?.Invoke();
 	}
 }

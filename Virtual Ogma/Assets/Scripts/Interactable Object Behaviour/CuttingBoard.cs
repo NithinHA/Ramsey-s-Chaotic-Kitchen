@@ -37,7 +37,7 @@ public class CuttingBoard : MonoBehaviour
 		Destroy(countdown_display, food_item.time_to_prepare);
 
 		// display particle effects for chopping action
-		GameObject chopping_particles = Instantiate(KeywordsData.instance.item_particles_dict[food_item], transform.position + new Vector3(0, .5f, 0), Quaternion.identity);
+		GameObject chopping_particles = Instantiate(KeywordsData.Instance.item_particles_dict[food_item], transform.position + new Vector3(0, .5f, 0), Quaternion.identity);
 		chopping_particles.transform.SetParent(transform);
 
 		// play chopping sound
@@ -53,7 +53,7 @@ public class CuttingBoard : MonoBehaviour
 		GetComponent<AudioSource>().Stop();
 
 		// add chopped fruits, vegetables or meat (food_item) to inventory... DONE
-		bool has_added = Inventory.instance.addItem(food_item);
+		bool has_added = Inventory.Instance.addItem(food_item);
 		if (has_added)
 			Debug.Log(food_item.name + " added to inventory");
 		else

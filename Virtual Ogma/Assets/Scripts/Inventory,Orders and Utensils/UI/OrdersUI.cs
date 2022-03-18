@@ -1,12 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class OrdersUI : MonoBehaviour
 {
 	public Transform orders_panel;
-	Orders orders;
 
 	ItemSlot[] slots;
 
@@ -14,24 +12,29 @@ public class OrdersUI : MonoBehaviour
 
 	void Start()
 	{
-		orders = Orders.instance;
-		orders.on_order_changed_callback += updateUI;
+		Orders.Instance.onOrderListUpdate += UpdateUI;
 
 		slots = orders_panel.GetComponentsInChildren<ItemSlot>();
 	}
 
-	void Update()
+    private void OnDestroy()
+    {
+		if(Orders.Instance != null)
+			Orders.Instance.onOrderListUpdate -= UpdateUI;
+    }
+
+    void Update()
 	{
 
 	}
 
-	void updateUI()
+	void UpdateUI()
 	{
 		for (int i = 0; i < slots.Length; i++)
 		{
-			if (i < orders.orders_list.Count)
+			if (i < Orders.Instance.orders_list.Count)
 			{
-				slots[i].addItem(orders.orders_list[i]);
+				slots[i].addItem(Orders.Instance.orders_list[i]);
 			}
 			else
 			{
@@ -51,12 +54,12 @@ public class OrdersUI : MonoBehaviour
 		if (is_shrink)
 		{
 			transform.GetComponent<RectTransform>().sizeDelta = new Vector2(250, 260);
-			info_toggle_button.GetComponentInChildren<Text>().text = "H\nI\nD\nE";
+			info_toggle_button.GetComponentInChildren<TextMeshProUGUI>().text = "H\nI\nD\nE";
 		}
 		else
 		{
 			transform.GetComponent<RectTransform>().sizeDelta = new Vector2(75, 260);
-			info_toggle_button.GetComponentInChildren<Text>().text = "S\nH\nO\nW";
+			info_toggle_button.GetComponentInChildren<TextMeshProUGUI>().text = "S\nH\nO\nW";
 		}
 	}
 }

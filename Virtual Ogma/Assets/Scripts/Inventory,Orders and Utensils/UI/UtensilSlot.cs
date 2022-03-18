@@ -1,7 +1,7 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class UtensilSlot : MonoBehaviour
 {
@@ -10,8 +10,10 @@ public class UtensilSlot : MonoBehaviour
 
 	[Header("UI")]
 	public Image image;
-	public Text name_text;
-	public Text count_text;
+	//public Text name_text;
+	public TextMeshProUGUI nameText;
+	//public Text count_text;
+	public TextMeshProUGUI countText;
 
 	[Header("Empty utensil indicator")]
 	[SerializeField] private Color blink_color;
@@ -23,10 +25,10 @@ public class UtensilSlot : MonoBehaviour
 
     void Start()
     {
-		utensils = Utensils.instance;
+		utensils = Utensils.Instance;
 		image.sprite = utensil_item.icon;
-		name_text.text = utensil_item.name;
-		count_text.text = utensils.clean_utensil_arr[utensils.utensil_index_dict[utensil_item.name]].ToString();
+		nameText.text = utensil_item.name;
+		countText.text = utensils.clean_utensil_arr[utensils.utensil_index_dict[utensil_item.name]].ToString();
 
 		utensils.on_utensil_changed_callback += updateUtensilsUI;
 	}
@@ -38,7 +40,7 @@ public class UtensilSlot : MonoBehaviour
 	
 	public void updateUtensilsUI()
 	{
-		count_text.text = utensils.clean_utensil_arr[utensils.utensil_index_dict[utensil_item.name]].ToString();
+		countText.text = utensils.clean_utensil_arr[utensils.utensil_index_dict[utensil_item.name]].ToString();
 	}
 
 	public void blinkSlot()

@@ -58,7 +58,7 @@ public class Cooker : MonoBehaviour
 			is_cooking = true;      // eg.- "alice boil rice at a" followed by "bob turn off cooker a" immediately. Without this check, it will result in "Overcooked".
 		string food_item_name = food_item.name.Split()[1];
 		Debug.Log("cooking " + food_item_name);
-		Test_script2.ts2.applyText("cooking " + food_item_name);
+		InstructionPanel.Instance.DisplayInstruction("cooking " + food_item_name);
 		this.food_item = food_item;
 		//stove.material = cooking_mat;			// indicates that stove is lit and food_item is being cooked
 		cooking_delay_coroutine = StartCoroutine(cooking_delay(food_item_name));
@@ -82,12 +82,12 @@ public class Cooker : MonoBehaviour
 
 		yield return new WaitForSeconds(food_item.time_to_prepare);
 		Debug.Log(food_item_name + " cooked");
-		Test_script2.ts2.applyText(food_item_name + " cooked");
+		InstructionPanel.Instance.DisplayInstruction(food_item_name + " cooked");
 		is_cooked = true;						// at this time, both is_cooking and is_cooked  will be true and system waits for user to turn off cooker
 		//stove.material = cooked_mat;			// indicates that food_item is cooked and you may turn off the stove
 
 		Debug.Log("indicate turn off cooker!");
-		Test_script2.ts2.applyText("indicate turn off cooker");
+		InstructionPanel.Instance.DisplayInstruction("indicate turn off cooker");
 		spoiling_delay_coroutine = StartCoroutine(spoiling_delay());
 	}
 
@@ -107,7 +107,7 @@ public class Cooker : MonoBehaviour
 		is_cooking = false;
 		is_cooked = false;
 		Debug.Log("Overcooked!");
-		Test_script2.ts2.applyText("Overcooked");
+		InstructionPanel.Instance.DisplayInstruction("Overcooked");
 
 		// turn off flame automatically
 		if(flame_particles != null)
@@ -146,13 +146,13 @@ public class Cooker : MonoBehaviour
 		if (is_cooked)
 		{
 			// add cooked rice or cooked noodles (food_item) to inventory... DONE
-			bool has_added = Inventory.instance.addItem(food_item);
+			bool has_added = Inventory.Instance.addItem(food_item);
 			if (has_added) {
 				Debug.Log(food_item.name + " added to inventory");
-				Test_script2.ts2.applyText(food_item.name + " added to inventory");
+				InstructionPanel.Instance.DisplayInstruction(food_item.name + " added to inventory");
 			} else {
 				Debug.Log("can not add " + food_item.name + " to inventory");
-				Test_script2.ts2.applyText("can not add " + food_item.name + " to inventory");
+				InstructionPanel.Instance.DisplayInstruction("can not add " + food_item.name + " to inventory");
 			}
 		}
 		is_cooking = false;
@@ -175,7 +175,7 @@ public class Cooker : MonoBehaviour
 		cooker_flame_audio.Stop();
 
 		Debug.Log("cooking stops");
-		Test_script2.ts2.applyText("cooking stops");
+		InstructionPanel.Instance.DisplayInstruction("cooking stops");
 
 		//stove.material = default_mat;		// indicates cooking is over and stove is turned off
 	}

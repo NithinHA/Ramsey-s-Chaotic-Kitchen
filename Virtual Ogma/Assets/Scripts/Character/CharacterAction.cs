@@ -34,7 +34,7 @@ public class CharacterAction : MonoBehaviour
 			if (!keyword_recognizer.IsRunning && is_listening)
 			{
 				Debug.Log("give a command");
-				Test_script2.ts2.applyText("give a command");
+				InstructionPanel.Instance.DisplayInstruction("give a command");
 				keyword_recognizer.Start();
 			}
 		}
@@ -55,7 +55,7 @@ public class CharacterAction : MonoBehaviour
 		Action keyword_action;
 		if (keywords_dict.TryGetValue(args.text, out keyword_action))
 		{
-			Test_script2.ts2.applyText(args.text);
+			InstructionPanel.Instance.DisplayInstruction(args.text);
 			keyword_action.Invoke();
 		}
 	}

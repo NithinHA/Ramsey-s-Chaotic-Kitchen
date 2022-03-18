@@ -6,6 +6,6 @@ public class LevelController : MonoBehaviour
 {
     private void Start()
     {
-        AudioManager.instance.playSound("ambient_bg");
+        AudioManager.Instance.playSound("ambient_bg");
     }
 }

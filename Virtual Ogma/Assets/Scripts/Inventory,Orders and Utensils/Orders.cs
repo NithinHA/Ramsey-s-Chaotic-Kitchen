@@ -1,24 +1,11 @@
-﻿using System.Collections;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using SingletonBase;
 
-public class Orders : MonoBehaviour
+public class Orders : Singleton<Orders>
 {
-	#region Singleton
-	public static Orders instance;       // singleton
-	private void Awake()
-	{
-		if (instance != null)
-		{
-			Debug.LogWarning("More than one Orders instance found in the scene");
-			return;
-		}
-		instance = this;
-	}
-	#endregion
-
-	public delegate void onOrderChanged();                   // invoke this delegate whenever a new dish is added to orders_list, or an existing item is removed from orders_list
-	public onOrderChanged on_order_changed_callback;
+	public Action onOrderListUpdate;
 
 	public int order_space = 20;
 	public List<Item> orders_list = new List<Item>();
@@ -32,17 +19,14 @@ public class Orders : MonoBehaviour
 		}
 		orders_list.Add(item);
 
-		if (on_order_changed_callback != null)
-			on_order_changed_callback.Invoke();      // invoke delegate on adding new dish to orders_list
-
+		onOrderListUpdate?.Invoke();
 		return true;
 	}
 
 	public void removeItem(Item item)
 	{
 		orders_list.Remove(item);
-		if (on_order_changed_callback != null)
-			on_order_changed_callback.Invoke();      // invoke delegate on removing a dish from orders_list
+		onOrderListUpdate?.Invoke();
 	}
 
 	public bool isItemPresent(Item dish)			// probably would not need this method.. but let's see

@@ -1,11 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using SingletonBase;
 
-public class KeywordsData : MonoBehaviour
+public class KeywordsData : Singleton<KeywordsData>
 {
-	public static KeywordsData instance;	// Singleton instance of class KeywordsData
-
 	[Header("Chef data")]
 	public List<string> chef_keywords_2 = new List<string>();
 
@@ -33,15 +32,10 @@ public class KeywordsData : MonoBehaviour
 
 	[SerializeField] List<Item> all_items = new List<Item>();
 
-	void Awake()
+	protected override void Awake()
     {
-		if (instance != null)
-		{
-			Debug.LogWarning("More than one KeywordsData instance found in the scene");
-			return;
-		}
-		instance = this;
-		
+		base.Awake();
+
 		for (int i = 0; i < item_arr.Length; i++)                                           // initialize item_positoins dictionary
 		{
 			game_item_positions.Add(item_arr[i], item_positions[i]);

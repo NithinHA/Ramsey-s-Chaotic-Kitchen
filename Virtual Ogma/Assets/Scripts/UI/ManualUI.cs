@@ -1,22 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using SingletonBase;
 
-public class ManualUI : MonoBehaviour
+public class ManualUI : Singleton<ManualUI>
 {
     public GameObject manual_body;
     public GameObject main_panel;
-
-    public static ManualUI instance;
-    void Awake()
-    {
-        instance = this;
-    }
-
-    void Update()
-    {
-        
-    }
 
     public void showManual()
     {

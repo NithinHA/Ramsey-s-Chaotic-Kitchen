@@ -2,56 +2,59 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using DG.Tweening;
+using SingletonBase;
 
-public class SceneTransition : MonoBehaviour
+public class SceneTransition : Singleton<SceneTransition>
 {
-    Animator anim;
-
-    public static SceneTransition instance;
-    void Awake()
-    {
-        instance = this;
-
-        anim = GetComponent<Animator>();
-    }
-
-    private void Update()
-    {
-        
-    }
+    [SerializeField] private Transform m_LeftWall;
+    [SerializeField] private Transform m_RightWall;
+    [SerializeField] private float m_TransitDuration = .7f;
 
     public void restartLevel()
     {
         int scene_index = SceneManager.GetActiveScene().buildIndex;     // get current scene index
-        StartCoroutine(sceneTransitionCoroutine(scene_index));
+        TransitScene(scene_index);
     }
 
     public void mainMenu()
     {
-        StartCoroutine(sceneTransitionCoroutine("main_menu"));
+        TransitScene("main_menu");
     }
 
-    public void sceneTransition(int scene_index)        // assign this method to buttons in the end-game canvas
+    public void TransitScene(int sceneIndex)        // assign this method to buttons in the end-game canvas
     {
-        StartCoroutine(sceneTransitionCoroutine(scene_index));
+        Sequence mySequence = DOTween.Sequence();
+        mySequence.Join(m_LeftWall.DOScaleX(1, m_TransitDuration))
+        .Join(m_RightWall.DOScaleX(1, m_TransitDuration))
+        .SetEase(Ease.OutSine)
+        .AppendCallback(() =>
+        {
+            SceneManager.sceneLoaded += PostSceneTransit;
+            SceneManager.LoadScene(sceneIndex);
+        });
     }
 
-    public void sceneTransition(string scene_name)
+    public void TransitScene(string sceneName)
     {
-        StartCoroutine(sceneTransitionCoroutine(scene_name));
+        Sequence mySequence = DOTween.Sequence();
+        mySequence.Join(m_LeftWall.DOScaleX(1, m_TransitDuration))
+        .Join(m_RightWall.DOScaleX(1, m_TransitDuration))
+        .SetEase(Ease.OutSine)
+        .AppendCallback(() =>
+        {
+            SceneManager.sceneLoaded += PostSceneTransit;
+            SceneManager.LoadScene(sceneName);
+        });
     }
 
-    IEnumerator sceneTransitionCoroutine(int scene_index)
+    private void PostSceneTransit(Scene scene, LoadSceneMode mode)
     {
-        anim.SetTrigger("end");
-        yield return new WaitForSeconds(1);
-        SceneManager.LoadScene(scene_index);
-    }
+        SceneManager.sceneLoaded -= PostSceneTransit; 
 
-    IEnumerator sceneTransitionCoroutine(string scene_name)
-    {
-        anim.SetTrigger("end");
-        yield return new WaitForSeconds(1);
-        SceneManager.LoadScene(scene_name);
+        Sequence mySequence = DOTween.Sequence();
+        mySequence.Join(m_LeftWall.DOScaleX(0, m_TransitDuration))
+        .Join(m_RightWall.DOScaleX(0, m_TransitDuration))
+        .SetEase(Ease.InSine);
     }
 }

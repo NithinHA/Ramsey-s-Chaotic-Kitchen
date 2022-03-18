@@ -13,8 +13,8 @@ public class WaiterAction : CharacterAction
 
 	void Start()
 	{
-		inventory = Inventory.instance;             // get the Singleton instance of Inventory Class
-		keywords_data = KeywordsData.instance;      // get the Singleton instance of KeywordsData Class
+		inventory = Inventory.Instance;             // get the Singleton instance of Inventory Class
+		keywords_data = KeywordsData.Instance;      // get the Singleton instance of KeywordsData Class
 		characterType = CharacterType.waiter;
 
 		keywords_list = keywords_data.waiter_keywords_2;
@@ -118,10 +118,10 @@ public class WaiterAction : CharacterAction
 				character.GetComponent<Player>().PlayVoiceOver(VoiceOverTypes.ActionNegative);
 				yield break;
 			}
-			if (!Utensils.instance.checkUtensilAvailability(food_item.served_in))       // check if utensil to serve food in is available.
+			if (!Utensils.Instance.checkUtensilAvailability(food_item.served_in))       // check if utensil to serve food in is available.
 			{
 				character.GetComponent<Player>().PlayVoiceOver(VoiceOverTypes.ActionNegative);
-				Utensils.instance.utensilUnavailableIndicator(food_item.served_in);     //indicate utensil are unavailable by blinking utensil_slot
+				Utensils.Instance.utensilUnavailableIndicator(food_item.served_in);     //indicate utensil are unavailable by blinking utensil_slot
 				yield break;
 			}
 			character.GetComponent<Player>().PlayVoiceOver(VoiceOverTypes.ActionPositive);
@@ -136,7 +136,7 @@ public class WaiterAction : CharacterAction
             //move player to serve food
             anim.SetBool("is_walking", true);       // play walking anim
             Debug.Log("serve " + food_item.name + " to table " + table_name);
-			Test_script2.ts2.applyText("serve " + food_item.name + " to table " + table_name);
+			InstructionPanel.Instance.DisplayInstruction("serve " + food_item.name + " to table " + table_name);
 			ch.target = all_transforms[0].position;
 			ch.target_reached = false;
 			while (!ch.target_reached)
@@ -154,7 +154,7 @@ public class WaiterAction : CharacterAction
 				cu.food_served();			// removes the dish from orders_list and some other actions take place 
 				//remove dish from inventory and one utensil instance
 				inventory.removeItem(food_item);
-				Utensils.instance.removeOneUtensil(food_item.served_in);
+				Utensils.Instance.removeOneUtensil(food_item.served_in);
 			}
 
             //move player to starting position
