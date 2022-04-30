@@ -2,6 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using DG.Tweening;
 
 public class ItemSlot : MonoBehaviour
 {
@@ -9,6 +10,7 @@ public class ItemSlot : MonoBehaviour
 
 	public Image icon;                      // applies to both inventory and orders
 
+	[SerializeField] private Transform m_InfoPanel;
 	[SerializeField] private TextMeshProUGUI nameText;
 	public GameObject ingredients_panel;		// applies to only orders
 
@@ -68,6 +70,21 @@ public class ItemSlot : MonoBehaviour
 
 		if (close_button != null)
 			close_button.interactable = false;			// disable remove item button from inventory
+	}
+
+	public void ToggleSlot(bool active, float time = .5f)
+    {
+		float targetVal = active ? 1 : 0;
+		if(active)
+			m_InfoPanel.gameObject.SetActive(true);
+
+		m_InfoPanel.DOScaleX(targetVal, time)
+			.SetEase(Ease.OutExpo)
+			.OnComplete(() => 
+			{ 
+				if (!active) 
+					m_InfoPanel.gameObject.SetActive(false); 
+			});
 	}
 
 	/////////////// Buttons ///////////////

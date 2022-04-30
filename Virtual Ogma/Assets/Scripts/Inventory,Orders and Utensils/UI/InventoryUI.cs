@@ -1,15 +1,19 @@
-﻿using System.Collections;
+﻿using DG.Tweening;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class InventoryUI : MonoBehaviour
 {
 	public Transform inventory_panel;
-	Inventory inventory;
+	[SerializeField] private float m_TransitTime = .5f;
 
+	Inventory inventory;
 	ItemSlot[] slots;
 
-    void Start()
+	private bool _isShrink = true;
+
+	void Start()
     {
 		inventory = Inventory.Instance;
 		inventory.on_item_changed_callback += updateUI;
@@ -39,6 +43,17 @@ public class InventoryUI : MonoBehaviour
 
 	public void toggleInventory()
 	{
-		inventory_panel.gameObject.SetActive(!inventory_panel.gameObject.activeSelf);
+		_isShrink = !_isShrink;
+		if (!_isShrink)
+			inventory_panel.gameObject.SetActive(true);
+
+		float target = _isShrink ? 0 : 1;
+		inventory_panel.DOScale(target, m_TransitTime)
+			.SetEase(Ease.OutExpo)
+			.OnComplete(() =>
+			{
+				if (_isShrink)
+					inventory_panel.gameObject.SetActive(false);
+			});
 	}
 }

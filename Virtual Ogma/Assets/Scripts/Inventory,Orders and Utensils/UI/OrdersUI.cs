@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using DG.Tweening;
 
 public class OrdersUI : MonoBehaviour
 {
@@ -8,7 +9,16 @@ public class OrdersUI : MonoBehaviour
 
 	ItemSlot[] slots;
 
-	[SerializeField] private Button info_toggle_button;
+	[SerializeField] private TextMeshProUGUI m_OrdersButtonText;
+	[SerializeField] private RectTransform m_OrdersContainerRect;
+	[Space]
+	[SerializeField] private float m_TransitTime = .5f;
+	[SerializeField] private float m_ContainerMin = 75f;
+	[SerializeField] private float m_ContainerMax = 250f;
+	[SerializeField] private string m_OrdersBtTextHide = "H\nI\nD\nE";
+	[SerializeField] private string m_OrdersBtTextShow = "S\nH\nO\nW";
+
+	private bool _isShrink = true;
 
 	void Start()
 	{
@@ -45,21 +55,13 @@ public class OrdersUI : MonoBehaviour
 
 	public void toggleOrdersInfo()
 	{
-		bool is_shrink = !slots[0].transform.Find("info_panel").gameObject.activeSelf;					// !!!!!! Find GameObject with name !!!!!!
+		_isShrink = !_isShrink;
 		foreach (ItemSlot slot in slots)
-		{
-			slot.transform.Find("info_panel").gameObject.SetActive(!slot.transform.Find("info_panel").gameObject.activeSelf);       // !!!!!! Find GameObject with name !!!!!!
-		}
+			slot.ToggleSlot(!_isShrink, m_TransitTime);
 
-		if (is_shrink)
-		{
-			transform.GetComponent<RectTransform>().sizeDelta = new Vector2(250, 260);
-			info_toggle_button.GetComponentInChildren<TextMeshProUGUI>().text = "H\nI\nD\nE";
-		}
-		else
-		{
-			transform.GetComponent<RectTransform>().sizeDelta = new Vector2(75, 260);
-			info_toggle_button.GetComponentInChildren<TextMeshProUGUI>().text = "S\nH\nO\nW";
-		}
+		Vector2 targetSize = new Vector2(_isShrink ? m_ContainerMin : m_ContainerMax, m_OrdersContainerRect.sizeDelta.y);
+		m_OrdersContainerRect.DOSizeDelta(targetSize, m_TransitTime)
+			.SetEase(Ease.OutExpo)
+			.OnComplete(() => m_OrdersButtonText.text = _isShrink ? m_OrdersBtTextShow : m_OrdersBtTextHide);
 	}
 }
