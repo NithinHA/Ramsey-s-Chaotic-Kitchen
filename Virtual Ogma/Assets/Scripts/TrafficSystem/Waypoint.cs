@@ -8,6 +8,9 @@ public class Waypoint : MonoBehaviour
     public Waypoint Next;
     [Range(0f, 8f)] public float Width = 5f;
 
+    public List<Waypoint> Branches = new List<Waypoint>();
+    [Range(0, 1)] public float BranchRatio = .5f;
+
     public Vector3 GetPosition()
     {
         Vector3 minBound = transform.position + transform.right * Width / 2f;
