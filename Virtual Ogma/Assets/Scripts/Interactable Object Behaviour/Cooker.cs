@@ -18,6 +18,7 @@ public class Cooker : MonoBehaviour
 	private Coroutine spoiling_delay_coroutine;
 
 	[SerializeField] private GameObject countdown_display_prefab;
+	[SerializeField] private Transform m_CountdownDisplayTransform;
 	private GameObject countdown_display;
 
 	[Header("Particles:")]
@@ -67,7 +68,7 @@ public class Cooker : MonoBehaviour
 	IEnumerator cooking_delay(string food_item_name)
 	{
 		// displpay the countdown_timer and then delete it after the countdown is over
-		countdown_display = Instantiate(countdown_display_prefab, transform.position + new Vector3(0, 1, .5f), Quaternion.Euler(new Vector3(45, 0, 0)));
+		countdown_display = Instantiate(countdown_display_prefab, m_CountdownDisplayTransform.position, Quaternion.Euler(new Vector3(45, 0, 0)));
 		countdown_display.transform.SetParent(transform);
 		countdown_display.GetComponentInChildren<CountdownDisplay>().setTimer(food_item.time_to_prepare);
 		Destroy(countdown_display, food_item.time_to_prepare);
@@ -94,7 +95,7 @@ public class Cooker : MonoBehaviour
 	IEnumerator spoiling_delay()
 	{
 		// displpay the countdown_timer and then delete it after the countdown is over
-		countdown_display = Instantiate(countdown_display_prefab, transform.position + new Vector3(0, 1, .5f), Quaternion.Euler(new Vector3(45, 0, 0)));
+		countdown_display = Instantiate(countdown_display_prefab, m_CountdownDisplayTransform.position, Quaternion.Euler(new Vector3(45, 0, 0)));
 		countdown_display.transform.SetParent(transform);
 		countdown_display.GetComponentInChildren<CountdownDisplay>().setTimer(time_to_spoil);
 		Destroy(countdown_display, time_to_spoil);

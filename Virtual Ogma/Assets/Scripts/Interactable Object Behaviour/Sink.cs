@@ -8,8 +8,8 @@ public class Sink : MonoBehaviour
 	Utensils utensils;
 
 	[SerializeField] private GameObject countdown_display_prefab;
-
 	[SerializeField] private GameObject tapwater_particles_prefab;
+	[SerializeField] private Transform m_NozzlePoint;
 
 	void Start()
     {
@@ -43,7 +43,7 @@ public class Sink : MonoBehaviour
 		Destroy(countdown_display, washing_time);
 
 		// display tap water particles
-		GameObject tapwater_particles = Instantiate(tapwater_particles_prefab, transform.position + new Vector3(0, .8f, 0), Quaternion.identity);
+		GameObject tapwater_particles = Instantiate(tapwater_particles_prefab, m_NozzlePoint.position, Quaternion.identity);
 		tapwater_particles.transform.SetParent(transform);
 
 		// play wash_basin sound
