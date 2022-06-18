@@ -1333,15 +1333,16 @@ MonoBehaviour:
   vo_NameCalled:
     voiceOverType: 0
     voiceOverClips:
-    - {fileID: 8300000, guid: 69cd35f5f51182349ad620a5f184b708, type: 3}
-    - {fileID: 8300000, guid: 710104ef92603b248a1f5b4a6b250e4c, type: 3}
+    - {fileID: 8300000, guid: e6a3ba27db942e24fa7a1239973ca2a6, type: 3}
+    - {fileID: 8300000, guid: bb10da2539fdff1449b4549b8d8326de, type: 3}
+    - {fileID: 8300000, guid: 54a234c2c69a0ba4885e2f265dddcf7a, type: 3}
   vo_ActionPositive:
-    voiceOverType: 0
+    voiceOverType: 1
     voiceOverClips:
-    - {fileID: 8300000, guid: c76de4ef5626c5a45b96a649a6af42c2, type: 3}
-    - {fileID: 8300000, guid: 0a4dde091495a584c88b206e61338608, type: 3}
+    - {fileID: 8300000, guid: 765ecf6492049b34daabd82ab23271a0, type: 3}
+    - {fileID: 8300000, guid: bb10da2539fdff1449b4549b8d8326de, type: 3}
   vo_ActionNegative:
-    voiceOverType: 0
+    voiceOverType: 2
     voiceOverClips:
     - {fileID: 8300000, guid: 443c027042560d345acf7c75d80a084b, type: 3}
   chef_interactable:

@@ -321,13 +321,16 @@ MonoBehaviour:
   vo_NameCalled:
     voiceOverType: 0
     voiceOverClips:
-    - {fileID: 8300000, guid: d122706adb7bff4489aa496d6b941b7e, type: 3}
+    - {fileID: 8300000, guid: 3d213bacab40f6543ade1ba00125df98, type: 3}
+    - {fileID: 8300000, guid: efc2c3056df36174885c0b1bbf8e4046, type: 3}
+    - {fileID: 8300000, guid: dc8c7c86b79b5f9458a9343dda64776f, type: 3}
   vo_ActionPositive:
-    voiceOverType: 0
+    voiceOverType: 1
     voiceOverClips:
-    - {fileID: 8300000, guid: 47b7bcb7b85d57e4ea3298c005eb57d6, type: 3}
+    - {fileID: 8300000, guid: e56c38b5fd0127747a15f642383390a8, type: 3}
+    - {fileID: 8300000, guid: dc8c7c86b79b5f9458a9343dda64776f, type: 3}
   vo_ActionNegative:
-    voiceOverType: 0
+    voiceOverType: 2
     voiceOverClips:
     - {fileID: 8300000, guid: 443c027042560d345acf7c75d80a084b, type: 3}
   waiter_interactable:

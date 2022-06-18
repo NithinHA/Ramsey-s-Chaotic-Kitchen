@@ -15232,6 +15232,31 @@ PrefabInstance:
       propertyPath: chef_positions.Array.data[9]
       value: 
       objectReference: {fileID: 560962647}
+    - target: {fileID: 6123485399651095107, guid: 5a6d661c48cd1ba4fbebfe1dfb1fe384,
+        type: 3}
+      propertyPath: vo_NameCalled.voiceOverClips.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: 1bb7ebdb7d217574d97b2a3fcb82c0f6, type: 3}
+    - target: {fileID: 6123485399651095107, guid: 5a6d661c48cd1ba4fbebfe1dfb1fe384,
+        type: 3}
+      propertyPath: vo_NameCalled.voiceOverClips.Array.data[1]
+      value: 
+      objectReference: {fileID: 8300000, guid: 19d4ea39bb53e1a4ca2a0488093b8923, type: 3}
+    - target: {fileID: 6123485399651095107, guid: 5a6d661c48cd1ba4fbebfe1dfb1fe384,
+        type: 3}
+      propertyPath: vo_NameCalled.voiceOverClips.Array.data[2]
+      value: 
+      objectReference: {fileID: 8300000, guid: 97074a1b589183d47832a94ae0e2b88e, type: 3}
+    - target: {fileID: 6123485399651095107, guid: 5a6d661c48cd1ba4fbebfe1dfb1fe384,
+        type: 3}
+      propertyPath: vo_ActionPositive.voiceOverClips.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: 3790c8449a777b74d9a4b4fe89346a6d, type: 3}
+    - target: {fileID: 6123485399651095107, guid: 5a6d661c48cd1ba4fbebfe1dfb1fe384,
+        type: 3}
+      propertyPath: vo_ActionPositive.voiceOverClips.Array.data[1]
+      value: 
+      objectReference: {fileID: 8300000, guid: 97074a1b589183d47832a94ae0e2b88e, type: 3}
     - target: {fileID: 6123485401262119113, guid: 5a6d661c48cd1ba4fbebfe1dfb1fe384,
         type: 3}
       propertyPath: starting_transform
@@ -36793,12 +36818,12 @@ PrefabInstance:
     - target: {fileID: 6123485399651095107, guid: 5a6d661c48cd1ba4fbebfe1dfb1fe384,
         type: 3}
       propertyPath: vo_NameCalled.voiceOverClips.Array.size
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6123485399651095107, guid: 5a6d661c48cd1ba4fbebfe1dfb1fe384,
         type: 3}
       propertyPath: vo_ActionPositive.voiceOverClips.Array.size
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6123485399651095107, guid: 5a6d661c48cd1ba4fbebfe1dfb1fe384,
         type: 3}
@@ -36904,17 +36929,22 @@ PrefabInstance:
         type: 3}
       propertyPath: vo_NameCalled.voiceOverClips.Array.data[0]
       value: 
-      objectReference: {fileID: 8300000, guid: 541f04a9abc71f34492bc7d6aac834a9, type: 3}
+      objectReference: {fileID: 8300000, guid: e6a3ba27db942e24fa7a1239973ca2a6, type: 3}
     - target: {fileID: 6123485399651095107, guid: 5a6d661c48cd1ba4fbebfe1dfb1fe384,
         type: 3}
       propertyPath: vo_NameCalled.voiceOverClips.Array.data[1]
       value: 
-      objectReference: {fileID: 8300000, guid: ec1324b246d7a89428e3b0f47c0644dd, type: 3}
+      objectReference: {fileID: 8300000, guid: 54a234c2c69a0ba4885e2f265dddcf7a, type: 3}
     - target: {fileID: 6123485399651095107, guid: 5a6d661c48cd1ba4fbebfe1dfb1fe384,
         type: 3}
       propertyPath: vo_ActionPositive.voiceOverClips.Array.data[0]
       value: 
-      objectReference: {fileID: 8300000, guid: ec1324b246d7a89428e3b0f47c0644dd, type: 3}
+      objectReference: {fileID: 8300000, guid: 765ecf6492049b34daabd82ab23271a0, type: 3}
+    - target: {fileID: 6123485399651095107, guid: 5a6d661c48cd1ba4fbebfe1dfb1fe384,
+        type: 3}
+      propertyPath: vo_NameCalled.voiceOverClips.Array.data[2]
+      value: 
+      objectReference: {fileID: 8300000, guid: bb10da2539fdff1449b4549b8d8326de, type: 3}
     - target: {fileID: 6123485401262119113, guid: 5a6d661c48cd1ba4fbebfe1dfb1fe384,
         type: 3}
       propertyPath: starting_transform
