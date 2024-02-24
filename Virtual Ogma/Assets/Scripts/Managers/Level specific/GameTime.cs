@@ -8,10 +8,8 @@ using TMPro;
 
 public class GameTime : MonoBehaviour
 {
-    [SerializeField] private TextMeshProUGUI time_text;
-	public float game_time;
-	private string minutes;
-	private string seconds;
+	public float RemainingTime;
+	public static Action<float> OnGameTimeUpdate;
 
     void Start()
     {
@@ -23,32 +21,20 @@ public class GameTime : MonoBehaviour
 		if (LevelController.Instance.CurrentGameState != GameState.Running)
 			return;
 
-		if (game_time > 0.0f)
+		int valueBefore = Mathf.FloorToInt(RemainingTime);
+		
+		if (RemainingTime > 0.0f)
 		{
-			game_time -= Time.deltaTime;
+			RemainingTime -= Time.deltaTime;
 		}
 		else
 		{
-			game_time = 0.0f;
+			RemainingTime = 0.0f;
 			LevelController.Instance.ChangeGameState(GameState.End);
-			//has_game_ended = true;
 		}
 
-		// get minute-second format from seconds format
-		minutes = Mathf.Floor(game_time / 60).ToString("00");
-		seconds = (game_time % 60).ToString("00");
-
-		// display minutes and seconds on the screen
-		time_text.text = string.Format("{0}:{1}", minutes, seconds);
-
-		//else			// game is over
-		//{
-		//	if (Input.GetKeyDown(KeyCode.Space))			// restart the level
-		//	{
-		//		Score.score = 0;
-		//		Time.timeScale = 1;
-		//		SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-		//	}
-		//}
+		int valueAfter = Mathf.FloorToInt(RemainingTime);
+		if (valueBefore != valueAfter)
+			OnGameTimeUpdate?.Invoke(RemainingTime);	// gets invoked if the RemainingTime as integer changes.
     }
 }

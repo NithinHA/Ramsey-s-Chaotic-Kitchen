@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class CharacterData : MonoBehaviour
 {
+	public string CharacterName;
 	[Header("VoiceOver clips")]
 	public CharacterVoiceOvers vo_NameCalled;
 	public CharacterVoiceOvers vo_ActionPositive;

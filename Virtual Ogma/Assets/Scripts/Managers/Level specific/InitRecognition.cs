@@ -10,23 +10,23 @@ public class InitRecognition : MonoBehaviour
 	KeywordRecognizer keyword_recognizer;
 	Dictionary<string, Action> keywords = new Dictionary<string, Action>();
 	
-	public GameObject[] chefs;
-	public GameObject[] waiters;
+	public Player[] chefs;
+	public Player[] waiters;
 
 	[SerializeField] private InventoryUI inventory_UI;
 	[SerializeField] private OrdersUI orders_UI;
 
     void Start()
     {
-		foreach (GameObject chef in chefs)
-			keywords.Add(chef.name, () => InitCharacter(chef, CharacterType.chef));
-		foreach (GameObject waiter in waiters)
-			keywords.Add(waiter.name, () => InitCharacter(waiter, CharacterType.waiter));
-		keywords.Add("Inventory", () => openInventory());
-		keywords.Add("Orders", () => showOrders());
-        keywords.Add("Help", () => showManual());
-        keywords.Add("Restart", () => restartGame());
-        keywords.Add("Main menu", () => loadMainMenu());
+		foreach (Player chef in chefs)
+			keywords.Add(chef.characterData.CharacterName, () => InitCharacter(chef, CharacterType.chef));
+		foreach (Player waiter in waiters)
+			keywords.Add(waiter.characterData.CharacterName, () => InitCharacter(waiter, CharacterType.waiter));
+		keywords.Add(Constants.Keywords.Inventory, () => openInventory());
+		keywords.Add(Constants.Keywords.Orders, () => showOrders());
+        keywords.Add(Constants.Keywords.Help, () => showManual());
+        keywords.Add(Constants.Keywords.Restart, () => restartGame());
+        keywords.Add(Constants.Keywords.MainMenu, () => loadMainMenu());
 
         keyword_recognizer = new KeywordRecognizer(keywords.Keys.ToArray(), ConfidenceLevel.Low);
 		keyword_recognizer.OnPhraseRecognized += OnKeywordsRecognized;
@@ -77,7 +77,7 @@ public class InitRecognition : MonoBehaviour
 		//}
 	}
 
-	private void InitCharacter(GameObject character, CharacterType type)
+	private void InitCharacter(Player character, CharacterType type)
     {
 		keyword_recognizer.Stop();
 		Debug.Log(character.name + " called");

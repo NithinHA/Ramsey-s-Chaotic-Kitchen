@@ -39,7 +39,7 @@ public class ChefAction : CharacterAction
         keyword_recognizer.OnPhraseRecognized += OnKeywordsRecognized;
     }
 
-    public override void Init(GameObject ch)
+    public override void Init(Player ch)
     {
         if (Input.GetKey(KeyCode.Q))
         {
@@ -80,51 +80,50 @@ public class ChefAction : CharacterAction
 
     IEnumerator chopping(string[] word_list)
     {
-        GameObject playerGO = character;          // A copy of character is made for use within the coroutine since, the global variable character might change before this coroutine ends.
+        Player playerCopy = character;          // A copy of character is made for use within the coroutine since, the global variable character might change before this coroutine ends.
         string cuttingBoardName = word_list[word_list.Length - 1];
         GameObject cuttingBoardGO = cuttingBoards.Find(item => item.itemKeyword == cuttingBoardName.ToLower()).itemGO;
-        if (!playerGO.GetComponent<Player>().is_busy && !cuttingBoardGO.GetComponent<CuttingBoard>().is_chopping)
+        if (!playerCopy.is_busy && !cuttingBoardGO.GetComponent<CuttingBoard>().is_chopping)
         {
-            character.GetComponent<Player>().PlayVoiceOver(VoiceOverTypes.ActionPositive);
+            playerCopy.PlayVoiceOver(VoiceOverTypes.ActionPositive);
             string item_name = word_list[1];                     // received item to be chopped vegetables/fruits/meat
             Item food_item = keywords_data.findItemWithRawMaterial("chopped " + item_name);
             Transform[] all_transforms = {
                 item_transforms[food_item],
                 place_transforms[cuttingBoardGO.transform],
-                playerGO.GetComponent<Player>().starting_transform
+                playerCopy.starting_transform
             };        // array of positions where character needs to go
 
-            Player ch = playerGO.GetComponent<Player>();
             CuttingBoard cb = cuttingBoardGO.GetComponent<CuttingBoard>();
-            ch.is_busy = true;          // set character.is_busy true
+            playerCopy.is_busy = true;          // set character.is_busy true
             cb.is_chopping = true;      // set cutting_board.is_chopping true
 
-            Animator anim = ch.GetComponent<Animator>();
+            Animator anim = playerCopy.GetComponent<Animator>();
 
             //move player to fetch item
             anim.SetBool("is_walking", true);       // play walking anim
-            ch.target = all_transforms[0].position;
-            ch.target_reached = false;
-            while (!ch.target_reached)
+            playerCopy.target = all_transforms[0].position;
+            playerCopy.target_reached = false;
+            while (!playerCopy.target_reached)
                 yield return null;
             anim.SetBool("is_walking", false);      // stop walking anim
             //resolve rotations
-            StartCoroutine(ch.invokeResolveRotation(all_transforms[0], 1));
+            StartCoroutine(playerCopy.invokeResolveRotation(all_transforms[0], 1));
             //play get_supplies sound
-            AudioManager.Instance?.playSound("get_supplies");
+            AudioManager.Instance?.playSound(Constants.Audio.GetSupplies);
             anim.SetTrigger("is_serving");      // get supplies anim
             //wait player for 1s
             yield return new WaitForSeconds(1);
 
             //move player to chopping board
             anim.SetBool("is_walking", true);       // play walking anim
-            ch.target = all_transforms[1].position;
-            ch.target_reached = false;
-            while (!ch.target_reached)
+            playerCopy.target = all_transforms[1].position;
+            playerCopy.target_reached = false;
+            while (!playerCopy.target_reached)
                 yield return null;
             anim.SetBool("is_walking", false);      // stop walking anim
             //resolve rotations
-            Coroutine resolve_rotations_cor = StartCoroutine(ch.resolveRotations(all_transforms[1].eulerAngles));
+            Coroutine resolve_rotations_cor = StartCoroutine(playerCopy.resolveRotations(all_transforms[1].eulerAngles));
             //call cb.chop()
             cb.chop(food_item);
             //wait player for chopping_delay seconds
@@ -138,65 +137,64 @@ public class ChefAction : CharacterAction
 
             //move player to starting position
             anim.SetBool("is_walking", true);       // play walking anim
-            ch.target = all_transforms[2].position;
-            ch.target_reached = false;
-            while (!ch.target_reached)
+            playerCopy.target = all_transforms[2].position;
+            playerCopy.target_reached = false;
+            while (!playerCopy.target_reached)
                 yield return null;
             anim.SetBool("is_walking", false);      // stop walking anim
             //resolve rotations
-            StartCoroutine(ch.invokeResolveRotation(all_transforms[2], 1));
+            StartCoroutine(playerCopy.invokeResolveRotation(all_transforms[2], 1));
             yield return new WaitForSeconds(1);
 
             //set chef not busy
-            ch.is_busy = false;
+            playerCopy.is_busy = false;
         }
         else
-            character.GetComponent<Player>().PlayVoiceOver(VoiceOverTypes.ActionNegative);
+            playerCopy.PlayVoiceOver(VoiceOverTypes.ActionNegative);
     }
 
     IEnumerator boiling(string[] word_list)
     {
-        GameObject playerGO = character;          // A copy of character is made for use within the coroutine since, the global variable character might change before this coroutine ends.
+        Player playerCopy = character;          // A copy of character is made for use within the coroutine since, the global variable character might change before this coroutine ends.
         string cooker_name = word_list[word_list.Length - 1];
         GameObject cookerGO = cookers.Find(item => item.itemKeyword == cooker_name.ToLower()).itemGO;
-        if (!playerGO.GetComponent<Player>().is_busy && !cookerGO.GetComponent<Cooker>().is_cooking)      // if character is free and cooker is not cooking anything
+        if (!playerCopy.is_busy && !cookerGO.GetComponent<Cooker>().is_cooking)      // if character is free and cooker is not cooking anything
         {
-            character.GetComponent<Player>().PlayVoiceOver(VoiceOverTypes.ActionPositive);
+            playerCopy.PlayVoiceOver(VoiceOverTypes.ActionPositive);
             string item_name = word_list[1];                     //received item to be cooked rice/noodles
             Item food_item = keywords_data.findItemWithRawMaterial("boiled " + item_name);
-            Transform[] all_transforms = { item_transforms[food_item], place_transforms[cookerGO.transform], playerGO.GetComponent<Player>().starting_transform };        //array of positions where character needs to go
+            Transform[] all_transforms = { item_transforms[food_item], place_transforms[cookerGO.transform], playerCopy.starting_transform };        //array of positions where character needs to go
 
-            Player ch = playerGO.GetComponent<Player>();
             Cooker co = cookerGO.GetComponent<Cooker>();
-            ch.is_busy = true;          // set character.is_busy true
+            playerCopy.is_busy = true;          // set character.is_busy true
             co.is_cooking = true;       // set cooker.is_cooking true
 
-            Animator anim = ch.GetComponent<Animator>();
+            Animator anim = playerCopy.GetComponent<Animator>();
 
             //move player to fetch item
             anim.SetBool("is_walking", true);       // play walking anim
-            ch.target = all_transforms[0].position;
-            ch.target_reached = false;
-            while (!ch.target_reached)
+            playerCopy.target = all_transforms[0].position;
+            playerCopy.target_reached = false;
+            while (!playerCopy.target_reached)
                 yield return null;
             anim.SetBool("is_walking", false);      // stop walking anim
             //resolve rotations
-            StartCoroutine(ch.invokeResolveRotation(all_transforms[0], 1));
+            StartCoroutine(playerCopy.invokeResolveRotation(all_transforms[0], 1));
             //play get_supplies sound
-            AudioManager.Instance?.playSound("get_supplies");
+            AudioManager.Instance?.playSound(Constants.Audio.GetSupplies);
             anim.SetTrigger("is_serving");      // get supplies anim
             //wait player for 1s
             yield return new WaitForSeconds(1);
 
             //move player to cooker
             anim.SetBool("is_walking", true);       // play walking anim
-            ch.target = all_transforms[1].position;
-            ch.target_reached = false;
-            while (!ch.target_reached)
+            playerCopy.target = all_transforms[1].position;
+            playerCopy.target_reached = false;
+            while (!playerCopy.target_reached)
                 yield return null;
             anim.SetBool("is_walking", false);      // stop walking anim
             //resolve rotations
-            StartCoroutine(ch.invokeResolveRotation(all_transforms[1], 1));
+            StartCoroutine(playerCopy.invokeResolveRotation(all_transforms[1], 1));
             //call co.cook()
             co.cook(food_item);
             anim.SetTrigger("is_serving");      // turn on cooker anim
@@ -205,47 +203,46 @@ public class ChefAction : CharacterAction
 
             //move player to starting position
             anim.SetBool("is_walking", true);       // play walking anim
-            ch.target = all_transforms[2].position;
-            ch.target_reached = false;
-            while (!ch.target_reached)
+            playerCopy.target = all_transforms[2].position;
+            playerCopy.target_reached = false;
+            while (!playerCopy.target_reached)
                 yield return null;
             anim.SetBool("is_walking", false);      // stop walking anim
             //resolve rotations
-            StartCoroutine(ch.invokeResolveRotation(all_transforms[2], 1));
+            StartCoroutine(playerCopy.invokeResolveRotation(all_transforms[2], 1));
             yield return new WaitForSeconds(1);
 
             //set chef not busy
-            ch.is_busy = false;
+            playerCopy.is_busy = false;
         }
         else
-            character.GetComponent<Player>().PlayVoiceOver(VoiceOverTypes.ActionNegative);
+            playerCopy.PlayVoiceOver(VoiceOverTypes.ActionNegative);
     }
 
     IEnumerator turn_off(string[] word_list)
     {
-        GameObject playerGO = character;          // A copy of character is made for use within the coroutine since, the global variable character might change before this coroutine ends.
+        Player playerCopy = character;          // A copy of character is made for use within the coroutine since, the global variable character might change before this coroutine ends.
         string cooker_name = word_list[word_list.Length - 1];
         GameObject cookerGO = cookers.Find(item => item.itemKeyword == cooker_name.ToLower()).itemGO;
-        if (!playerGO.GetComponent<Player>().is_busy && cookerGO.GetComponent<Cooker>().is_cooking)       // if character is free and cooker is cooking something
+        if (!playerCopy.is_busy && cookerGO.GetComponent<Cooker>().is_cooking)       // if character is free and cooker is cooking something
         {
-            character.GetComponent<Player>().PlayVoiceOver(VoiceOverTypes.ActionPositive);
-            Transform[] all_transforms = { place_transforms[cookerGO.transform], playerGO.GetComponent<Player>().starting_transform };        //array of positions where character needs to go
+            playerCopy.PlayVoiceOver(VoiceOverTypes.ActionPositive);
+            Transform[] all_transforms = { place_transforms[cookerGO.transform], playerCopy.starting_transform };        //array of positions where character needs to go
 
-            Player ch = playerGO.GetComponent<Player>();
             Cooker co = cookerGO.GetComponent<Cooker>();
-            ch.is_busy = true;          // set character.is_busy true, and cooker.is_cooking is already true
+            playerCopy.is_busy = true;          // set character.is_busy true, and cooker.is_cooking is already true
 
-            Animator anim = ch.GetComponent<Animator>();
+            Animator anim = playerCopy.GetComponent<Animator>();
 
             //move player to cooker
             anim.SetBool("is_walking", true);       // play walking anim
-            ch.target = all_transforms[0].position;
-            ch.target_reached = false;
-            while (!ch.target_reached)
+            playerCopy.target = all_transforms[0].position;
+            playerCopy.target_reached = false;
+            while (!playerCopy.target_reached)
                 yield return null;
             anim.SetBool("is_walking", false);      // stop walking anim
             //resolve rotations
-            StartCoroutine(ch.invokeResolveRotation(all_transforms[0], .5f));
+            StartCoroutine(playerCopy.invokeResolveRotation(all_transforms[0], .5f));
             //call co.turn_off_cooker()
             co.turn_off_cooker();
             anim.SetTrigger("is_serving");      // turn off cooker anim
@@ -253,28 +250,28 @@ public class ChefAction : CharacterAction
 
             //move player to starting position
             anim.SetBool("is_walking", true);       // play walking anim
-            ch.target = all_transforms[1].position;
-            ch.target_reached = false;
-            while (!ch.target_reached)
+            playerCopy.target = all_transforms[1].position;
+            playerCopy.target_reached = false;
+            while (!playerCopy.target_reached)
                 yield return null;
             anim.SetBool("is_walking", false);      // stop walking anim
             //resolve rotations
-            StartCoroutine(ch.invokeResolveRotation(all_transforms[1], 1));
+            StartCoroutine(playerCopy.invokeResolveRotation(all_transforms[1], 1));
             yield return new WaitForSeconds(1);
 
             //set chef not busy
-            ch.is_busy = false;
+            playerCopy.is_busy = false;
         }
         else
-            character.GetComponent<Player>().PlayVoiceOver(VoiceOverTypes.ActionNegative);
+            playerCopy.PlayVoiceOver(VoiceOverTypes.ActionNegative);
     }
 
     IEnumerator getting_supplies(string[] word_list)
     {
-        GameObject player_GO = character;          // A copy of character is made for use within the coroutine since, the global variable character might change before this coroutine ends.
-        if (!player_GO.GetComponent<Player>().is_busy)
+        Player playerCopy = character;          // A copy of character is made for use within the coroutine since, the global variable character might change before this coroutine ends.
+        if (!playerCopy.is_busy)
         {
-            character.GetComponent<Player>().PlayVoiceOver(VoiceOverTypes.ActionPositive);
+            playerCopy.PlayVoiceOver(VoiceOverTypes.ActionPositive);
             StringBuilder sb = new StringBuilder();
             for (int i = 1; i < word_list.Length; i++)
             {
@@ -282,24 +279,23 @@ public class ChefAction : CharacterAction
             }
             string item_name = sb.ToString().Trim();         // item to be get buns/sea weed
             Item food_item = keywords_data.findItemWithRawMaterial(item_name);
-            Transform[] all_transforms = { item_transforms[food_item], player_GO.GetComponent<Player>().starting_transform };        // array of positions where character needs to go
+            Transform[] all_transforms = { item_transforms[food_item], playerCopy.starting_transform };        // array of positions where character needs to go
 
-            Player ch = player_GO.GetComponent<Player>();
-            ch.is_busy = true;          // set character.is_busy true
+            playerCopy.is_busy = true;          // set character.is_busy true
 
-            Animator anim = ch.GetComponent<Animator>();
+            Animator anim = playerCopy.GetComponent<Animator>();
 
             //move player to fetch item
             anim.SetBool("is_walking", true);       // play walking anim
-            ch.target = all_transforms[0].position;
-            ch.target_reached = false;
-            while (!ch.target_reached)
+            playerCopy.target = all_transforms[0].position;
+            playerCopy.target_reached = false;
+            while (!playerCopy.target_reached)
                 yield return null;
             anim.SetBool("is_walking", false);      // stop walking anim
             //resolve rotations
-            StartCoroutine(ch.invokeResolveRotation(all_transforms[0], food_item.time_to_prepare));
+            StartCoroutine(playerCopy.invokeResolveRotation(all_transforms[0], food_item.time_to_prepare));
             //play get_supplies sound
-            AudioManager.Instance?.playSound("get_supplies");
+            AudioManager.Instance?.playSound(Constants.Audio.GetSupplies);
             anim.SetTrigger("is_serving");      // get supplies anim
                                                 //wait player for time required to fetch the item
             yield return new WaitForSeconds(food_item.time_to_prepare);
@@ -318,63 +314,62 @@ public class ChefAction : CharacterAction
 
             //move player to starting position
             anim.SetBool("is_walking", true);       // play walking anim
-            ch.target = all_transforms[1].position;
-            ch.target_reached = false;
-            while (!ch.target_reached)
+            playerCopy.target = all_transforms[1].position;
+            playerCopy.target_reached = false;
+            while (!playerCopy.target_reached)
                 yield return null;
             anim.SetBool("is_walking", false);      // stop walking anim
             //resolve rotations
-            StartCoroutine(ch.invokeResolveRotation(all_transforms[1], 1));
+            StartCoroutine(playerCopy.invokeResolveRotation(all_transforms[1], 1));
             yield return new WaitForSeconds(1);
 
             //set chef not busy
-            ch.is_busy = false;
+            playerCopy.is_busy = false;
         }
         else
-            character.GetComponent<Player>().PlayVoiceOver(VoiceOverTypes.ActionNegative);
+            playerCopy.PlayVoiceOver(VoiceOverTypes.ActionNegative);
     }
 
     IEnumerator washing(string[] word_list)
     {
-        GameObject playerGO = character;          // A copy of character is made for use within the coroutine since, the global variable character might change before this coroutine ends.
+        Player playerCopy = character;          // A copy of character is made for use within the coroutine since, the global variable character might change before this coroutine ends.
         GameObject sinkGO = washBasins.itemGO;
         GameObject servingTableGO = servingTable.itemGO;
-        if (!playerGO.GetComponent<Player>().is_busy && !sinkGO.GetComponent<Sink>().is_washing)
+        if (!playerCopy.is_busy && !sinkGO.GetComponent<Sink>().is_washing)
         {
-            character.GetComponent<Player>().PlayVoiceOver(VoiceOverTypes.ActionPositive);
+            playerCopy.PlayVoiceOver(VoiceOverTypes.ActionPositive);
             string item_name = word_list[1];                     // received item to be washed (dishes)
             Item utensil_item = keywords_data.findItemWithRawMaterial(item_name);
-            Transform[] all_transforms = { place_transforms[servingTableGO.transform], place_transforms[sinkGO.transform], playerGO.GetComponent<Player>().starting_transform };        // array of positions where character needs to go
+            Transform[] all_transforms = { place_transforms[servingTableGO.transform], place_transforms[sinkGO.transform], playerCopy.starting_transform };        // array of positions where character needs to go
 
-            Player ch = playerGO.GetComponent<Player>();
             Sink sink = sinkGO.GetComponent<Sink>();
-            ch.is_busy = true;              // set character.is_busy true
+            playerCopy.is_busy = true;              // set character.is_busy true
             sink.is_washing = true;         // set sink.is_washing true
 
-            Animator anim = ch.GetComponent<Animator>();
+            Animator anim = playerCopy.GetComponent<Animator>();
 
             //move player to fetch item
             anim.SetBool("is_walking", true);       // play walking anim
-            ch.target = all_transforms[0].position;
-            ch.target_reached = false;
-            while (!ch.target_reached)
+            playerCopy.target = all_transforms[0].position;
+            playerCopy.target_reached = false;
+            while (!playerCopy.target_reached)
                 yield return null;
             anim.SetBool("is_walking", false);      // stop walking anim
             //resolve rotations
-            StartCoroutine(ch.invokeResolveRotation(all_transforms[0], .5f));
+            StartCoroutine(playerCopy.invokeResolveRotation(all_transforms[0], .5f));
             //wait player fetching item
             anim.SetTrigger("is_serving");      // fetch utensil anim
             yield return new WaitForSeconds(.5f);
 
             //move player to sink
             anim.SetBool("is_walking", true);       // play walking anim
-            ch.target = all_transforms[1].position;
-            ch.target_reached = false;
-            while (!ch.target_reached)
+            playerCopy.target = all_transforms[1].position;
+            playerCopy.target_reached = false;
+            while (!playerCopy.target_reached)
                 yield return null;
             anim.SetBool("is_walking", false);      // stop walking anim
             //resolve rotations
-            Coroutine resolve_rotations_cor = StartCoroutine(ch.resolveRotations(all_transforms[1].eulerAngles));
+            Coroutine resolve_rotations_cor = StartCoroutine(playerCopy.resolveRotations(all_transforms[1].eulerAngles));
             //call sink.washUtensils()
             sink.washUtensils(utensil_item);
             anim.SetBool("is_working", true);       // play washing anim
@@ -388,26 +383,26 @@ public class ChefAction : CharacterAction
 
             //move player to starting position
             anim.SetBool("is_walking", true);       // play walking anim
-            ch.target = all_transforms[2].position;
-            ch.target_reached = false;
-            while (!ch.target_reached)
+            playerCopy.target = all_transforms[2].position;
+            playerCopy.target_reached = false;
+            while (!playerCopy.target_reached)
                 yield return null;
             anim.SetBool("is_walking", false);      // stop walking anim
             //resolve rotations
-            StartCoroutine(ch.invokeResolveRotation(all_transforms[2], 1));
+            StartCoroutine(playerCopy.invokeResolveRotation(all_transforms[2], 1));
             yield return new WaitForSeconds(1);
 
             //set chef not busy
-            ch.is_busy = false;
+            playerCopy.is_busy = false;
         }
         else
-            character.GetComponent<Player>().PlayVoiceOver(VoiceOverTypes.ActionNegative);
+            playerCopy.PlayVoiceOver(VoiceOverTypes.ActionNegative);
     }
 
     IEnumerator preparing(string[] word_list)
     {
-        GameObject player_GO = character;          // A copy of character is made for use within the coroutine since, the global variable character might change before this coroutine ends.
-        if (!player_GO.GetComponent<Player>().is_busy)
+        Player playerCopy = character;          // A copy of character is made for use within the coroutine since, the global variable character might change before this coroutine ends.
+        if (!playerCopy.is_busy)
         {
             StringBuilder sb = new StringBuilder();
             for (int i = 1; i < word_list.Length; i++)
@@ -420,23 +415,22 @@ public class ChefAction : CharacterAction
             bool are_ingredients_available = inventory.areIngredientsAvailable(dish_item);  // check if raw materials for dish are available in inventory
             if (are_ingredients_available)
             {
-                character.GetComponent<Player>().PlayVoiceOver(VoiceOverTypes.ActionPositive);
-                Transform[] all_transforms = { player_GO.GetComponent<Player>().preparing_position, player_GO.GetComponent<Player>().starting_transform };
-                Player ch = player_GO.GetComponent<Player>();
-                ch.is_busy = true;          // set character.is_busy true
+                playerCopy.PlayVoiceOver(VoiceOverTypes.ActionPositive);
+                Transform[] all_transforms = { playerCopy.preparing_position, playerCopy.starting_transform };
+                playerCopy.is_busy = true;          // set character.is_busy true
 
-                Animator anim = ch.GetComponent<Animator>();
+                Animator anim = playerCopy.GetComponent<Animator>();
 
                 //move player to player's preparing_position
                 anim.SetBool("is_walking", true);       // play walking anim
-                ch.target = all_transforms[0].position;
-                ch.target_reached = false;
-                while (!ch.target_reached)
+                playerCopy.target = all_transforms[0].position;
+                playerCopy.target_reached = false;
+                while (!playerCopy.target_reached)
                     yield return null;
                 anim.SetBool("is_walking", false);      // stop walking anim
 
                 //resolve rotations
-                StartCoroutine(ch.invokeResolveRotation(all_transforms[0], dish_item.time_to_prepare));
+                StartCoroutine(playerCopy.invokeResolveRotation(all_transforms[0], dish_item.time_to_prepare));
 
                 //remove ingredients used to prepare the dish from inventory
                 inventory.removeIngredientsUsed(dish_item);
@@ -465,23 +459,23 @@ public class ChefAction : CharacterAction
 
                 //move player to starting position
                 anim.SetBool("is_walking", true);       // play walking anim
-                ch.target = all_transforms[1].position;
-                ch.target_reached = false;
-                while (!ch.target_reached)
+                playerCopy.target = all_transforms[1].position;
+                playerCopy.target_reached = false;
+                while (!playerCopy.target_reached)
                     yield return null;
                 anim.SetBool("is_walking", false);      // stop walking anim
                 //resolve rotations
-                StartCoroutine(ch.invokeResolveRotation(all_transforms[1], 1));
+                StartCoroutine(playerCopy.invokeResolveRotation(all_transforms[1], 1));
                 yield return new WaitForSeconds(1);
 
                 //set chef not busy
-                ch.is_busy = false;
+                playerCopy.is_busy = false;
             }
             else
-                character.GetComponent<Player>().PlayVoiceOver(VoiceOverTypes.ActionNegative);
+                playerCopy.PlayVoiceOver(VoiceOverTypes.ActionNegative);
         }
         else
-            character.GetComponent<Player>().PlayVoiceOver(VoiceOverTypes.ActionNegative);
+            playerCopy.PlayVoiceOver(VoiceOverTypes.ActionNegative);
     }
 
     void default_method()

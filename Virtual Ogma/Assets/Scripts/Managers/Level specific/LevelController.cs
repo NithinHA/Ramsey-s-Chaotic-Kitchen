@@ -13,13 +13,13 @@ public class LevelController : Singleton<LevelController>
     protected override void Start()
     {
         base.Start();
-        AudioManager.Instance?.playSound("ambient_bg");
+        AudioManager.Instance?.playSound(Constants.Audio.AmbientBg);
         StartCoroutine(StartLevelWithDelay());
     }
 
     IEnumerator StartLevelWithDelay()
     {
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(5);
         ChangeGameState(GameState.Running);
     }
 

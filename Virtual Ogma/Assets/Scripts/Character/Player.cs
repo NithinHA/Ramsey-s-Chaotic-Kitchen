@@ -8,7 +8,7 @@ public class Player : MonoBehaviour
 	//private Camera cam;
 	private NavMeshAgent agent;
 	private AudioSource audioSource;
-	private CharacterData characterData;
+	public CharacterData characterData { get; private set; }
 
 	public Transform starting_transform;		// use transform instead
 	//[HideInInspector] public Vector3 starting_rotation;
@@ -26,7 +26,7 @@ public class Player : MonoBehaviour
 	[SerializeField] private float resolve_rotation_speed = 3f;
 	public Coroutine resolve_rotations_coroutine;
 
-	void Start()
+	void Awake()
     {
 		agent = GetComponent<NavMeshAgent>();
         target = starting_transform.position;

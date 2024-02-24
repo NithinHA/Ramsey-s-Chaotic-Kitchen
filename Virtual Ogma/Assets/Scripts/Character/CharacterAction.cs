@@ -6,7 +6,7 @@ using UnityEngine.Windows.Speech;
 
 public class CharacterAction : MonoBehaviour
 {
-    protected GameObject character;
+    protected Player character;
     protected bool is_listening = false;
 
     protected KeywordsData keywords_data;
@@ -17,7 +17,7 @@ public class CharacterAction : MonoBehaviour
 
 	public CharacterType characterType;
 
-	public virtual void Init(GameObject ch)
+	public virtual void Init(Player ch)
 	{
 		character = ch;
 		Player player = ch.GetComponent<Player>();
