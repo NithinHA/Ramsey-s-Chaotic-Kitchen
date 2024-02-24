@@ -29,10 +29,7 @@ public class CharacterAction : MonoBehaviour
 
 	protected virtual void Update()
     {
-		if (LevelController.Instance.CurrentGameState != GameState.Running)
-			return;
-
-		if (Input.GetKey(KeyCode.Q))
+		if (Input.GetKey(KeyCode.Q) && LevelController.Instance.CurrentGameState == GameState.Running)
 		{
 			if (!keyword_recognizer.IsRunning && is_listening)
 			{
