@@ -13,7 +13,8 @@ public class EndGamePanel : MonoBehaviour
 
     private void OnDestroy()
     {
-        LevelController.Instance.OnGameStateChange -= OnGameStateChange;
+        if (LevelController.Instance != null)
+            LevelController.Instance.OnGameStateChange -= OnGameStateChange;
     }
 
     private void OnGameStateChange(GameState prevState, GameState curState)
