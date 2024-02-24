@@ -45,7 +45,10 @@ public class InitRecognition : MonoBehaviour
 	bool is_listening = true;		// prevents keyword_recognizer to start and stop repeatedly every frame
 	void Update()
     {
-		if (Input.GetKey(KeyCode.Q))
+        //if (LevelController.Instance.CurrentGameState != GameState.Running)
+        //    return;
+
+        if (Input.GetKey(KeyCode.Q) && LevelController.Instance.CurrentGameState == GameState.Running)
 		{
 			if (!keyword_recognizer.IsRunning && is_listening)
 			{

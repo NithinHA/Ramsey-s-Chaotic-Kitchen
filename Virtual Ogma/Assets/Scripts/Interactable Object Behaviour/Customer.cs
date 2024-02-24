@@ -53,6 +53,9 @@ public class Customer : MonoBehaviour
 	
     void Update()
     {
+		if (LevelController.Instance.CurrentGameState != GameState.Running)
+			return;
+
 		if (is_served)
 		{
 			if (cur_time > 0)

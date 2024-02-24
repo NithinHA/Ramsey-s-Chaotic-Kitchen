@@ -29,11 +29,13 @@ public class CharacterAction : MonoBehaviour
 
 	protected virtual void Update()
     {
+		if (LevelController.Instance.CurrentGameState != GameState.Running)
+			return;
+
 		if (Input.GetKey(KeyCode.Q))
 		{
 			if (!keyword_recognizer.IsRunning && is_listening)
 			{
-				Debug.Log("give a command");
 				InstructionPanel.Instance.DisplayInstruction("give a command");
 				keyword_recognizer.Start();
 			}

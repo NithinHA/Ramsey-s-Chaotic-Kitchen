@@ -39,6 +39,12 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: OverUI
+    uniqueID: 3773479017
+    locked: 0
+  - name: UI
+    uniqueID: 2730672919
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0
