@@ -44,6 +44,7 @@ public class CharacterAction : MonoBehaviour
 				is_listening = false;
 				keyword_recognizer.Stop();
 				character.GetComponent<Player>().remove_highlighter();
+				AudioManager.Instance?.playSound(Constants.Audio.ListenerOff);
 				// pan the camera to the default camera position
 			}
 		}

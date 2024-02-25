@@ -10,6 +10,8 @@
         public const string AmbientBg = "ambient_bg";
         public const string WashBasin = "wash_basin";
         public const string GetSupplies = "get_supplies";
+        public const string ListenerOn= "listener_on";
+        public const string ListenerOff= "listener_off";
     }
 
     public class Keywords
