@@ -2,6 +2,7 @@
 using UnityEngine;
 using DG.Tweening;
 using System;
+using System.Collections;
 
 public class ClockUI : MonoBehaviour
 {
@@ -28,11 +29,12 @@ public class ClockUI : MonoBehaviour
         _gameTime = FindObjectOfType<GameTime>();
     }
 
-    private void Start()
+    private IEnumerator Start()
     {
-        ClockAnimationSequence();
         GameTime.OnGameTimeUpdate += OnGameTimeUpdate;
         GameTime.OnGameTimeAlert += OnGameTimeAlert;
+        yield return new WaitForSeconds(.5f);
+        ClockAnimationSequence();
     }
 
     private void OnDestroy()
