@@ -1,15 +1,14 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
-using DG.Tweening;
+using System.Threading.Tasks;
 using SingletonBase;
 
 public class SceneTransition : Singleton<SceneTransition>
 {
-    [SerializeField] private Transform m_LeftWall;
-    [SerializeField] private Transform m_RightWall;
-    [SerializeField] private float m_TransitDuration = .7f;
+    [SerializeField] private Animator m_Animator;
+
+    private const string ScreenClose = "st_close";
+    private const string ScreenOpen = "st_open";
 
     public void restartLevel()
     {
@@ -22,39 +21,28 @@ public class SceneTransition : Singleton<SceneTransition>
         TransitScene("main_menu");
     }
 
-    public void TransitScene(int sceneIndex)        // assign this method to buttons in the end-game canvas
+    public async void TransitScene(int sceneIndex)        // assign this method to buttons in the end-game canvas
     {
-        Sequence mySequence = DOTween.Sequence();
-        mySequence.Join(m_LeftWall.DOScaleX(1, m_TransitDuration))
-        .Join(m_RightWall.DOScaleX(1, m_TransitDuration))
-        .SetEase(Ease.OutSine)
-        .AppendCallback(() =>
-        {
-            SceneManager.sceneLoaded += PostSceneTransit;
-            SceneManager.LoadScene(sceneIndex);
-        });
+        await SceneTransitBase();
+        SceneManager.LoadScene(sceneIndex);
     }
 
-    public void TransitScene(string sceneName)
+    public async void TransitScene(string sceneName)
     {
-        Sequence mySequence = DOTween.Sequence();
-        mySequence.Join(m_LeftWall.DOScaleX(1, m_TransitDuration))
-        .Join(m_RightWall.DOScaleX(1, m_TransitDuration))
-        .SetEase(Ease.OutSine)
-        .AppendCallback(() =>
-        {
-            SceneManager.sceneLoaded += PostSceneTransit;
-            SceneManager.LoadScene(sceneName);
-        });
+        await SceneTransitBase();
+        SceneManager.LoadScene(sceneName);
+    }
+
+    private async Task SceneTransitBase()
+    {
+        m_Animator.SetTrigger(ScreenClose);
+        await Task.Delay(1000);
+        SceneManager.sceneLoaded += PostSceneTransit;
     }
 
     private void PostSceneTransit(Scene scene, LoadSceneMode mode)
     {
-        SceneManager.sceneLoaded -= PostSceneTransit; 
-
-        Sequence mySequence = DOTween.Sequence();
-        mySequence.Join(m_LeftWall.DOScaleX(0, m_TransitDuration))
-        .Join(m_RightWall.DOScaleX(0, m_TransitDuration))
-        .SetEase(Ease.InSine);
+        SceneManager.sceneLoaded -= PostSceneTransit;
+        m_Animator.SetTrigger(ScreenOpen);
     }
 }

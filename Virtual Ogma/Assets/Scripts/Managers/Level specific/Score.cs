@@ -34,7 +34,6 @@ public class Score : Singleton<Score>
 		score += bill_amount + tips;
 		scoreText.text = "Score: $" + score.ToString();
 
-		// play coins sound
-		GetComponent<AudioSource>().Play();
+		AudioManager.Instance.PlaySound(Constants.Audio.CoinsEarn);
 	}
 }

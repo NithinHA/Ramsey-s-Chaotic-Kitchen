@@ -13,7 +13,7 @@ public class LevelController : Singleton<LevelController>
     protected override void Start()
     {
         base.Start();
-        AudioManager.Instance?.playSound(Constants.Audio.AmbientBg);
+        AudioManager.Instance?.PlaySound(Constants.Audio.AmbientBg);
         StartCoroutine(StartLevelWithDelay());
     }
 

@@ -8,10 +8,17 @@
     public class Audio
     {
         public const string AmbientBg = "ambient_bg";
-        public const string WashBasin = "wash_basin";
-        public const string GetSupplies = "get_supplies";
+        public const string MainMenuBg = "main_menu_bg";
+
         public const string ListenerOn= "listener_on";
         public const string ListenerOff= "listener_off";
+        
+        public const string WashBasin = "wash_basin";
+        public const string GetSupplies = "get_supplies";
+        public const string CoinsEarn= "coins_earn";
+        public const string ClockAlert = "clock_alert";
+        public const string ClockCountdownAlert = "clock_countdown";
+        public const string TimeUp = "time_up";     // unused
     }
 
     public class Keywords

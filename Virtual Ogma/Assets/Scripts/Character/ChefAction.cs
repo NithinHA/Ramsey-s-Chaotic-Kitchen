@@ -110,7 +110,7 @@ public class ChefAction : CharacterAction
             //resolve rotations
             StartCoroutine(playerCopy.invokeResolveRotation(all_transforms[0], 1));
             //play get_supplies sound
-            AudioManager.Instance?.playSound(Constants.Audio.GetSupplies);
+            AudioManager.Instance?.PlaySound(Constants.Audio.GetSupplies);
             anim.SetTrigger("is_serving");      // get supplies anim
             //wait player for 1s
             yield return new WaitForSeconds(1);
@@ -181,7 +181,7 @@ public class ChefAction : CharacterAction
             //resolve rotations
             StartCoroutine(playerCopy.invokeResolveRotation(all_transforms[0], 1));
             //play get_supplies sound
-            AudioManager.Instance?.playSound(Constants.Audio.GetSupplies);
+            AudioManager.Instance?.PlaySound(Constants.Audio.GetSupplies);
             anim.SetTrigger("is_serving");      // get supplies anim
             //wait player for 1s
             yield return new WaitForSeconds(1);
@@ -295,7 +295,7 @@ public class ChefAction : CharacterAction
             //resolve rotations
             StartCoroutine(playerCopy.invokeResolveRotation(all_transforms[0], food_item.time_to_prepare));
             //play get_supplies sound
-            AudioManager.Instance?.playSound(Constants.Audio.GetSupplies);
+            AudioManager.Instance?.PlaySound(Constants.Audio.GetSupplies);
             anim.SetTrigger("is_serving");      // get supplies anim
                                                 //wait player for time required to fetch the item
             yield return new WaitForSeconds(food_item.time_to_prepare);

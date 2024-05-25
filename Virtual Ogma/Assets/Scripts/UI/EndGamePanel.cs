@@ -25,4 +25,14 @@ public class EndGamePanel : MonoBehaviour
             _scoreText.text = "Total earnings\n$" + Score.score;
         }
     }
+
+    public void OnClick_Restart()       // incomplete
+    {
+        _container.SetActive(false);
+    }
+
+    public void OnClick_MainMenu()      // incomplete
+    {
+        _container.SetActive(false);
+    }
 }

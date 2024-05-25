@@ -3151,11 +3151,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2745578269818024024, guid: 5fd4fe5aef5076940bc1cea8503e8342,
-        type: 3}
-      propertyPath: IsDontDestroyOnLoad
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 5686663908432685577, guid: 5fd4fe5aef5076940bc1cea8503e8342,
         type: 3}
       propertyPath: m_Name
@@ -7953,6 +7948,36 @@ MonoBehaviour:
     source: {fileID: 0}
   - name: listener_off
     clip: {fileID: 8300000, guid: bbc8a8bf812885740832789576f89bc3, type: 3}
+    volume: 0.958
+    pitch: 1
+    is_looping: 0
+    source: {fileID: 0}
+  - name: coins_earn
+    clip: {fileID: 8300000, guid: 17441cc8ef225eb4094d44bfe888af70, type: 3}
+    volume: 0.958
+    pitch: 1
+    is_looping: 0
+    source: {fileID: 0}
+  - name: clock_alert
+    clip: {fileID: 8300000, guid: 9b3fe2fa61cb337409801ed37e0274c0, type: 3}
+    volume: 0.958
+    pitch: 1
+    is_looping: 0
+    source: {fileID: 0}
+  - name: time_up
+    clip: {fileID: 8300000, guid: 6e4f9133c6352bd4b972c5c6601dc6bf, type: 3}
+    volume: 0.958
+    pitch: 1
+    is_looping: 0
+    source: {fileID: 0}
+  - name: main_menu_bg
+    clip: {fileID: 8300000, guid: 5f689404bfc65a34780fb7ef7cb78166, type: 3}
+    volume: 0.958
+    pitch: 1
+    is_looping: 1
+    source: {fileID: 0}
+  - name: clock_countdown
+    clip: {fileID: 8300000, guid: 2aefac86bab1eb54c9ef9c50dc8a8448, type: 3}
     volume: 0.958
     pitch: 1
     is_looping: 0

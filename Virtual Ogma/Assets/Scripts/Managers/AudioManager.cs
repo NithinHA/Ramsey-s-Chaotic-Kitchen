@@ -24,7 +24,7 @@ public class AudioManager : Singleton<AudioManager>
 		}
 	}
 	
-    public void playSound(string name)
+    public void PlaySound(string name)
 	{
 		Sound s = Array.Find(sounds, sound => sound.name == name);		// find the sound with the name that matches to the name of sound to be played
 		if (s == null)
@@ -35,7 +35,7 @@ public class AudioManager : Singleton<AudioManager>
 		s.source.Play();			// play the sound
 	}
 
-	public void stopSound(string name)
+	public void StopSound(string name)
 	{
 		Sound s = Array.Find(sounds, sound => sound.name == name);      // find the sound with the name that matches to the name of sound to be stopped playing
 		if (s == null)

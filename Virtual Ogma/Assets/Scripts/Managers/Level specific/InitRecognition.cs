@@ -54,7 +54,7 @@ public class InitRecognition : MonoBehaviour
 			{
 				keyword_recognizer.Start();
 				is_listening = false;
-				AudioManager.Instance?.playSound(Constants.Audio.ListenerOn);
+				AudioManager.Instance?.PlaySound(Constants.Audio.ListenerOn);
 			}
 		}
 		else
@@ -63,7 +63,7 @@ public class InitRecognition : MonoBehaviour
 			{
 				keyword_recognizer.Stop();
 				is_listening = true;
-				AudioManager.Instance?.playSound(Constants.Audio.ListenerOff);
+				AudioManager.Instance?.PlaySound(Constants.Audio.ListenerOff);
 			}
 			if (!is_listening)
 			{
