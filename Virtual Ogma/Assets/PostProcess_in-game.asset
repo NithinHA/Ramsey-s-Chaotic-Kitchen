@@ -157,10 +157,10 @@ MonoBehaviour:
               inWeight: 0
               outWeight: 0
             - serializedVersion: 3
-              time: 0.26377952
-              value: 0.35042733
-              inSlope: 1.8091166
-              outSlope: 1.8091166
+              time: 0.31163543
+              value: 0.4483053
+              inSlope: 1.8814645
+              outSlope: 1.8814645
               tangentMode: 0
               weightedMode: 0
               inWeight: 0
@@ -194,6 +194,15 @@ MonoBehaviour:
               inWeight: 0
               outWeight: 0
             - serializedVersion: 3
+              time: 0.4743694
+              value: 0.4822036
+              inSlope: 2.0830507
+              outSlope: 2.0830507
+              tangentMode: 0
+              weightedMode: 0
+              inWeight: 0
+              outWeight: 0
+            - serializedVersion: 3
               time: 1
               value: 1
               inSlope: 1
@@ -222,6 +231,15 @@ MonoBehaviour:
               inWeight: 0
               outWeight: 0
             - serializedVersion: 3
+              time: 0.5760781
+              value: 0.43983072
+              inSlope: 1.007928
+              outSlope: 1.007928
+              tangentMode: 0
+              weightedMode: 0
+              inWeight: 0
+              outWeight: 0
+            - serializedVersion: 3
               time: 1
               value: 1
               inSlope: 1
@@ -243,6 +261,15 @@ MonoBehaviour:
             - serializedVersion: 3
               time: 0
               value: 0
+              inSlope: 1
+              outSlope: 1
+              tangentMode: 0
+              weightedMode: 0
+              inWeight: 0
+              outWeight: 0
+            - serializedVersion: 3
+              time: 0.50081366
+              value: 0.39322054
               inSlope: 1
               outSlope: 1
               tangentMode: 0
@@ -306,9 +333,9 @@ MonoBehaviour:
           m_Range: 1
         e_CurrentEditingCurve: 0
         e_CurveY: 1
-        e_CurveR: 0
-        e_CurveG: 0
-        e_CurveB: 0
+        e_CurveR: 1
+        e_CurveG: 1
+        e_CurveB: 1
   userLut:
     m_Enabled: 0
     m_Settings:

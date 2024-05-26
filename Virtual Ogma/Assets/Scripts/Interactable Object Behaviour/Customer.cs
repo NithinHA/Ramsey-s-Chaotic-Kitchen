@@ -129,7 +129,7 @@ public class Customer : MonoBehaviour
 		Debug.Log("Tips received = " + tips);
 		InstructionPanel.Instance.DisplayInstruction("Tips received = " + tips);
 		
-		Score.Instance.payBill(this.dish, tips);		// update score text
+		Score.Instance.PayBill(this.dish, tips);		// update score text
 
 		this.dish = null;				// reset dish to null
 		tips = 0;						// reset tips value to 0

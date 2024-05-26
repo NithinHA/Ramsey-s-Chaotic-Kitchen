@@ -106,11 +106,11 @@ public class InitRecognition : MonoBehaviour
 
     void restartGame()
 	{
-        SceneTransition.Instance.restartLevel();
+        SceneTransition.Instance.RestartLevel();
     }
 	
     void loadMainMenu()
     {
-        SceneTransition.Instance.mainMenu();
+        SceneTransition.Instance.MainMenu();
     }
 }

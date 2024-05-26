@@ -1,9 +1,11 @@
 ﻿using TMPro;
 using UnityEngine;
+using DG.Tweening;
 
 public class EndGamePanel : MonoBehaviour
 {
     [SerializeField] private GameObject _container;
+    [SerializeField] private RectTransform _bgPanel;
     [SerializeField] private TextMeshProUGUI _scoreText;
 
     private void Start()
@@ -19,20 +21,23 @@ public class EndGamePanel : MonoBehaviour
 
     private void OnGameStateChange(GameState prevState, GameState curState)
     {
-        if(curState == GameState.End)
-        {
-            _container.SetActive(true);
-            _scoreText.text = "Total earnings\n$" + Score.score;
-        }
+        if (curState != GameState.End)
+            return;
+
+        _container.gameObject.SetActive(true);
+        _scoreText.text = $"Total earnings\n<color=yellow>${Score.score}</color>";
+
+        _bgPanel.localScale = Vector3.zero;
+        _bgPanel.DOScale(1, 1f).SetEase(Ease.OutExpo);
     }
 
     public void OnClick_Restart()       // incomplete
     {
-        _container.SetActive(false);
+        SceneTransition.Instance.RestartLevel();
     }
 
     public void OnClick_MainMenu()      // incomplete
     {
-        _container.SetActive(false);
+        SceneTransition.Instance.MainMenu();
     }
 }

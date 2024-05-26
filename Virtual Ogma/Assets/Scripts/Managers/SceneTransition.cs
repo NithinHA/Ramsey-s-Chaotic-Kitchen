@@ -10,13 +10,13 @@ public class SceneTransition : Singleton<SceneTransition>
     private const string ScreenClose = "st_close";
     private const string ScreenOpen = "st_open";
 
-    public void restartLevel()
+    public void RestartLevel()
     {
         int scene_index = SceneManager.GetActiveScene().buildIndex;     // get current scene index
         TransitScene(scene_index);
     }
 
-    public void mainMenu()
+    public void MainMenu()
     {
         TransitScene("main_menu");
     }

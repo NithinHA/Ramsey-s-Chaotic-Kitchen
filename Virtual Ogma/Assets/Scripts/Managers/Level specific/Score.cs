@@ -28,7 +28,7 @@ public class Score : Singleton<Score>
         
     }
 
-	public void payBill(Item dish, int tips)
+	public void PayBill(Item dish, int tips)
 	{
 		int bill_amount = keywords_data.dish_cost[dish];
 		score += bill_amount + tips;

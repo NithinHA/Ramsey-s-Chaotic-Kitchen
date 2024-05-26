@@ -34,7 +34,7 @@ public class ClockUI : MonoBehaviour
         GameTime.OnGameTimeUpdate += OnGameTimeUpdate;
         GameTime.OnGameTimeAlert += OnGameTimeAlert;
         yield return new WaitForSeconds(.5f);
-        ClockAnimationSequence();
+        ClockAnimationSequence(() => LevelController.Instance.ChangeGameState(GameState.Running));
     }
 
     private void OnDestroy()
@@ -53,7 +53,7 @@ public class ClockUI : MonoBehaviour
     /// Set original position and Time.
     /// Move from _resumeGamePos to _pauseGamePos; Wait for few frames; Move from _pauseGamePos to _resumeGamePos.
     /// </summary>
-    private void ClockAnimationSequence()
+    private void ClockAnimationSequence(Action onComplete = null)
     {
         if (_gameTime != null)
             OnGameTimeUpdate(_gameTime.RemainingTime);
@@ -66,7 +66,8 @@ public class ClockUI : MonoBehaviour
             .Join(_container.DORotate(_pauseGamePos.rotation.eulerAngles, 1.5f).SetEase(Ease.OutExpo))
             .AppendInterval(1.5f)
             .Append(_container.DOMove(_resumeGamePos.position, 1f).SetEase(Ease.OutExpo))
-            .Join(_container.DORotate(_resumeGamePos.rotation.eulerAngles, 1f).SetEase(Ease.OutExpo));
+            .Join(_container.DORotate(_resumeGamePos.rotation.eulerAngles, 1f).SetEase(Ease.OutExpo))
+            .OnComplete(() => onComplete?.Invoke());
     }
 
     private void OnGameTimeUpdate(float remainingTime)
