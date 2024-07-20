@@ -25,18 +25,18 @@ public class EndGamePanel : MonoBehaviour
             return;
 
         _container.gameObject.SetActive(true);
-        _scoreText.text = $"Total earnings\n<color=yellow>${Score.score}</color>";
+        _scoreText.text = $"Total earnings\n<color=yellow>${Score.Instance.score}</color>";
 
         _bgPanel.localScale = Vector3.zero;
         _bgPanel.DOScale(1, 1f).SetEase(Ease.OutExpo);
     }
 
-    public void OnClick_Restart()       // incomplete
+    public void OnClick_Restart()
     {
         SceneTransition.Instance.RestartLevel();
     }
 
-    public void OnClick_MainMenu()      // incomplete
+    public void OnClick_MainMenu()
     {
         SceneTransition.Instance.MainMenu();
     }

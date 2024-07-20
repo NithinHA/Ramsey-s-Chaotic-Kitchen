@@ -1,39 +1,37 @@
-﻿using UnityEngine;
-using UnityEngine.UI;
-using TMPro;
-using SingletonBase;
+﻿using SingletonBase;
+using System;
+using UnityEngine;
 
 public class Score : Singleton<Score>
 {
-	public static int score = 0;
-	//Text score_text;
-	[SerializeField] TextMeshProUGUI scoreText;
+	public static Action<int, bool> OnScoreUpdate;	// pass score and can_animate
+	public int score = 0;
+	public int TargetScore = 500;
 
-	KeywordsData keywords_data;
+	private KeywordsData keywords_data;
 
     protected override void Start()
     {
 		base.Start();
-
 		keywords_data = KeywordsData.Instance;
-		//score_text = GetComponentInChildren<Text>();
-
-        score = 0;      // doing so avoids the score being carried when you restart the level
-		//score_text.text = "Score: ₹" + score.ToString();
-		scoreText.text = "Score: $" + score.ToString();
+		OnScoreUpdate?.Invoke(score, false);
 	}
-	
-    void Update()
-    {
-        
-    }
+
+	private void Update()
+	{
+		if (Input.GetKeyDown(KeyCode.S))
+		{
+			score += UnityEngine.Random.Range(40, 90);
+			OnScoreUpdate?.Invoke(score, true);
+		}
+	}
 
 	public void PayBill(Item dish, int tips)
 	{
-		int bill_amount = keywords_data.dish_cost[dish];
-		score += bill_amount + tips;
-		scoreText.text = "Score: $" + score.ToString();
+		int baseDishCost = keywords_data.dish_cost[dish];
+		score += baseDishCost + tips;
 
-		AudioManager.Instance.PlaySound(Constants.Audio.CoinsEarn);
+		OnScoreUpdate?.Invoke(score, true);
+		AudioManager.Instance?.PlaySound(Constants.Audio.CoinsEarn);
 	}
 }

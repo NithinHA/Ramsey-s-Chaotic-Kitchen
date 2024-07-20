@@ -1,8 +1,16 @@
-﻿public static class Constants
+﻿using System.Collections.Generic;
+
+public static class Constants
 {
     public class GameConstants
     {
-
+        // The keys of this dictionary must be in ascending order.
+        public static Dictionary<int, int> CustomerServDelayTipMap = new Dictionary<int, int>()
+        {
+            {60, 20},
+            {100, 10},
+            {150, 5}
+        };
     }
 
     public class Audio

@@ -47,7 +47,7 @@ public class Sink : MonoBehaviour
 		tapwater_particles.transform.SetParent(transform);
 
 		// play wash_basin sound
-		AudioManager.Instance.PlaySound(Constants.Audio.WashBasin);
+		AudioManager.Instance?.PlaySound(Constants.Audio.WashBasin);
 
 		yield return new WaitForSeconds(washing_time);
 		utensils.clean_utensil_arr[utensil_index] = utensils.utensil_count_arr[utensil_index];            // cleans all utensil of that instance. ie.- cleans all plates or bowls or cups
@@ -56,7 +56,7 @@ public class Sink : MonoBehaviour
 		Destroy(tapwater_particles);
 
 		// stop wash_basin sound
-		AudioManager.Instance.StopSound(Constants.Audio.WashBasin);
+		AudioManager.Instance?.StopSound(Constants.Audio.WashBasin);
 
 		utensils.on_utensil_changed_callback.Invoke();              // invoke delegate on cleaning utensils
 	}

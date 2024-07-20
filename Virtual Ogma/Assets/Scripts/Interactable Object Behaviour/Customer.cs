@@ -10,8 +10,7 @@ public class Customer : MonoBehaviour
 	public float order_time;
 	private float cur_time;
 
-	float time_of_order;                    // time at which was made. Used to compute total waiting time of a customer
-	int tips;								// additional score that player gets for serving food early to this customer
+	float time_of_order = -1;                    // time at which was made. Used to compute total waiting time of a customer
 
 	Item[] dishes;						// list of all dish Items taken from KeywordsData class
 	public Item dish;					//current dish
@@ -32,6 +31,7 @@ public class Customer : MonoBehaviour
 	public GameObject table_top;
 	[SerializeField] private CustomerOrderBubble orderBubblePrefab;
 	[SerializeField] private Transform bubbleParent;
+	[SerializeField] private ParticleSystem m_CoinParticles;
 
 	public Action<Item> onFoodOrdered;
 	public Action onFoodServed;
@@ -74,13 +74,8 @@ public class Customer : MonoBehaviour
 				table_top.GetComponent<Renderer>().material = food_order_indication_mat;	// make the table pink color indicating waiter has to take order from that table
 				cur_time = order_time;
 				is_served = false;
+				time_of_order = Time.time;		// TO MAKE THINGS CHALLENGING, start a timer here and if food is served before 40s => $30 tips, 20s => $50 tips, 10s => $80 tips
 			}
-		}
-		else
-		{
-			// TO MAKE THINGS CHALLENGING, start a timer here and if food is served before 40s => $30 tips, 20s => $50 tips, 10s => $80 tips
-			if(time_of_order == -1)				// prevents body of the if condition from executing every frame
-				time_of_order = Time.time;
 		}
 	}
 
@@ -116,24 +111,23 @@ public class Customer : MonoBehaviour
 
         int serv_delay = (int)(Time.time - time_of_order);
 
-		// coustomer gives tips depending upon the time customer was waiting
-		if (serv_delay < 30) {
-			tips = 20;
-		} else if(serv_delay < 60) {
-			tips = 10;
-		} else if(serv_delay < 90) {
-			tips = 5;
-		} else {
-			tips = 0;
-		}
-		Debug.Log("Tips received = " + tips);
-		InstructionPanel.Instance.DisplayInstruction("Tips received = " + tips);
-		
+		// customer gives tips depending upon the time customer was waiting
+		int tips = 0;
+        foreach (var item in Constants.GameConstants.CustomerServDelayTipMap)
+        {
+			if (serv_delay < item.Key)
+            {
+				tips = item.Value;
+				break;
+            }
+        }
+
+		InstructionPanel.Instance.DisplayInstruction($"Serve delayed by {serv_delay}s, tips received ${tips} ");
+		m_CoinParticles.Play();
 		Score.Instance.PayBill(this.dish, tips);		// update score text
 
 		this.dish = null;				// reset dish to null
 		tips = 0;						// reset tips value to 0
-		time_of_order = -1;				// reset time_of_order to -1
 		// removing dish from inventory and decrementing clean utensil count is done in WaiterAction class
 		table_top.GetComponent<Renderer>().material = default_mat;  // make table original color indicating customer has been served and is eating the dish
 		onFoodServed?.Invoke();

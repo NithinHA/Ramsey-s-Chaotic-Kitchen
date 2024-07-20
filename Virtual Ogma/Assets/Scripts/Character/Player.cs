@@ -128,54 +128,23 @@ public class Player : MonoBehaviour
 	{
 		if (direction.y > transform.eulerAngles.y)
 		{
-			Debug.Log("increase");
 			while (transform.eulerAngles.y < direction.y)
 			{
-				Debug.Log("R: " + direction + "\nT" + transform.eulerAngles);
+				// Debug.Log("R: " + direction + "\nT" + transform.eulerAngles);
 				transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(direction), Time.deltaTime * resolve_rotation_speed);
 				yield return null;
 			}
-			Debug.Log("R: " + direction + "\nT" + transform.eulerAngles);
+			// Debug.Log("R: " + direction + "\nT" + transform.eulerAngles);
 		}
 		else
 		{
-			Debug.Log("decrease");
 			while (transform.eulerAngles.y > direction.y)
 			{
-				Debug.Log("R: " + direction + "\nT" + transform.eulerAngles);
+				// Debug.Log("R: " + direction + "\nT" + transform.eulerAngles);
 				transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(direction), Time.deltaTime * resolve_rotation_speed);
 				yield return null;
 			}
-			Debug.Log("R: " + direction + "\nT" + transform.eulerAngles);
+			// Debug.Log("R: " + direction + "\nT" + transform.eulerAngles);
 		}
 	}
-
-	//public void resolveRotationAfterNavigation(Vector3 direction)
-	//{
-	//	Vector3 relative_direction = new Vector3(direction.x*0, direction.y , direction.z * 0);
-	//	//Debug.Log(direction);
-	//	Quaternion look_rotation = Quaternion.LookRotation(direction, Vector3.up);
-	//	Debug.Log(look_rotation);
-	//	//transform.rotation = look_rotation;
-	//	StartCoroutine(resolveRotations(look_rotation));
-	//}
-	//IEnumerator resolveRotations(Quaternion look_rotation)
-	//{
-	//	if (look_rotation.y > transform.rotation.y)
-	//	{
-	//		while (transform.rotation.y < look_rotation.y)
-	//		{
-	//			transform.rotation = Quaternion.Slerp(transform.rotation, look_rotation, Time.deltaTime * resolve_rotation_speed);
-	//			yield return null;
-	//		}
-	//	}
-	//	else
-	//	{
-	//		while (transform.rotation.y > look_rotation.y)
-	//		{
-	//			transform.rotation = Quaternion.Slerp(transform.rotation, look_rotation, Time.deltaTime * resolve_rotation_speed);
-	//			yield return null;
-	//		}
-	//	}
-	//}
 }

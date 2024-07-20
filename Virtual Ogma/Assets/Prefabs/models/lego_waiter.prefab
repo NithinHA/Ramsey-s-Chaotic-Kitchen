@@ -323,7 +323,6 @@ MonoBehaviour:
     voiceOverType: 0
     voiceOverClips:
     - {fileID: 8300000, guid: 3d213bacab40f6543ade1ba00125df98, type: 3}
-    - {fileID: 8300000, guid: efc2c3056df36174885c0b1bbf8e4046, type: 3}
     - {fileID: 8300000, guid: dc8c7c86b79b5f9458a9343dda64776f, type: 3}
   vo_ActionPositive:
     voiceOverType: 1

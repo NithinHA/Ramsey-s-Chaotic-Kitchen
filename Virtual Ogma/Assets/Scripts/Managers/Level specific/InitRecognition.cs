@@ -83,7 +83,7 @@ public class InitRecognition : MonoBehaviour
     {
 		keyword_recognizer.Stop();
 		Debug.Log(character.name + " called");
-		InstructionPanel.Instance.DisplayInstruction(character.name + " called");
+		InstructionPanel.Instance.DisplayInstruction(character.name + " selected");
 		CharacterAction characterAction = type == CharacterType.chef ? GetComponent<ChefAction>() as CharacterAction : 
 			GetComponent<WaiterAction>() as CharacterAction;
 		characterAction.Init(character);

@@ -24,7 +24,7 @@ public class ItemSlot : MonoBehaviour
 		icon.enabled = true;
 
 		if (nameText != null)
-			nameText.text = item.name + " -> $" + KeywordsData.Instance.dish_cost[item];		// display name and cost of of the order
+			nameText.text = $"{item.name} : ${KeywordsData.Instance.dish_cost[item]}";		// display name and cost of of the order
 
 		if(ingredients_panel != null)
 		{
