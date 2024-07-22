@@ -11,12 +11,13 @@ public class MainMenuController : Singleton<MainMenuController>
 {
     private enum MainMenuStage
     {
-        Street, LevelSelect
+        Street, LevelSelect, InfoScreen
     }
 
     [SerializeField] private Image m_Eyelids;
     [SerializeField] private Transform m_MainMenuT;
     [SerializeField] private Transform m_LevelSelectT;
+    [SerializeField] private Transform m_InfoScreenT;
     [Space]
     [SerializeField] private float m_BlinkTime = 1f;
 
@@ -98,6 +99,17 @@ public class MainMenuController : Singleton<MainMenuController>
                 if (!isClose)
                     m_Eyelids.raycastTarget = false;
             });
+    }
+
+    public void OnHelpButton()
+    {
+        _currentMainMenuStage = MainMenuStage.InfoScreen;
+        EyesToggle(true, m_BlinkTime, () =>
+        {
+            MainCam.transform.position = m_InfoScreenT.position;
+            MainCam.transform.rotation = m_InfoScreenT.rotation;
+            EyesToggle(false, m_BlinkTime);
+        });
     }
 
     public void OnExitButton()
