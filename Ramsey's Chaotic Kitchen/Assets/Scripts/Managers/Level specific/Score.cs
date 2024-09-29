@@ -17,6 +17,7 @@ public class Score : Singleton<Score>
 		OnScoreUpdate?.Invoke(score, false);
 	}
 
+#if UNITY_EDITOR
 	private void Update()
 	{
 		if (Input.GetKeyDown(KeyCode.S))
@@ -25,6 +26,7 @@ public class Score : Singleton<Score>
 			OnScoreUpdate?.Invoke(score, true);
 		}
 	}
+#endif
 
 	public void PayBill(Item dish, int tips)
 	{

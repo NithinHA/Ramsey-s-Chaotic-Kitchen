@@ -70,13 +70,6 @@ public class InitRecognition : MonoBehaviour
 				is_listening = true;
 			}
 		}
-
-		//control test script.. DELETE it
-		//if (Input.GetKeyDown(KeyCode.K))
-		//{
-		//	ob_ = Instantiate<GameObject>(ob, Vector3.zero, Quaternion.identity);
-		//	ob_.AddComponent<Test_script>();
-		//}
 	}
 
 	private void InitCharacter(Player character, CharacterType type)

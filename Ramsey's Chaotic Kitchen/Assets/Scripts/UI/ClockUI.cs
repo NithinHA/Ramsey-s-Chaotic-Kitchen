@@ -43,12 +43,6 @@ public class ClockUI : MonoBehaviour
         GameTime.OnGameTimeAlert -= OnGameTimeAlert;
     }
 
-    private void Update()
-    {
-        //if (Input.GetKeyDown(KeyCode.C))
-        //    _isLast10sAlert = !_isLast10sAlert;
-    }
-
     /// <summary>
     /// Set original position and Time.
     /// Move from _resumeGamePos to _pauseGamePos; Wait for few frames; Move from _pauseGamePos to _resumeGamePos.
