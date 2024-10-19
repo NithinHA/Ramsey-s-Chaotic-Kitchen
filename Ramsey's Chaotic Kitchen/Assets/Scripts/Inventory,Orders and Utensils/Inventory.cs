@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 using SingletonBase;
+using System;
 
 public class Inventory : Singleton<Inventory>
 {
 	public delegate void onItemChanged();					// invoke this delegate whenever a new item is added to inventory, or an existing item is removed from inventory
-	public onItemChanged on_item_changed_callback;
+	public Action<Item> OnItemAdded;
+	public Action<Item, int> OnItemRemoved;
 
 	public int inventory_space = 20;
 	public List<Item> food_items = new List<Item>();
@@ -20,17 +22,14 @@ public class Inventory : Singleton<Inventory>
 		}
 		food_items.Add(item);
 
-		if (on_item_changed_callback != null)
-			on_item_changed_callback.Invoke();		// invoke delegate on adding new food_item
-
+		OnItemAdded?.Invoke(item);
 		return true;
 	}
 
-	public void removeItem(Item item)
+	public void removeItem(Item item, int slotIndex = -1)
 	{
 		food_items.Remove(item);
-		if (on_item_changed_callback != null)
-			on_item_changed_callback.Invoke();		// invoke delegate on removing a food_item
+		OnItemRemoved?.Invoke(item, slotIndex);
 	}
 
 	public bool isItemPresent(Item food_item)

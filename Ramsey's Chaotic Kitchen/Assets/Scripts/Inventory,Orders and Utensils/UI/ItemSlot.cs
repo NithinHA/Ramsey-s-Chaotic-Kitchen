@@ -87,21 +87,7 @@ public class ItemSlot : MonoBehaviour
 			});
 	}
 
-	/////////////// Buttons ///////////////
-
-	public void onInventoryButton()
-	{
-		if (this.item != null)
-		{
-			Debug.Log("Item selected: " + item.name);
-			InstructionPanel.Instance.DisplayInstruction("Item selected: " + item.name);
-		}
-	}
-	
-	public void onCloseButton()
-	{
-		Inventory.Instance.removeItem(item);
-	}
+#region Button OnClicks
 
 	public void onOrderButton()
 	{
@@ -118,4 +104,6 @@ public class ItemSlot : MonoBehaviour
 			InstructionPanel.Instance.DisplayInstruction("Order selected: " + item.name + "\nIngredients:" + sb.ToString());
 		}
 	}
+
+#endregion
 }

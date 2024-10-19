@@ -20070,61 +20070,73 @@ MonoBehaviour:
   sounds:
   - name: get_supplies
     clip: {fileID: 8300000, guid: 60e588ab80e020641b52d4e543286205, type: 3}
-    volume: 0.703
+    volume: 0.7
     pitch: 1.28
     is_looping: 0
     source: {fileID: 0}
   - name: wash_basin
     clip: {fileID: 8300000, guid: 7e416e8ce53107c428a170980432f4e9, type: 3}
-    volume: 0.958
+    volume: 0.65
     pitch: 1.65
     is_looping: 1
     source: {fileID: 0}
   - name: ambient_bg
     clip: {fileID: 8300000, guid: d619910645348c54a9a915e752896c9d, type: 3}
-    volume: 0.958
+    volume: 0.6
     pitch: 1
     is_looping: 1
     source: {fileID: 0}
   - name: listener_on
     clip: {fileID: 8300000, guid: 756d8d5b79d02f14b975962fb3574470, type: 3}
-    volume: 0.958
+    volume: 0.7
     pitch: 1
     is_looping: 0
     source: {fileID: 0}
   - name: listener_off
     clip: {fileID: 8300000, guid: bbc8a8bf812885740832789576f89bc3, type: 3}
-    volume: 0.958
+    volume: 0.7
     pitch: 1
     is_looping: 0
     source: {fileID: 0}
   - name: coins_earn
     clip: {fileID: 8300000, guid: 17441cc8ef225eb4094d44bfe888af70, type: 3}
-    volume: 0.958
+    volume: 0.7
     pitch: 1
     is_looping: 0
     source: {fileID: 0}
   - name: clock_alert
     clip: {fileID: 8300000, guid: 9b3fe2fa61cb337409801ed37e0274c0, type: 3}
-    volume: 0.958
+    volume: 0.8
     pitch: 1
     is_looping: 0
     source: {fileID: 0}
   - name: time_up
     clip: {fileID: 8300000, guid: 6e4f9133c6352bd4b972c5c6601dc6bf, type: 3}
-    volume: 0.958
+    volume: 0.8
     pitch: 1
     is_looping: 0
     source: {fileID: 0}
   - name: main_menu_bg
     clip: {fileID: 8300000, guid: 5f689404bfc65a34780fb7ef7cb78166, type: 3}
-    volume: 0.958
+    volume: 0.65
     pitch: 1
     is_looping: 1
     source: {fileID: 0}
   - name: clock_countdown
     clip: {fileID: 8300000, guid: 2aefac86bab1eb54c9ef9c50dc8a8448, type: 3}
-    volume: 0.958
+    volume: 0.8
+    pitch: 1
+    is_looping: 0
+    source: {fileID: 0}
+  - name: inventory_add
+    clip: {fileID: 8300000, guid: 81e8cd810c65a9a48a25f9608dc77a76, type: 3}
+    volume: 0.65
+    pitch: 1
+    is_looping: 0
+    source: {fileID: 0}
+  - name: inventory_remove
+    clip: {fileID: 8300000, guid: 1ede5fefd877c514292a49114818456a, type: 3}
+    volume: 0.65
     pitch: 1
     is_looping: 0
     source: {fileID: 0}

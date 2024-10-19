@@ -27,6 +27,9 @@ public static class Constants
         public const string ClockAlert = "clock_alert";
         public const string ClockCountdownAlert = "clock_countdown";
         public const string TimeUp = "time_up";     // unused
+
+        public const string InventoryAdd = "inventory_add";
+        public const string InventoryRemove = "inventory_remove";
     }
 
     public class Keywords

@@ -48,7 +48,7 @@ public class Sink : MonoBehaviour
 
 		// play wash_basin sound
 		AudioManager.Instance?.PlaySound(Constants.Audio.WashBasin);
-
+		utensils.OnUtensilCleanup(utensil_index, washing_time);
 		yield return new WaitForSeconds(washing_time);
 		utensils.clean_utensil_arr[utensil_index] = utensils.utensil_count_arr[utensil_index];            // cleans all utensil of that instance. ie.- cleans all plates or bowls or cups
 		is_washing = false;

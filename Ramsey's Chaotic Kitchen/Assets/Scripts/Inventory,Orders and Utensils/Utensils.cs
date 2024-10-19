@@ -13,13 +13,17 @@ public class Utensils : Singleton<Utensils>
 	public int[] utensil_count_arr;             // total numer of utensil instances present for serving... eg.- 4 plates, 2 bowls and 2 cups
 	public int[] clean_utensil_arr;             // tells how many of the utensils are clean at a given time
 
+	[SerializeField] private UtensilSlot[] m_UtensilSlots;
+
 	protected override void Awake()
 	{
 		base.Awake();
 
-		utensil_index_dict.Add("plates", 0);
-		utensil_index_dict.Add("bowls", 1);
-		utensil_index_dict.Add("cups", 2);
+        for (int i = 0; i < m_UtensilSlots.Length; i++)
+        {
+            UtensilSlot slot = m_UtensilSlots[i];
+            utensil_index_dict.Add(slot.utensil_item.name, i); 
+        }
 
 		clean_utensil_arr = new int[utensil_count_arr.Length];      // done here since static members cannot be edited in inspector
 		for (int i = 0; i < utensil_count_arr.Length; i++)
@@ -56,9 +60,12 @@ public class Utensils : Singleton<Utensils>
 	{
 		int utensil_index;
 		utensil_index_dict.TryGetValue(utensil.name, out utensil_index);
-		UtensilSlot[] utensil_slot_arr = gameObject.GetComponentsInChildren<UtensilSlot>();
-		utensil_slot_arr[utensil_index].blinkSlot();
-
+		m_UtensilSlots[utensil_index].BlinkSlot();
 		// play an indication sound
+	}
+
+	public void OnUtensilCleanup(int index, float cleanupDuration)
+    {
+		m_UtensilSlots[index].OnSlotRefresh(cleanupDuration);
 	}
 }

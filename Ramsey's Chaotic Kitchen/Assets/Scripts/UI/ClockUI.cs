@@ -115,7 +115,7 @@ public class ClockUI : MonoBehaviour
     /// </summary>
     private void ClockCountdownAlert()
     {
-        AudioManager.Instance.PlaySound(Constants.Audio.ClockCountdownAlert);
+        AudioManager.Instance?.PlaySound(Constants.Audio.ClockCountdownAlert);
         _container.DOScale(_countdownAlertScale, .1f).SetEase(Ease.OutExpo).
             OnComplete(() => _container.DOScale(Vector3.one, .2f).SetEase(Ease.OutExpo));
     }

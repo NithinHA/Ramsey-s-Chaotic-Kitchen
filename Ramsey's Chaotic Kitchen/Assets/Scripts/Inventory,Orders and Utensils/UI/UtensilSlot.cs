@@ -2,6 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using DG.Tweening;
 
 public class UtensilSlot : MonoBehaviour
 {
@@ -10,27 +11,30 @@ public class UtensilSlot : MonoBehaviour
 
 	[Header("UI")]
 	public Image image;
-	//public Text name_text;
 	public TextMeshProUGUI nameText;
-	//public Text count_text;
 	public TextMeshProUGUI countText;
+	[SerializeField] private Image m_Bg;
 
-	[Header("Empty utensil indicator")]
-	[SerializeField] private Color blink_color;
-	[SerializeField] private float blink_time = .1f;
-	Color default_color;
-	[SerializeField] private float blink_count = 5;
+	[Header("Utensil indicators")]
+	[SerializeField] private Color m_EmptyBlinkColor;
+	[SerializeField] private float m_EmptyBlinkTime = .1f;
+	[SerializeField] private float m_EmptyBlinkCount = 5;
+	[Space]
+	[SerializeField] private Color m_RefreshColor;
 
-	Utensils utensils;
+	Color _defaultColor;
+	Utensils _utensils;
+	Coroutine _blinkCoroutine;
 
     void Start()
     {
-		utensils = Utensils.Instance;
+		_utensils = Utensils.Instance;
 		image.sprite = utensil_item.icon;
 		nameText.text = utensil_item.name;
-		countText.text = utensils.clean_utensil_arr[utensils.utensil_index_dict[utensil_item.name]].ToString();
+		countText.text = _utensils.clean_utensil_arr[_utensils.utensil_index_dict[utensil_item.name]].ToString();
 
-		utensils.on_utensil_changed_callback += updateUtensilsUI;
+		_utensils.on_utensil_changed_callback += updateUtensilsUI;
+		_defaultColor = m_Bg.color;
 	}
 	
     void Update()
@@ -40,29 +44,57 @@ public class UtensilSlot : MonoBehaviour
 	
 	public void updateUtensilsUI()
 	{
-		countText.text = utensils.clean_utensil_arr[utensils.utensil_index_dict[utensil_item.name]].ToString();
+		countText.text = _utensils.clean_utensil_arr[_utensils.utensil_index_dict[utensil_item.name]].ToString();
 	}
 
-	public void blinkSlot()
+	public void BlinkSlot()
 	{
-		StartCoroutine(blink_slot());
+		if (_blinkCoroutine != null)
+			StopCoroutine(_blinkCoroutine);
+
+		_blinkCoroutine = StartCoroutine(BlinkSlotRoutine());
 	}
-	IEnumerator blink_slot()
+	IEnumerator BlinkSlotRoutine()
 	{
-		default_color = GetComponent<Image>().color;
-		for (int i = 0; i < blink_count; i++)
+		m_Bg.fillAmount = 1;
+		for (int i = 0; i < m_EmptyBlinkCount; i++)
 		{
 			if (i % 2 == 0)
 			{
-				GetComponent<Image>().color = blink_color;
-				yield return new WaitForSeconds(blink_time);
+				m_Bg.color = m_EmptyBlinkColor;
+				yield return new WaitForSeconds(m_EmptyBlinkTime);
 			}
 			else
 			{
-				GetComponent<Image>().color = default_color;
-				yield return new WaitForSeconds(blink_time);
+				m_Bg.color = _defaultColor;
+				yield return new WaitForSeconds(m_EmptyBlinkTime);
 			}
 		}
-		GetComponent<Image>().color = default_color;
+
+		m_Bg.color = _defaultColor;
+		_blinkCoroutine = null;
+	}
+
+	public void OnSlotRefresh(float duration)
+	{
+		if (_blinkCoroutine != null)
+			StopCoroutine(_blinkCoroutine);
+
+		_blinkCoroutine = StartCoroutine(RefreshSlotRoutine(duration));
+	}
+	IEnumerator RefreshSlotRoutine(float duration)
+	{
+		m_Bg.color = m_RefreshColor;
+		float elapsedTime = 0f;
+		while (elapsedTime < duration)
+		{
+			m_Bg.fillAmount = Mathf.Lerp(0, 1, elapsedTime / duration);
+			elapsedTime += Time.deltaTime;
+			yield return null;
+		}
+
+		yield return new WaitForSeconds(.2f);
+		m_Bg.color = _defaultColor;
+		m_Bg.fillAmount = 1;
 	}
 }
